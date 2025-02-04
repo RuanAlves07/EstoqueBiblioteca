@@ -1,2 +1,3 @@
 # SenaiPython
 
+tropa do escambo
