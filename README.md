@@ -1,3 +1,5 @@
 # SenaiPython
 
-tropa do escambo
+# ❗ TESTE ❗
+
+Teste para o Futuro projeto, apenas para exemplo do Readme.
