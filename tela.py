@@ -14,7 +14,7 @@ jan.resizable(width=False, height=False)
 LeftFrame = Frame(jan, width=150, height=200, bg="lightblue", relief="raise")
 LeftFrame.pack(side=LEFT)
 
-RightFrame = Frame(jan, width=250, height=200, bg="lightblue", relief="raise")
+RightFrame = Frame(jan, width=250, height=200, bg="lightblue", relief="Faise")
 RightFrame.pack(side=RIGHT)
 
 # ADICIONAR CAMPOS DE USUÁRIO E SENHA
