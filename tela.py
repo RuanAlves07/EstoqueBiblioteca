@@ -42,6 +42,30 @@ def abrir_tela_estoque():
     
     estoque_label = Label(estoque_janela, text="Estoque", font=("Arial", 50), bg="white", fg="black")
     estoque_label.place(relx=0.5, rely=0.5, anchor=CENTER)  # Centraliza o label na tela
+        # Funções para as opções do menu
+    def adicionar_produto():
+        messagebox.showinfo("Adicionar Produto", "Funcionalidade de adicionar produto.")
+
+
+
+    def sair():
+        estoque_janela.destroy()  # Fecha a janela de estoque
+        jan.deiconify()  # faz logoff (vi no reddit)
+
+    # Criar a barra de menu
+    barra_menu = Menu(estoque_janela)
+
+    # Menu
+    menu_funcoes = Menu(barra_menu, tearoff=0)
+    menu_funcoes.add_command(label="Adicionar Produto", command=adicionar_produto)
+    menu_funcoes.add_separator()
+    menu_funcoes.add_command(label="Sair", command=sair)
+
+    # Adicionar o menu "Funções" à barra de menu
+    barra_menu.add_cascade(label="Funções", menu=menu_funcoes)
+
+    # Configurar a barra de menu na janela de estoque
+    estoque_janela.config(menu=barra_menu)
 
 
 # FUNÇÃO DE LOGIN
