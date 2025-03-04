@@ -30,6 +30,20 @@ SenhaLabel.place(x=10, y=70)
 SenhaEntry = ttk.Entry(RightFrame, width=20, show="•")
 SenhaEntry.place(x=100, y=70)
 
+# Função para abrir a tela de estoque apos login
+def abrir_tela_estoque():
+    # Criar  janela para o estoque apos login
+    estoque_janela = Toplevel()
+    estoque_janela.title("Estoque")
+    estoque_janela.geometry("800x600")
+    estoque_janela.configure(background="white")
+    estoque_janela.resizable(width=False, height=False)
+
+    
+    estoque_label = Label(estoque_janela, text="Estoque", font=("Arial", 50), bg="white", fg="black")
+    estoque_label.place(relx=0.5, rely=0.5, anchor=CENTER)  # Centraliza o label na tela
+
+
 # FUNÇÃO DE LOGIN
 def Login():
     usuario = UsuarioEntry.get()
@@ -41,6 +55,9 @@ def Login():
 
     if VerifyLogin:
         messagebox.showinfo(title="Sucesso", message="Acesso Confirmado. Bem Vindo!")
+        jan.withdraw()
+        abrir_tela_estoque()
+
     else:
         messagebox.showerror(title="Erro", message="Acesso Negado. Verifique seu usuário e senha.")
 
