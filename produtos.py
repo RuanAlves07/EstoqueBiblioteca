@@ -1,11 +1,12 @@
-import tkinter as tk
+from tkinter import *
 from tkinter import messagebox
-from comunicacao import criar_produto, atualizar_produto, listar_produto, deletar_produto
+from tkinter import ttk
+from comunicacao import comunicacao
 
-class CRUDApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("PRODUTOS")
-        
-        self.create_widgets()
-    
+i = Tk() 
+i.title("RA System - Painel de acesso") 
+i.geometry("600x800") 
+i.configure(background = "white") 
+i.resizable(width = False, height = False) 
+
+i.mainloop()
