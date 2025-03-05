@@ -31,41 +31,42 @@ SenhaEntry = ttk.Entry(RightFrame, width=20, show="•")
 SenhaEntry.place(x=100, y=70)
 
 # Função para abrir a tela de estoque apos login
-def abrir_tela_estoque():
+def abrir_tela_fornecedores():
     # Criar  janela para o estoque apos login
-    estoque_janela = Toplevel()
-    estoque_janela.title("Estoque")
-    estoque_janela.geometry("800x600")
-    estoque_janela.configure(background="white")
-    estoque_janela.resizable(width=False, height=False)
+    fornecedores_janela = Toplevel()
+    fornecedores_janela.title("Fornecedores")
+    fornecedores_janela.geometry("800x600")
+    fornecedores_janela.configure(background="grey")
+    fornecedores_janela.resizable(width=False, height=False)
 
     
-    estoque_label = Label(estoque_janela, text="Estoque", font=("Arial", 50), bg="white", fg="black")
-    estoque_label.place(relx=0.5, rely=0.5, anchor=CENTER)  # Centraliza o label na tela
+    fornecedores_label = Label(fornecedores_janela, text="Estoque", font=("Arial", 50), bg="white", fg="black")
+    fornecedores_label.place(relx=0.5, rely=0.5, anchor=CENTER)  # Centraliza o label na tela
         # func. para as opções do menu
-    def adicionar_produto():
-        messagebox.showinfo("Adicionar Produto", "vai servir pra add os produto")
+    def adicionar_fornecedor():
+        messagebox.showinfo("Adicionar Fornecedor", "vai servir pra add os fornecedores")
 
 
 
     def sair():
-        estoque_janela.destroy()  # fecha a janela de estoque
+        fornecedores_janela.destroy()  # fecha a janela de estoque
         jan.deiconify()  # faz logoff (vi no reddit)
 
     # criar a barra de menu
-    barra_menu = Menu(estoque_janela)
+    barra_menu = Menu(fornecedores_janela)
 
     # Menu
     menu_funcoes = Menu(barra_menu, tearoff=0)
-    menu_funcoes.add_command(label="Adicionar Produto", command=adicionar_produto)
+    menu_funcoes.add_command(label="Adicionar Fornecedor", command=adicionar_fornecedor)
     menu_funcoes.add_separator()
+    menu_funcoes.add_command(Label = "Lista de fornecedores")
     menu_funcoes.add_command(label="Sair", command=sair)
 
     # Adicionar o menu "Funções" à barra de menu
     barra_menu.add_cascade(label="Funções", menu=menu_funcoes)
 
     # Configurar a barra de menu na janela de estoque
-    estoque_janela.config(menu=barra_menu)
+    fornecedores_janela.config(menu=barra_menu)
 
 
 # FUNÇÃO DE LOGIN
@@ -81,8 +82,7 @@ def Login():
         messagebox.showinfo(title="Sucesso", message="Acesso Confirmado. Bem Vindo!")
         jan.withdraw()
 
-        #serva pra execução da 2 tela de estoque 
-        abrir_tela_estoque()
+
 
     else:
         messagebox.showerror(title="Erro", message="Acesso Negado. Verifique seu usuário e senha.")
