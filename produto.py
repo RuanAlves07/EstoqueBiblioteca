@@ -11,6 +11,8 @@ class TelaProdutos:
     i.configure(background = "#f6f3ec") 
     i.resizable(width = False, height = False) 
 
+
+    
     # Def para ir para a aba de adicionar livros
 
     def GoToAdicionar():
@@ -78,8 +80,6 @@ class TelaProdutos:
         AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40, command = RegistrarNoBanco)
         AddButton.place(x = 300, y = 520)
 
-
-
         # Botão para voltar para a tela das opções sobre a questão de produtos
 
         VoltarButton = ttk.Button(produto_add, text = "Voltar", width = 8)
@@ -109,7 +109,7 @@ class TelaProdutos:
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
-    def GoToList():
+    def GoToList(self):
 
         produto_list = Tk()
         produto_list.title("PRODUTOS - UPDATE")
@@ -118,6 +118,13 @@ class TelaProdutos:
         produto_list.resizable(width=False, height=False)
 
 
+        self.text_area = tk.Text(self.root, height = 10, width = 80)
+        self.text_area.grid (row = 10, column = 0, columnspan = 4)
+
+        users = read_users()
+        self.text_area.delete(1.0, tk.END)
+        for user in users:
+            self.text_area.insert(tk.END, f"ID: {user[0]}, Nome: {user[1]}, Telefone: {user[2]}, E-mail: {user[3]}\n")
 
     #Label do titulo
     Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
