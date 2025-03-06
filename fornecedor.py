@@ -64,7 +64,7 @@ def excluir_forn():
         # Conectar ao MySQL
         conn = conectar_banco()
         cursor = conn.cursor()
-        cursor.execute("SELECT id, nome, nomefantasia, cnpj, endereco FROM fornecedor")
+        cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor1")
         fornecedores = cursor.fetchall()
         conn.close()
 
