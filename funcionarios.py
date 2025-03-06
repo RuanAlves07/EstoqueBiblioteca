@@ -41,6 +41,7 @@ def cadastro_func():
 
     voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão para voltar 
     voltButton.place(x = 10, y = 570)
+
 def excluir_func():
     jan = Tk()
     jan.title("Exclusão de Funcionarios")
@@ -68,6 +69,9 @@ def sair():
     jan.withdraw()
 
 
+
+Titulolabel = Label(text = "GERENCIADOR DE FORNECEDOR", font =("Times New Roman", 18))
+Titulolabel.place(x = 10, y = 75)
 
 cadButton = ttk.Button( text = "Cadastrar Funcionario", width = 50, command= cadastro_func) # Cria um botão 
 cadButton.place(x = 45, y = 200) # Posiciona o botão 

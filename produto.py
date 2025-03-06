@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-
+from comunicacao import comunicacao
 class TelaProdutos:
 
 
@@ -11,6 +11,8 @@ class TelaProdutos:
     i.configure(background = "#f6f3ec") 
     i.resizable(width = False, height = False) 
 
+
+    
     # Def para ir para a aba de adicionar livros
 
     def GoToAdicionar():
@@ -60,7 +62,7 @@ class TelaProdutos:
 
         # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica que está faltando algum campo de entrada
 
-        def RegistrarNoBanco():
+        def RegistrarNoBanco(self):
             
             nome = NomeEntry.get()
             descricao = DescEntry.get()
@@ -77,8 +79,6 @@ class TelaProdutos:
 
         AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40, command = RegistrarNoBanco)
         AddButton.place(x = 300, y = 520)
-
-
 
         # Botão para voltar para a tela das opções sobre a questão de produtos
 
@@ -109,15 +109,13 @@ class TelaProdutos:
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
-    def GoToList():
+    def GoToList(self):
 
         produto_list = Tk()
         produto_list.title("PRODUTOS - UPDATE")
         produto_list.geometry("800x600")
         produto_list.configure(background="#f6f3ec")
         produto_list.resizable(width=False, height=False)
-
-
 
     #Label do titulo
     Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
