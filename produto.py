@@ -59,7 +59,7 @@ class TelaProdutos:
 
         # Botão para registrar o produto no banco de dados
 
-        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 30)
+        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40)
         AddButton.place(x = 300, y = 520)
 
         # Botão para voltar para a tela das opções sobre a questão de produtos
@@ -101,18 +101,28 @@ class TelaProdutos:
 
 
 
+    #Label do titulo
+    Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
+    Titulolabel.place(x = 30, y = 75)
+
+
+    #Button para ir no menu de registro dos produto
     AButton = ttk.Button(text = "ADICIONAR PRODUTOS", width = 50, command = GoToAdicionar)
     AButton.place(x = 45, y = 200)
 
+    #Button para ir no menu de remoção de produto
     RemoveButton = ttk.Button(text = "EXCLUIR PRODUTOS", width = 50, command = GoToExcluir)
     RemoveButton.place(x = 45, y = 300)
 
+    #Button para ir no menu de atualização de informação de produtos
     UpdateButton = ttk.Button(text = "ATUALIZAR PRODUTOS", width = 50, command = GoToUpdate)
     UpdateButton.place(x = 45, y = 400)
 
+    #Button para ir no menu de listagem de todos os produtos registrados
     ListButton = ttk.Button(text = "LISTAR PRODUTOS", width = 50, command = GoToList)
     ListButton.place(x = 45, y = 500)
 
+    #Button de voltar para tela de menu principal do sistema
     VoltarButton = ttk.Button(text = "Voltar", width = 8)
     VoltarButton.place(x = 10, y = 570)
 
