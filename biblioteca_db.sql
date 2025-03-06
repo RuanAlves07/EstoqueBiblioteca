@@ -10,7 +10,7 @@ create table login(
 
 );
 
-create table produtos(
+create table produto(
 
     idproduto int not null auto_increment,
     nome text,
