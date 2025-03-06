@@ -19,7 +19,8 @@ def cadastro_forn():
     jan.resizable(width=False, height=False)
     UsuarioEntry = ttk.Entry(jan, width = 30) # Criar um campo de entrada para o usuário
     UsuarioEntry.place (x = 120, y = 115)
-
+    voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão 
+    voltButton.place(x = 10, y = 570)
 def excluir_forn():
     jan = Tk()
     jan.title("Exclusão de Fornecedores")
