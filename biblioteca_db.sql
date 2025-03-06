@@ -40,6 +40,7 @@ create table funcionario(
     telefone text,
     enderecofunc text,
     email text, 
+    primary key (idfuncionario)
      
 
 )
