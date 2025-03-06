@@ -20,23 +20,25 @@ SenhaLabel.place(x = 57, y = 125)
 SenhaEntry = ttk.Entry(width = 30, show = "•") 
 SenhaEntry.place(x = 155, y = 140)
 
+#Fazer login
 def login():
 
     usuario = LoginEntry.get()
     senha = SenhaEntry.get()
 
-    #db = comunicacao.py() 
-    #db.cursor.execute("""SELECT * FROM usuario WHERE usuario = %s AND senha = %s""", (usuario, senha))
-    #VerifyLogin = db.cursor.fetchone()
+    db = comunicacao() 
+    db.cursor.execute("""SELECT * FROM usuario WHERE usuario = %s AND senha = %s""", (usuario, senha))
+    VerifyLogin = db.cursor.fetchone()
 
-    #if VerifyLogin:
-        #messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Confirmado, Bem Vindo!")
-    #else:
-        #messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Negado. Verifique se esta cadastrado no sistema!")
+    if VerifyLogin:
+        messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Confirmado, Bem Vindo!")
+    else:
+        messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Negado. Verifique se esta cadastrado no sistema!")
 
 LoginButton = ttk.Button(text = "LOGIN", width = 15, command = login)
 LoginButton.place(x = 130, y = 335)
 
+#Registrar um novo usuario
 def registrar():
 
     LoginButton.place(x = 5000)
@@ -51,18 +53,20 @@ def registrar():
     TelefoneEntry = ttk.Entry(width = 30)  
     TelefoneEntry.place(x = 155, y = 225) 
 
+    #Codigo para registrar o usuario no banco
     def RegistrarNoBanco():
         nome = LoginEntry.get()
         senha = SenhaEntry.get()
         endereco = EnderecoEntry.get()
         telefone = TelefoneEntry.get()
 
+        #Mensagem de erro se apertar o botao 'Registrar' sem digitar nada nos campos de textos 
         if nome == "" or senha == "" or endereco == "" or telefone == "":
             messagebox.showerror(title = "Erro de Registro", message = "PREENCHA TODOS OS CAMPOS") 
         else:
-            #db = comunicacao() 
-            #db.RegistrarNoBanco(nome, endereco, telefone, senha) 
-            #messagebox.showinfo("Sucesso", "Usuario registrado com sucesso!")
+            db = comunicacao() 
+            db.RegistrarNoBanco(nome, endereco, telefone, senha) 
+            messagebox.showinfo("Sucesso", "Usuario registrado com sucesso!")
 
             
             LoginEntry.delete(0, END) 
@@ -73,6 +77,7 @@ def registrar():
     Register = ttk.Button(text = "REGISTRAR", width = 15, command = RegistrarNoBanco) 
     Register.place(x = 240, y = 335)
 
+    #Para voltar para login
     def VoltarLogin():
         EnderecoLabel.place(x = 5000) 
         EnderecoEntry.place(x = 5000) 
