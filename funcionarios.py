@@ -10,14 +10,31 @@ jan.configure(background="#f6f3ec")
 jan.resizable(width=False, height=False)
 
 
+
+
 def cadastro_func():
     jan = Tk()
     jan.title("Cadastro de Funcionarios")
-    jan.geometry("400x600")
+    jan.geometry("800x600")
     jan.configure(background="#f6f3ec")
     jan.resizable(width=False, height=False)
-    UsuarioEntry = ttk.Entry(jan, width = 30) # Criar um campo de entrada para o usuário
-    UsuarioEntry.place (x = 120, y = 115)
+
+    NomeLabel = Label(jan, text="Nome:", font=("Times New Roman", 20))
+    NomeLabel.place(x = 115, y = 50)
+    UsuarioEntry = ttk.Entry(jan, width = 40) # Criar um campo de entrada para o usuário
+    UsuarioEntry.place (x = 250, y = 60)
+
+    TelefoneLabel =  Label(jan, text="Telefone:", font=("Times New Roman", 20))
+    TelefoneLabel.place(x = 115, y = 120)
+    TelefoneEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o telefone
+    TelefoneEntry.place (x = 250, y = 130)
+
+    
+    EnderecoLabel =  Label(jan, text="Endereço:", font=("Times New Roman", 20))
+    EnderecoLabel.place(x = 115, y = 190)
+    EnderecoEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o telefone
+    EnderecoEntry.place (x = 250, y = 200)
+
     voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão 
     voltButton.place(x = 10, y = 570)
 def excluir_func():
