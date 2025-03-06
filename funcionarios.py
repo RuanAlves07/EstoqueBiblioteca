@@ -37,6 +37,7 @@ def cadastro_func():
 
     voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão 
     voltButton.place(x = 10, y = 570)
+
 def excluir_func():
     jan = Tk()
     jan.title("Exclusão de Funcionarios")
