@@ -14,22 +14,32 @@ jan.resizable(width=False, height=False)
 def cadastro_forn():
     jan = Tk()
     jan.title("Cadastro de Fornecedores")
-    jan.geometry("400x600")
+    jan.geometry("800x600")
     jan.configure(background="#f6f3ec")
     jan.resizable(width=False, height=False)
 
+    forlabel = Label(jan,text = "NOME EMPRESARIAL: ", font =("Times New Roman", 15))
+    forlabel.place(x = 115, y = 55)
+    fornomeEntry = ttk.Entry(jan, width = 30)
+    fornomeEntry.place(x = 330, y = 60)
 
-
-    fornecedores_label = Label(jan, text="NOME EMPRESARIAL: ", font=("Arial",13))
-    fornecedores_label.place(x = 120, y = 85)  # Centraliza o label na tela
-    fornecedoEntry = ttk.Entry(jan, width = 40) # Criar um campo de entrada para o usuário
-    fornecedoEntry.place (x = 80, y = 115)
-
-    fornecedores_ficticio = Label(jan, text="NOME DE FANTASIA: ", font=("Arial",13))
-    fornecedores_ficticio.place(x = 120, y = 160)  # Centraliza o label na tela
+    fornecedores_ficticio = Label(jan, text="NOME DE FANTASIA: ", font =("Times New Roman", 15))
+    fornecedores_ficticio.place(x = 115, y = 150)  # Centraliza o label na tela
     ficticioEntry = ttk.Entry(jan, width = 40) # Criar um campo de entrada para o usuário
-    ficticioEntry.place (x = 80, y = 190)
+    ficticioEntry.place (x = 330, y = 160)
 
+    fornecedores_cnpj = Label(jan, text="CNPJ DA EMPRESA: ", font =("Times New Roman", 15))
+    fornecedores_cnpj.place(x = 115, y = 255)  # Centraliza o label na tela
+    cnpjEntry = ttk.Entry(jan, width = 40) # Criar um campo de entrada para o usuário
+    cnpjEntry.place (x = 330, y = 260)    
+
+    fornecedores_END = Label(jan, text="ENDEREÇO DA EMPRESA: ", font =("Times New Roman", 15))
+    fornecedores_END.place(x = 85, y = 350)  # Centraliza o label na tela
+    endEntry = ttk.Entry(jan, width = 40) # Criar um campo de entrada para o usuário
+    endEntry.place (x = 330, y = 360)  
+
+    AddButton = ttk.Button(jan, text = "REGISTRAR FORNECEDOR", width = 30)
+    AddButton.place(x = 300, y = 520)
 
     voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão 
     voltButton.place(x = 10, y = 570)
