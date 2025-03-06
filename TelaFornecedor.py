@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 
-
+# eu quero gozar
 # Criar a janela
 jan = Tk()
 jan.title("Fornecedor")
