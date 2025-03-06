@@ -50,7 +50,7 @@ def conectar_banco():
     return mysql.connector.connect(
         host="localhost",  # Alterar se o MySQL estiver em outro servidor
         user="root",  # Seu usuário do MySQL
-        password="root",  # Sua senha do MySQL
+        password="",  # Sua senha do MySQL
         database="biblioteca_db"  # Nome do banco de dados
     )
 
