@@ -17,8 +17,8 @@ def cadastro_forn():
     jan.geometry("400x600")
     jan.configure(background="#808080")
     jan.resizable(width=False, height=False)
-UsuarioEntry = ttk.Entry(jan, width = 30) # Criar um campo de entrada para o usuário
-UsuarioEntry.place (x = 120, y = 115)
+    UsuarioEntry = ttk.Entry(jan, width = 30) # Criar um campo de entrada para o usuário
+    UsuarioEntry.place (x = 120, y = 115)
 
 def excluir_forn():
     jan = Tk()
