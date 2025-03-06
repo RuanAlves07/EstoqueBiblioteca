@@ -40,8 +40,7 @@ def atuu_funci():
     jan.geometry("400x600")
     jan.configure(background="#808080")
     jan.resizable(width=False, height=False)
-    voltButton = ttk.Button( text = "Fechar", width = 10) # Cria um botão 
-    voltButton.place(x = 10, y = 570) # Posiciona o botão 
+    
 
 def sair():
     jan.withdraw()
