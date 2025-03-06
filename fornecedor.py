@@ -22,6 +22,7 @@ def cadastro_forn():
     forlabel.place(x = 115, y = 55)
     fornomeEntry = ttk.Entry(jan, width = 30)
     fornomeEntry.place(x = 330, y = 60)
+    #Sou gay
 
     fornecedores_ficticio = Label(jan, text="NOME DE FANTASIA: ", font =("Times New Roman", 15))
     fornecedores_ficticio.place(x = 115, y = 150)  # Centraliza o label na tela
