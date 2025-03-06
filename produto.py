@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-
+from comunicacao import comunicacao
 class TelaProdutos:
 
 
@@ -62,7 +62,7 @@ class TelaProdutos:
 
         # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica que está faltando algum campo de entrada
 
-        def RegistrarNoBanco():
+        def RegistrarNoBanco(self):
             
             nome = NomeEntry.get()
             descricao = DescEntry.get()
@@ -116,15 +116,6 @@ class TelaProdutos:
         produto_list.geometry("800x600")
         produto_list.configure(background="#f6f3ec")
         produto_list.resizable(width=False, height=False)
-
-
-        self.text_area = tk.Text(self.root, height = 10, width = 80)
-        self.text_area.grid (row = 10, column = 0, columnspan = 4)
-
-        users = read_users()
-        self.text_area.delete(1.0, tk.END)
-        for user in users:
-            self.text_area.insert(tk.END, f"ID: {user[0]}, Nome: {user[1]}, Telefone: {user[2]}, E-mail: {user[3]}\n")
 
     #Label do titulo
     Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
