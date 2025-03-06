@@ -18,6 +18,17 @@ class TelaProdutos:
         produto_add.geometry("800x600")
         produto_add.configure(background="#f6f3ec")
         produto_add.resizable(width=False, height=False)
+        Nomelabel = Label(produto_add,text = "Nome do livro: ", font =("Arial", 20))
+        Nomelabel.place(x = 75, y = 50)
+        Desclabel = Label(produto_add,text = "Descrição do livro: ", font =("Arial", 20))
+        Desclabel.place(x = 75, y = 150)
+        Generolabel = Label(produto_add,text = "Gênero do livro: ", font =("Arial", 20))
+        Generolabel.place(x = 75, y = 250)
+        Quantidadelabel = Label(produto_add,text = "Quantidade de livros: ", font =("Arial", 20))
+        Quantidadelabel.place(x = 75, y = 350)
+        Precolabel = Label(produto_add,text = "Quantidade de livros: ", font =("Arial", 20))
+        Precolabel.place(x = 75, y = 450)
+    
 
     def GoToExcluir():
         
