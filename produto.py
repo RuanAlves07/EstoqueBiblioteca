@@ -57,10 +57,28 @@ class TelaProdutos:
         PrecoEntry = ttk.Entry(produto_add, width = 30)
         PrecoEntry.place(x = 330, y = 460)
 
+
+        # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica que está faltando algum campo de entrada
+
+        def RegistrarNoBanco():
+            
+            nome = NomeEntry.get()
+            descricao = DescEntry.get()
+            genero = GeneroEntry.get()
+            quantidade = QuantidadeEntry.get()
+            preco = PrecoEntry.get()
+
+            if nome == "" or descricao == "" or genero == "" or quantidade == "" or preco == "":
+                messagebox.showerror(title = "Erro de Registro", message = "PREENCHA TODOS OS CAMPOS") # Exibe mensagem de erro
+            else:
+                messagebox.showinfo("Success","Livro registrado com sucesso!") 
+
         # Botão para registrar o produto no banco de dados
 
-        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40)
+        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40, command = RegistrarNoBanco)
         AddButton.place(x = 300, y = 520)
+
+
 
         # Botão para voltar para a tela das opções sobre a questão de produtos
 
