@@ -48,6 +48,9 @@ def sair():
 
 
 
+Titulolabel = Label(text = "GERENCIADOR DE FORNECEDOR", font =("Times New Roman", 18))
+Titulolabel.place(x = 10, y = 75)
+
 cadButton = ttk.Button( text = "Cadastrar Funcionario", width = 50, command= cadastro_func) # Cria um botão 
 cadButton.place(x = 45, y = 200) # Posiciona o botão 
 
