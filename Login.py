@@ -1,6 +1,7 @@
 from tkinter import * 
 from tkinter import messagebox 
 from tkinter import ttk 
+from comunicacao import login
 
 #Criação da tela
 jan = Tk() 
@@ -8,6 +9,8 @@ jan.title("Tela de login e cadastro")
 jan.geometry("500x500") 
 jan.configure(background = "#f6f3ec") 
 jan.resizable(width = False, height = False) 
+
+
 
 #Criando forma do usuario fazer login (Usuario e Senha)
 LoginLabel = Label(text = "Usuario: ", font = ("Century Gothic", 20), bg = "#f6f3ec", fg = "Black") 
@@ -21,13 +24,13 @@ SenhaEntry = ttk.Entry(width = 30, show = "•")
 SenhaEntry.place(x = 155, y = 140)
 
 #Fazer login
-def login():
+def FazerLogin():
 
     usuario = LoginEntry.get()
     senha = SenhaEntry.get()
 
-    db = comunicacao() 
-    db.cursor.execute("""SELECT * FROM usuario WHERE usuario = %s AND senha = %s""", (usuario, senha))
+    db = login() 
+    db.cursor.execute("""SELECT * FROM usuario WHERE nome = %s AND senha = %s""", (usuario, senha))
     VerifyLogin = db.cursor.fetchone()
 
     if VerifyLogin:
@@ -35,7 +38,7 @@ def login():
     else:
         messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Negado. Verifique se esta cadastrado no sistema!")
 
-LoginButton = ttk.Button(text = "LOGIN", width = 15, command = login)
+LoginButton = ttk.Button(text = "LOGIN", width = 15, command = FazerLogin)
 LoginButton.place(x = 130, y = 335)
 
 #Registrar um novo usuario
@@ -64,7 +67,7 @@ def registrar():
         if nome == "" or senha == "" or endereco == "" or telefone == "":
             messagebox.showerror(title = "Erro de Registro", message = "PREENCHA TODOS OS CAMPOS") 
         else:
-            db = comunicacao() 
+            db = login() 
             db.RegistrarNoBanco(nome, endereco, telefone, senha) 
             messagebox.showinfo("Sucesso", "Usuario registrado com sucesso!")
 
