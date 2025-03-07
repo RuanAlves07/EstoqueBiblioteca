@@ -29,13 +29,17 @@ def cadastro_func():
     TelefoneEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o telefone
     TelefoneEntry.place (x = 250, y = 130)
 
-    
     EnderecoLabel =  Label(jan, text="Endereço:", font=("Times New Roman", 20))
     EnderecoLabel.place(x = 115, y = 190)
-    EnderecoEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o telefone
+    EnderecoEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o endereço
     EnderecoEntry.place (x = 250, y = 200)
 
-    voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão 
+    EmailLabel =  Label(jan, text="Email:", font=("Times New Roman", 20))
+    EmailLabel.place(x = 115, y = 260)
+    EmailEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o email
+    EmailEntry.place (x = 250, y = 270)
+
+    voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão para voltar 
     voltButton.place(x = 10, y = 570)
 
 def excluir_func():
