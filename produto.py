@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-
+from comunicacao import comunicacao
 class TelaProdutos:
 
 
@@ -11,6 +11,8 @@ class TelaProdutos:
     i.configure(background = "#f6f3ec") 
     i.resizable(width = False, height = False) 
 
+
+    
     # Def para ir para a aba de adicionar livros
 
     def GoToAdicionar():
@@ -57,9 +59,25 @@ class TelaProdutos:
         PrecoEntry = ttk.Entry(produto_add, width = 30)
         PrecoEntry.place(x = 330, y = 460)
 
+
+        # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica que está faltando algum campo de entrada
+
+        def RegistrarNoBanco(self):
+            
+            nome = NomeEntry.get()
+            descricao = DescEntry.get()
+            genero = GeneroEntry.get()
+            quantidade = QuantidadeEntry.get()
+            preco = PrecoEntry.get()
+
+            if nome == "" or descricao == "" or genero == "" or quantidade == "" or preco == "":
+                messagebox.showerror(title = "Erro de Registro", message = "PREENCHA TODOS OS CAMPOS") # Exibe mensagem de erro
+            else:
+                messagebox.showinfo("Success","Livro registrado com sucesso!") 
+
         # Botão para registrar o produto no banco de dados
 
-        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 30)
+        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40, command = RegistrarNoBanco)
         AddButton.place(x = 300, y = 520)
 
         # Botão para voltar para a tela das opções sobre a questão de produtos
@@ -91,7 +109,7 @@ class TelaProdutos:
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
-    def GoToList():
+    def GoToList(self):
 
         produto_list = Tk()
         produto_list.title("PRODUTOS - UPDATE")
@@ -99,20 +117,28 @@ class TelaProdutos:
         produto_list.configure(background="#f6f3ec")
         produto_list.resizable(width=False, height=False)
 
+    #Label do titulo
+    Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
+    Titulolabel.place(x = 30, y = 75)
 
 
+    #Button para ir no menu de registro dos produto
     AButton = ttk.Button(text = "ADICIONAR PRODUTOS", width = 50, command = GoToAdicionar)
     AButton.place(x = 45, y = 200)
 
+    #Button para ir no menu de remoção de produto
     RemoveButton = ttk.Button(text = "EXCLUIR PRODUTOS", width = 50, command = GoToExcluir)
     RemoveButton.place(x = 45, y = 300)
 
+    #Button para ir no menu de atualização de informação de produtos
     UpdateButton = ttk.Button(text = "ATUALIZAR PRODUTOS", width = 50, command = GoToUpdate)
     UpdateButton.place(x = 45, y = 400)
 
+    #Button para ir no menu de listagem de todos os produtos registrados
     ListButton = ttk.Button(text = "LISTAR PRODUTOS", width = 50, command = GoToList)
     ListButton.place(x = 45, y = 500)
 
+    #Button de voltar para tela de menu principal do sistema
     VoltarButton = ttk.Button(text = "Voltar", width = 8)
     VoltarButton.place(x = 10, y = 570)
 

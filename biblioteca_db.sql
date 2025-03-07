@@ -32,3 +32,14 @@ create table fornecedor(
     primary key (idfornecedor)
 
 );
+
+create table funcionario(
+
+    idfuncionario int not null auto_increment
+    nome text,
+    telefone text,
+    enderecofunc text,
+    email text,
+    primary key (idfuncionario)   
+
+);

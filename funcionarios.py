@@ -10,16 +10,43 @@ jan.configure(background="#f6f3ec")
 jan.resizable(width=False, height=False)
 
 
+
+
 def cadastro_func():
     jan = Tk()
     jan.title("Cadastro de Funcionarios")
-    jan.geometry("400x600")
+    jan.geometry("800x600")
     jan.configure(background="#f6f3ec")
     jan.resizable(width=False, height=False)
-    UsuarioEntry = ttk.Entry(jan, width = 30) # Criar um campo de entrada para o usuário
-    UsuarioEntry.place (x = 120, y = 115)
-    voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão 
+
+    NomeLabel = Label(jan, text="Nome:", font=("Times New Roman", 20))
+    NomeLabel.place(x = 115, y = 50)
+    UsuarioEntry = ttk.Entry(jan, width = 40) # Criar um campo de entrada para o usuário
+    UsuarioEntry.place (x = 210, y = 60)
+
+    TelefoneLabel =  Label(jan, text="Telefone:", font=("Times New Roman", 20))
+    TelefoneLabel.place(x = 115, y = 120)
+    TelefoneEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o telefone
+    TelefoneEntry.place (x = 240, y = 130)
+
+    EnderecoLabel =  Label(jan, text="Endereço:", font=("Times New Roman", 20))
+    EnderecoLabel.place(x = 115, y = 190)
+    EnderecoEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o endereço
+    EnderecoEntry.place (x = 240, y = 200)
+
+    EmailLabel =  Label(jan, text="Email:", font=("Times New Roman", 20))
+    EmailLabel.place(x = 115, y = 260)
+    EmailEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o email
+    EmailEntry.place (x = 200, y = 270)
+
+    NascLabel =  Label(jan, text="Data de Nascimento:", font=("Times New Roman", 20))
+    NascLabel.place(x = 115, y = 330)
+    NascEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o email
+    NascEntry.place (x = 350, y = 340)
+
+    voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão para voltar 
     voltButton.place(x = 10, y = 570)
+
 def excluir_func():
     jan = Tk()
     jan.title("Exclusão de Funcionarios")
@@ -47,6 +74,9 @@ def sair():
     jan.withdraw()
 
 
+
+Titulolabel = Label(text = "GERENCIADOR DE FORNECEDOR", font =("Times New Roman", 18))
+Titulolabel.place(x = 10, y = 75)
 
 cadButton = ttk.Button( text = "Cadastrar Funcionario", width = 50, command= cadastro_func) # Cria um botão 
 cadButton.place(x = 45, y = 200) # Posiciona o botão 
