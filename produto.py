@@ -176,7 +176,7 @@ class TelaProdutos:
 
         produto_list = Tk()
         produto_list.title("PRODUTOS - LISTA")
-        produto_list.geometry("800x250")
+        produto_list.geometry("800x300")
         produto_list.configure(background="#f6f3ec")
         produto_list.resizable(width=False, height=False)
 
@@ -200,6 +200,8 @@ class TelaProdutos:
 
         tree.pack(pady=10, padx=10, fill=BOTH, expand=False)
 
+        VoltarButton = ttk.Button(produto_list, text = "Voltar", width = 8)
+        VoltarButton.place(x = 10, y = 270)
     #Label do titulo
     Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
     Titulolabel.place(x = 30, y = 75)

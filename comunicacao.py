@@ -17,6 +17,4 @@ class login:
         self.cursor.execute("INSERT INTO usuario (nome, senha, email, telefone) VALUES (%s, %s, %s, %s)", (nome, senha, email, telefone)) 
         self.conn.commit()
 
-    def buscar(self, idUsuario):
-        self.cursor.execute("SELECT * FROM usuario WHERE idUsuario = 2", (idUsuario))
-        from Menu import jan
+
