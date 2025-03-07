@@ -22,7 +22,7 @@ SenhaLabel = Label(text = "Senha: ", font = ("Century Gothic", 20 ), bg = "#f6f3
 SenhaLabel.place(x = 57, y = 125)
 SenhaEntry = ttk.Entry(width = 30, show = "•") 
 SenhaEntry.place(x = 155, y = 140)
-
+#sou gay
 #Fazer login
 def FazerLogin():
 
