@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+import mysql.connector
 
 # Criar a janela
 jan = Tk()
@@ -8,7 +9,6 @@ jan.title("Funcionarios")
 jan.geometry("400x600")
 jan.configure(background="#f6f3ec")
 jan.resizable(width=False, height=False)
-
 
 
 
@@ -75,6 +75,64 @@ def excluir_func():
         # Adicionar os fornecedores na tabela (Treeview)
         for fornecedor in fornecedores:
             tree.insert("", "end", values=fornecedor)
+
+    # Função para excluir o fornecedor selecionado
+    def excluir_selecionado():
+        item_selecionado = tree.selection()
+        if not item_selecionado:
+            messagebox.showwarning("Atenção", "Selecione um funcionario para excluir.")
+            return
+
+        funcionario_id = tree.item(item_selecionado)["values"][0]
+
+        resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario?")
+        if resposta:
+            conn = conectar_banco()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM funcinario WHERE idfuncionario = %s", (funcionario_id,))
+            conn.commit()
+            conn.close()
+
+            carregar_funcionarios()
+            messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
+
+    # Criar a janela principal
+    janela = Tk()
+    janela.title("Excluir Funcionario")
+    janela.geometry("700x400")
+    janela.configure(background="#f6f3ec")
+    janela.resizable(width=False, height=False)
+
+    # Criar a tabela (Treeview) para exibir os fornecedores
+    colunas = ("ID", "Nome", "Telefone", "Endereço", "Data de Nascimento")
+    tree = ttk.Treeview(janela, columns=colunas, show="headings")
+
+    tree.heading("ID", text="ID")
+    tree.heading("Nome", text="Nome")
+    tree.heading("Telefone", text="Telefone")
+    tree.heading("CNPJ", text="CNPJ")
+    tree.heading("Endereço", text="Endereço")
+    tree.heading("Data de Nascimento", text="Data de Nascimento")
+
+    tree.column("ID", width=50, anchor="center")
+    tree.column("Nome", width=150)
+    tree.column("Telefone", width=150)
+    tree.column("Endereço", width=120, anchor="center")
+    tree.column("Data de Nascimento", width=200)
+
+    tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+
+    # Criar botão para excluir fornecedor
+    bt_excluir = ttk.Button(janela, text="Excluir Selecionado", command=excluir_selecionado)
+    bt_excluir.pack(pady=5)
+
+    # Criar botão para fechar a janela
+    bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
+    bt_fechar.pack(pady=5)
+
+    carregar_funcionarios()
+
+        
 
 def listar_func():
     jan = Tk()
