@@ -46,8 +46,8 @@ def cadastro_func():
 
     nome = UsuarioEntry.get()
     telefone = TelefoneEntry.get()
-    email = EmailEntry.get()
     enderecofunc = EnderecoEntry.get()
+    email = EmailEntry.get()
     data_nascimento = NascEntry.get()
 
 
