@@ -22,7 +22,7 @@ def cadastro_forn():
     forlabel.place(x = 115, y = 55)
     fornomeEntry = ttk.Entry(jan, width = 30)
     fornomeEntry.place(x = 330, y = 60)
-    #Sou gay
+    
 
     fornecedores_ficticio = Label(jan, text="NOME DE FANTASIA: ", font =("Times New Roman", 15))
     fornecedores_ficticio.place(x = 115, y = 150)  # Centraliza o label na tela
@@ -39,11 +39,24 @@ def cadastro_forn():
     endEntry = ttk.Entry(jan, width = 40) # Criar um campo de entrada para o usuário
     endEntry.place (x = 330, y = 360)  
 
-    AddButton = ttk.Button(jan, text = "REGISTRAR FORNECEDOR", width = 30)
+    nomeforn = fornomeEntry.get()
+    nomefant = ficticioEntry.get()
+    cnpj = cnpjEntry.get()
+    end = endEntry
+
+
+    def RegistrarNoBanco():
+        conn = conectar_banco()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO fornecedor (nome, nomefantasia, CNPJ, endereco) VALUES (%s, %s, %s, %s)", (nomeforn, nomefant, cnpj, end)) #Insere os dados do usuário na tabela
+        conn.commit() # Confirma a inserção dos dados
+
+    AddButton = ttk.Button(jan, text = "REGISTRAR FORNECEDOR", width = 30,command=RegistrarNoBanco)
     AddButton.place(x = 300, y = 520)
 
     voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão 
     voltButton.place(x = 10, y = 570)
+    
 
 
 def conectar_banco():
@@ -64,7 +77,7 @@ def excluir_forn():
         # Conectar ao MySQL
         conn = conectar_banco()
         cursor = conn.cursor()
-        cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor1")
+        cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
         fornecedores = cursor.fetchall()
         conn.close()
 
@@ -85,7 +98,7 @@ def excluir_forn():
         if resposta:
             conn = conectar_banco()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM fornecedor1 WHERE idfornecedor = %s", (fornecedor_id,))
+            cursor.execute("DELETE FROM fornecedor WHERE idfornecedor = %s", (fornecedor_id,))
             conn.commit()
             conn.close()
 

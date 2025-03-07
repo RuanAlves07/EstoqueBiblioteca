@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+import mysql.connector
 
 # Criar a janela
 jan = Tk()
@@ -8,7 +9,6 @@ jan.title("Funcionarios")
 jan.geometry("400x600")
 jan.configure(background="#f6f3ec")
 jan.resizable(width=False, height=False)
-
 
 
 
@@ -43,8 +43,27 @@ def cadastro_func():
     NascLabel.place(x = 115, y = 330)
     NascEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o email
     NascEntry.place (x = 350, y = 340)
-    
-    AddButton = ttk.Button(jan, text = "REGISTRAR FUNCIONARIO", width = 30) # Cria um botão para registrar 
+
+    nome = UsuarioEntry.get()
+    telefone = TelefoneEntry.get()
+    enderecofunc = EnderecoEntry.get()
+    email = EmailEntry.get()
+    data_nascimento = NascEntry.get()
+
+
+    def RegistrarNoBanco():
+        conn = conectar_banco()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO funcionario (nome, telefone, enderecofunc, email, data_nascimento) VALUES (%s, %s, %s, %s)", (nome, telefone, enderecofunc, data_nascimento)) #Insere os dados do usuário na tabela
+        conn.commit() # Confirma a inserção dos dados
+
+        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or data_nascimento == "":
+                messagebox.showerror(title="Erro no Registro",message="PREENCHA TODOS OS CAMPOS") # Exibe mensagm de erro
+        else:
+                messagebox.showinfo("Sucesso","Funcionario registrado com sucesso!") # Exibe mensagem de Sucesso
+
+
+    AddButton = ttk.Button(jan, text = "REGISTRAR FUNCIONARIO", width = 30, command=RegistrarNoBanco) # Cria um botão para registrar 
     AddButton.place(x = 300, y = 520)
 
     voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão para voltar 
@@ -58,23 +77,6 @@ def conectar_banco():
         database="biblioteca_db"  # Nome do banco de dados
     )
     
-def excluir_func():
-    # Função para carregar funcionarios na tabela
-    def carregar_funcionarios():
-        # Limpa a tabela antes de carregar novos dados
-        for item in tree.get_children():
-            tree.delete(item)
-
-        # Conectar ao MySQL
-        conn = conectar_banco()
-        cursor = conn.cursor()
-        cursor.execute("SELECT idfuncionario, nome, telefone, endereco, email FROM funcionario")
-        fornecedores = cursor.fetchall()
-        conn.close()
-
-        # Adicionar os fornecedores na tabela (Treeview)
-        for fornecedor in fornecedores:
-            tree.insert("", "end", values=fornecedor)
 
 def listar_func():
     jan = Tk()
@@ -96,14 +98,14 @@ def sair():
 
 
 
-Titulolabel = Label(text = "GERENCIADOR DE FORNECEDOR", font =("Times New Roman", 18))
+Titulolabel = Label(text = "GERENCIADOR DE funcionario", font =("Times New Roman", 18))
 Titulolabel.place(x = 10, y = 75)
 
 cadButton = ttk.Button( text = "Cadastrar Funcionario", width = 50, command= cadastro_func) # Cria um botão 
 cadButton.place(x = 45, y = 200) # Posiciona o botão 
 
-excnButton = ttk.Button( text = "Excluir Funcionario", width = 50,command=excluir_func) # Cria um botão 
-excnButton.place(x = 45, y = 300) # Posiciona o botão 
+#excnButton = ttk.Button( text = "Excluir Funcionario", width = 50,command=excluir_func) # Cria um botão 
+#excnButton.place(x = 45, y = 300) # Posiciona o botão 
 
 listButton = ttk.Button( text = "Listar Funcionario", width = 50,command=listar_func) # Cria um botão 
 listButton.place(x = 45, y = 400) # Posiciona o botão 
