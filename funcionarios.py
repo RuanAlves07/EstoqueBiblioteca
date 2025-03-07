@@ -43,17 +43,38 @@ def cadastro_func():
     NascLabel.place(x = 115, y = 330)
     NascEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o email
     NascEntry.place (x = 350, y = 340)
+    
+    AddButton = ttk.Button(jan, text = "REGISTRAR FUNCIONARIO", width = 30) # Cria um botão para registrar 
+    AddButton.place(x = 300, y = 520)
 
     voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão para voltar 
     voltButton.place(x = 10, y = 570)
 
+def conectar_banco():
+    return mysql.connector.connect(
+        host="localhost",  # Alterar se o MySQL estiver em outro servidor
+        user="root",  # Seu usuário do MySQL
+        password="",  # Sua senha do MySQL
+        database="biblioteca_db"  # Nome do banco de dados
+    )
+    
 def excluir_func():
-    jan = Tk()
-    jan.title("Exclusão de Funcionarios")
-    jan.geometry("400x600")
-    jan.configure(background="#f6f3ec")
-    jan.resizable(width=False, height=False)
+    # Função para carregar funcionarios na tabela
+    def carregar_funcionarios():
+        # Limpa a tabela antes de carregar novos dados
+        for item in tree.get_children():
+            tree.delete(item)
 
+        # Conectar ao MySQL
+        conn = conectar_banco()
+        cursor = conn.cursor()
+        cursor.execute("SELECT idfuncionario, nome, telefone, endereco, email FROM funcionario")
+        fornecedores = cursor.fetchall()
+        conn.close()
+
+        # Adicionar os fornecedores na tabela (Treeview)
+        for fornecedor in fornecedores:
+            tree.insert("", "end", values=fornecedor)
 
 def listar_func():
     jan = Tk()
