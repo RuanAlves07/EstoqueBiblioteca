@@ -85,7 +85,7 @@ def excluir_forn():
         if resposta:
             conn = conectar_banco()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM fornecedor WHERE id = %s", (fornecedor_id,))
+            cursor.execute("DELETE FROM fornecedor1 WHERE idfornecedor = %s", (fornecedor_id,))
             conn.commit()
             conn.close()
 
@@ -118,12 +118,12 @@ def excluir_forn():
     tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
 
     # Criar botão para excluir fornecedor
-    btn_excluir = ttk.Button(janela, text="Excluir Selecionado", command=excluir_selecionado)
-    btn_excluir.pack(pady=5)
+    bt_excluir = ttk.Button(janela, text="Excluir Selecionado", command=excluir_selecionado)
+    bt_excluir.pack(pady=5)
 
     # Criar botão para fechar a janela
-    btn_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
-    btn_fechar.pack(pady=5)
+    bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
+    bt_fechar.pack(pady=5)
 
     carregar_fornecedores()
 
