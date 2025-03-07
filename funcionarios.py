@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+import mysql.connector
 
 # Criar a janela
 jan = Tk()
@@ -8,7 +9,6 @@ jan.title("Funcionarios")
 jan.geometry("400x600")
 jan.configure(background="#f6f3ec")
 jan.resizable(width=False, height=False)
-
 
 
 
