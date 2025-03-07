@@ -2,6 +2,7 @@
 
 import mysql.connector
 
+
 #Login
 class login:
     def __init__(self):
@@ -16,5 +17,9 @@ class login:
     def RegistrarNoBanco(self, nome, senha, email, telefone):
         self.cursor.execute("INSERT INTO usuario (nome, senha, email, telefone) VALUES (%s, %s, %s, %s)", (nome, senha, email, telefone)) 
         self.conn.commit()
+
+    
+        
+
 
 
