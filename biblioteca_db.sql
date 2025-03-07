@@ -39,8 +39,7 @@ create table funcionario(
     nome text,
     telefone text,
     enderecofunc text,
-    email text, 
-    primary key (idfuncionario)
-     
+    email text,
+    primary key (idfuncionario)   
 
-)
+);

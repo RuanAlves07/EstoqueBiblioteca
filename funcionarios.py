@@ -22,22 +22,27 @@ def cadastro_func():
     NomeLabel = Label(jan, text="Nome:", font=("Times New Roman", 20))
     NomeLabel.place(x = 115, y = 50)
     UsuarioEntry = ttk.Entry(jan, width = 40) # Criar um campo de entrada para o usuário
-    UsuarioEntry.place (x = 250, y = 60)
+    UsuarioEntry.place (x = 210, y = 60)
 
     TelefoneLabel =  Label(jan, text="Telefone:", font=("Times New Roman", 20))
     TelefoneLabel.place(x = 115, y = 120)
     TelefoneEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o telefone
-    TelefoneEntry.place (x = 250, y = 130)
+    TelefoneEntry.place (x = 240, y = 130)
 
     EnderecoLabel =  Label(jan, text="Endereço:", font=("Times New Roman", 20))
     EnderecoLabel.place(x = 115, y = 190)
     EnderecoEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o endereço
-    EnderecoEntry.place (x = 250, y = 200)
+    EnderecoEntry.place (x = 240, y = 200)
 
     EmailLabel =  Label(jan, text="Email:", font=("Times New Roman", 20))
     EmailLabel.place(x = 115, y = 260)
     EmailEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o email
-    EmailEntry.place (x = 250, y = 270)
+    EmailEntry.place (x = 200, y = 270)
+
+    NascLabel =  Label(jan, text="Data de Nascimento:", font=("Times New Roman", 20))
+    NascLabel.place(x = 115, y = 330)
+    NascEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o email
+    NascEntry.place (x = 350, y = 340)
 
     voltButton = ttk.Button(jan, text = "Fechar", width = 10,command=jan.withdraw) # Cria um botão para voltar 
     voltButton.place(x = 10, y = 570)
