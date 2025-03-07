@@ -15,5 +15,7 @@ class Database:
         print("Conectado ao banco de Dados!")
 
     def RegistrarNoBanco(self, nome, descricao, genero, quantidade, preco):
-        self.cursor.execute("INSERT INTO produto (nome, descricao, genero, quantidade, preco) VALUES (%s, %s, %s, %s, %s)", (nome, descricao, genero, quantidade, preco )) #Insere os dados do usuário na tabela
+        self.cursor.execute("INSERT INTO produto (nome, descricao, genero, quantidade, preco) VALUES (%s, %s, %s, %s, %s)", (nome, descricao, genero, quantidade, preco ))
         self.conn.commit() 
+
+    
