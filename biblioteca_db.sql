@@ -35,7 +35,7 @@ create table fornecedor(
 
 create table funcionario(
 
-    idfuncionario int not null auto_increment
+    idfuncionario int not null auto_increment,
     nome text,
     telefone text,
     enderecofunc text,
