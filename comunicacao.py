@@ -2,7 +2,8 @@
 
 import mysql.connector
 
-class Database:
+#Login
+class login:
     def __init__(self):
         self.conn = mysql.connector.connect(
             host = "localhost",
@@ -12,8 +13,10 @@ class Database:
         )
         self.cursor = self.conn.cursor() 
 
-        print("Conectado ao banco de Dados!")
+    def RegistrarNoBanco(self, nome, senha, email, telefone):
+        self.cursor.execute("INSERT INTO usuario (nome, senha, email, telefone) VALUES (%s, %s, %s, %s)", (nome, senha, email, telefone)) 
+        self.conn.commit()
 
-    def RegistrarNoBanco(self, nome, descricao, genero, quantidade, preco):
-        self.cursor.execute("INSERT INTO produto (nome, descricao, genero, quantidade, preco) VALUES (%s, %s, %s, %s, %s)", (nome, descricao, genero, quantidade, preco )) #Insere os dados do usuário na tabela
-        self.conn.commit() 
+    def buscar(self, idUsuario):
+        self.cursor.execute("SELECT * FROM usuario WHERE idUsuario = 2", (idUsuario))
+        from Menu import jan

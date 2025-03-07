@@ -1,7 +1,6 @@
 from tkinter import * 
 from tkinter import messagebox 
 from tkinter import ttk 
-#from Login import jan
 
 #Criação da tela
 jan = Tk() 
@@ -16,6 +15,7 @@ def TelaProdutos():
     FuncionariosButton.place(x = 5000)
     FornecedoresButton.place(x = 5000)
     VoltarButton.place(x = 5000)
+    
 
 ProdutosButton = ttk.Button(text = "Produtos", width = 40, command = TelaProdutos)
 ProdutosButton.place(x = 100, y = 35) 
