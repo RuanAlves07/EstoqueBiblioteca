@@ -44,14 +44,16 @@ def cadastro_func():
     NascEntry = ttk.Entry(jan, width=40) # Criar um campo de entrada para o email
     NascEntry.place (x = 350, y = 340)
 
-    nome = UsuarioEntry.get()
-    telefone = TelefoneEntry.get()
-    enderecofunc = EnderecoEntry.get()
-    email = EmailEntry.get()
-    data_nascimento = NascEntry.get()
 
 
     def testebanco():
+        
+        nome = UsuarioEntry.get()
+        telefone = TelefoneEntry.get()
+        enderecofunc = EnderecoEntry.get()
+        email = EmailEntry.get()
+        data_nascimento = NascEntry.get()
+
         conn = conectar_banco()
         cursor = conn.cursor()
         query = ("insert funcionario (nome, telefone, enderecofunc, email, datanascimento) VALUES (%s, %s, %s, %s, %s)")
@@ -59,6 +61,11 @@ def cadastro_func():
         conn.commit() # Confirma a inserção dos dados
         cursor.close()
         conn.close()
+
+        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or data_nascimento == "":
+                messagebox.showerror(title="Erro no Registro",message="PREENCHA TODOS OS CAMPOS") # Exibe mensagm de erro
+        else:
+                messagebox.showinfo("Sucesso","Funcionario registrado com sucesso!") # Exibe mensagem de Sucesso
 
 
     AddButton = ttk.Button(jan, text = "REGISTRAR FUNCIONARIO", width = 30, command=testebanco) # Cria um botão para registrar 
@@ -89,21 +96,95 @@ def atuu_func():
     jan.geometry("400x600")
     jan.configure(background="#f6f3ec")
     jan.resizable(width=False, height=False)
-    
+
+def excluir_func():    
+
+     # Função para carregar fornecedores na tabela
+    def carregar_funcionarios():
+        # Limpa a tabela antes de carregar novos dados
+        for item in tree.get_children():
+            tree.delete(item)
+
+        # Conectar ao MySQL
+        conn = conectar_banco()
+        cursor = conn.cursor()
+        cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
+        funcionarios = cursor.fetchall()
+        conn.close()
+
+        # Adicionar os funcionarios na tabela (Treeview)
+        for funcionario in funcionarios:
+            tree.insert("", "end", values=funcionario)
+        
+
+     # Função para excluir o funcionario selecionado
+    def excluir_selecionado2():
+        item_selecionado = tree.selection()
+        if not item_selecionado:
+            messagebox.showwarning("Atenção", "Selecione um funcionario para excluir.")
+            return
+
+        funcionario_id = tree.item(item_selecionado)["values"][0]
+
+        resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este fornecedor?")
+        if resposta:
+            conn = conectar_banco()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM funcionario WHERE idfuncionario = %s", (funcionario_id))
+            conn.commit()
+            conn.close()
+
+            carregar_funcionarios()
+            messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
+
+    jan = Tk()
+    jan.title("Excluir Fornecedores")
+    jan.geometry("700x400")
+    jan.configure(background="#f6f3ec")
+    jan.resizable(width=False, height=False)
+     # Criar a tabela (Treeview) para exibir os funcionarios
+    colunas = ("ID", "Nome", "Telefone", "Endereco", "Email", "data_nascimento")
+    tree = ttk.Treeview(jan, columns=colunas, show="headings")
+
+    tree.heading("ID", text="ID")
+    tree.heading("Nome", text="Nome")
+    tree.heading("Telefone", text="Telefone")
+    tree.heading("Endereco", text="Endereco")
+    tree.heading("Email", text="Email")
+    tree.heading("data_nascimento", text="data_nascimento")
+
+    tree.column("ID", width=50, anchor="center")
+    tree.column("Nome", width=150)
+    tree.column("Telefone", width=150)
+    tree.column("Endereco", width=120, anchor="center")
+    tree.column("Email", width=150)
+    tree.column("data_nascimento", width=200)
+
+    tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+
+    # Criar botão para excluir funcionario
+    bt_excluir = ttk.Button(jan, text="Excluir Selecionado", command=excluir_selecionado2)
+    bt_excluir.pack(pady=5)
+
+    # Criar botão para fechar a janela
+    bt_fechar = ttk.Button(jan, text="Fechar", width=10, command=jan.destroy)
+    bt_fechar.pack(pady=5)
+
+    carregar_funcionarios()        
 
 def sair():
     jan.withdraw()
 
 
 
-Titulolabel = Label(text = "GERENCIADOR DE funcionario", font =("Times New Roman", 18))
+Titulolabel = Label(text = "GERENCIADOR DE FUNCiONARIOS", font =("Times New Roman", 18))
 Titulolabel.place(x = 10, y = 75)
 
 cadButton = ttk.Button( text = "Cadastrar Funcionario", width = 50, command= cadastro_func) # Cria um botão 
 cadButton.place(x = 45, y = 200) # Posiciona o botão 
 
-#excnButton = ttk.Button( text = "Excluir Funcionario", width = 50,command=excluir_func) # Cria um botão 
-#excnButton.place(x = 45, y = 300) # Posiciona o botão 
+excnButton = ttk.Button( text = "Excluir Funcionario", width = 50,command=excluir_func) # Cria um botão 
+excnButton.place(x = 45, y = 300) # Posiciona o botão 
 
 listButton = ttk.Button( text = "Listar Funcionario", width = 50,command=listar_func) # Cria um botão 
 listButton.place(x = 45, y = 400) # Posiciona o botão 

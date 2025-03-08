@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+from comunicacao import comunicacao
 
 class TelaProdutos:
 
@@ -61,22 +62,26 @@ class TelaProdutos:
 
         # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica que está faltando algum campo de entrada
 
-        def RegistrarNoBanco(self):
-            
-            nome = NomeEntry.get()
-            descricao = DescEntry.get()
-            genero = GeneroEntry.get()
-            quantidade = QuantidadeEntry.get()
-            preco = PrecoEntry.get()
-
-            if nome == "" or descricao == "" or genero == "" or quantidade == "" or preco == "":
-                messagebox.showerror(title = "Erro de Registro", message = "PREENCHA TODOS OS CAMPOS") # Exibe mensagem de erro
-            else:
-                messagebox.showinfo("Success","Livro registrado com sucesso!") 
+        def RegistrarProduto():
+ 
+             nome = NomeEntry.get()
+             descricao = DescEntry.get()
+             genero = GeneroEntry.get()
+             quantidade = QuantidadeEntry.get()
+             preco = PrecoEntry.get()
+ 
+             if nome and descricao and genero and quantidade and preco:
+                 RegistrarProduto(nome, descricao, genero, quantidade, preco)
+ 
+                 messagebox.showerror("Success", "Usuario criado com sucesso!")
+             else:
+                 db = comunicacao() 
+                 db.RegistrarProduto(nome, descricao, genero, quantidade, preco) 
+                 messagebox.showerror("Error","Todos os campos são obrigatórios")
 
         # Botão para registrar o produto no banco de dados
 
-        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40, command = RegistrarNoBanco)
+        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40, command = RegistrarProduto)
         AddButton.place(x = 300, y = 520)
 
         # Botão para voltar para a tela das opções sobre a questão de produtos
@@ -171,7 +176,7 @@ class TelaProdutos:
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
-    def GoToList():
+    def GoToList(self):
 
         produto_list = Tk()
         produto_list.title("PRODUTOS - LISTA")
@@ -201,6 +206,9 @@ class TelaProdutos:
 
         VoltarButton = ttk.Button(produto_list, text = "Voltar", width = 8)
         VoltarButton.place(x = 10, y = 270)
+
+
+            
     #Label do titulo
     Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
     Titulolabel.place(x = 30, y = 75)

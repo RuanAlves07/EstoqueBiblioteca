@@ -115,7 +115,7 @@ def excluir_forn():
 
     # Criar a tabela (Treeview) para exibir os fornecedores
     colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
-    tree = ttk.Treeview(janela, columns=colunas, show="headings")
+    tree = ttk.Treeview(jan, columns=colunas, show="headings")
 
     tree.heading("ID", text="ID")
     tree.heading("Nome", text="Nome")
