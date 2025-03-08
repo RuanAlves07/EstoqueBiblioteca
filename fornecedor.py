@@ -39,17 +39,18 @@ def cadastro_forn():
     endEntry = ttk.Entry(jan, width = 40) # Criar um campo de entrada para o usuário
     endEntry.place (x = 330, y = 360)  
 
-    nomeforn = fornomeEntry.get()
-    nomefant = ficticioEntry.get()
-    cnpj = cnpjEntry.get()
-    end = endEntry
-
 
     def RegistrarNoBanco():
+        nomeforn = fornomeEntry.get()
+        nomefant = ficticioEntry.get()
+        cnpj = cnpjEntry.get()
+        end = endEntry.get()
         conn = conectar_banco()
         cursor = conn.cursor()
         cursor.execute("INSERT INTO fornecedor (nome, nomefantasia, CNPJ, endereco) VALUES (%s, %s, %s, %s)", (nomeforn, nomefant, cnpj, end)) #Insere os dados do usuário na tabela
         conn.commit() # Confirma a inserção dos dados
+
+        
 
     AddButton = ttk.Button(jan, text = "REGISTRAR FORNECEDOR", width = 30,command=RegistrarNoBanco)
     AddButton.place(x = 300, y = 520)
