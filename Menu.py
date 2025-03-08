@@ -11,7 +11,7 @@ class TelaLoginCadastro:
         self.master.resizable(width=False, height=False)
 
         # Botões de navegação
-        self.ProdutosButton = ttk.Button(self.master, text = "Produtos", width = 40, command = jan.withdraw())
+        self.ProdutosButton = ttk.Button(self.master, text = "Produtos", width = 40, command = self.TelaProdutos)
         self.ProdutosButton.place(x=100, y=35)
 
         self.FuncionariosButton = ttk.Button(self.master, text = "Funcionarios", width = 40, command = self.TelaFuncionarios)
