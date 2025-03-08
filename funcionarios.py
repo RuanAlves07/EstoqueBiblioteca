@@ -54,16 +54,11 @@ def cadastro_func():
     def testebanco():
         conn = conectar_banco()
         cursor = conn.cursor()
-        query = ("INSERT INTO funcionario (idfuncionario, nome, telefone, enderecofunc, email, data_nascimento) VALUES (%s, %s, %s, %s, %s)")
-        cursor.execute(query, (nome, telefone, enderecofunc, data_nascimento))#Insere os dados do usuário na tabela
+        query = ("insert funcionario (nome, telefone, enderecofunc, email, datanascimento) VALUES (%s, %s, %s, %s, %s)")
+        cursor.execute(query, (nome, telefone, enderecofunc, email,  data_nascimento))#Insere os dados do usuário na tabela
         conn.commit() # Confirma a inserção dos dados
         cursor.close()
         conn.close()
-
-        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or data_nascimento == "":
-                messagebox.showerror(title="Erro no Registro",message="PREENCHA TODOS OS CAMPOS") # Exibe mensagm de erro
-        else:
-                messagebox.showinfo("Sucesso","Funcionario registrado com sucesso!") # Exibe mensagem de Sucesso
 
 
     AddButton = ttk.Button(jan, text = "REGISTRAR FUNCIONARIO", width = 30, command=testebanco) # Cria um botão para registrar 
