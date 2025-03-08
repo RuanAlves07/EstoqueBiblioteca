@@ -12,7 +12,7 @@ from comunicacao import login
             user = "root",
             password = "",
             database = "biblioteca_db"
-        )
+        )mast
         self.cursor = self.conn.cursor()  """
 #Criação da tela
 jan = Tk() 
@@ -24,13 +24,13 @@ jan.resizable(width = False, height = False)
 
 
 #Criando forma do usuario fazer login (Usuario e Senha)
-LoginLabel = Label(text = "Usuario: ", font = ("Century Gothic", 20), bg = "#f6f3ec", fg = "Black") 
-LoginLabel.place(x = 45, y = 80) 
+LoginLabel = Label(text = "Usuario: ", font = ("Times New Roman", 20), bg = "#f6f3ec", fg = "Black") 
+LoginLabel.place(x = 45, y = 83) 
 LoginEntry = ttk.Entry(width = 30)  
 LoginEntry.place(x = 155, y = 94)
 
-SenhaLabel = Label(text = "Senha: ", font = ("Century Gothic", 20 ), bg = "#f6f3ec", fg = "Black") 
-SenhaLabel.place(x = 57, y = 125)
+SenhaLabel = Label(text = "Senha: ", font = ("Times New Roman", 20 ), bg = "#f6f3ec", fg = "Black") 
+SenhaLabel.place(x = 57, y = 130)
 SenhaEntry = ttk.Entry(width = 30, show = "•") 
 SenhaEntry.place(x = 155, y = 140)
 #sou gay
