@@ -1,9 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-from comunicacao import comunicacao
-
-
 
 class TelaProdutos:
 
@@ -17,7 +14,6 @@ class TelaProdutos:
 
     
     # Def para ir para a aba de adicionar livros
-
     def GoToAdicionar():
 
         produto_add = Tk()
@@ -63,32 +59,24 @@ class TelaProdutos:
         PrecoEntry.place(x = 330, y = 460)
 
 
-        # Def para registrar o produto e comunicar com o banco de dados, com um plus de caso o usuario deixe algo em branco, ele notifica e quando o mesmo cadastrar, as abas serão limpas
+        # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica que está faltando algum campo de entrada
 
-        def RegistrarProduto():
+        def RegistrarNoBanco(self):
             
             nome = NomeEntry.get()
             descricao = DescEntry.get()
             genero = GeneroEntry.get()
             quantidade = QuantidadeEntry.get()
             preco = PrecoEntry.get()
-            
-            if nome == "" or descricao == "" or genero == "" or quantidade == "" or preco == "":
-                messagebox.showerror(title = "Erro de Registro", message = "PREENCHA TODOS OS CAMPOS") 
-            else:
-                db = comunicacao() 
-                db.RegistrarProduto(nome, descricao, genero, quantidade, preco)
-                messagebox.showinfo("Success","Livro registrado com sucesso!") 
 
-                NomeEntry.delete(0, END) 
-                DescEntry.delete(0, END) 
-                GeneroEntry.delete(0, END) 
-                QuantidadeEntry.delete(0, END) 
-                PrecoEntry.delete(0, END)
+            if nome == "" or descricao == "" or genero == "" or quantidade == "" or preco == "":
+                messagebox.showerror(title = "Erro de Registro", message = "PREENCHA TODOS OS CAMPOS") # Exibe mensagem de erro
+            else:
+                messagebox.showinfo("Success","Livro registrado com sucesso!") 
 
         # Botão para registrar o produto no banco de dados
 
-        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40, command = RegistrarProduto)
+        AddButton = ttk.Button(produto_add, text = "REGISTRAR LIVRO", width = 40, command = RegistrarNoBanco)
         AddButton.place(x = 300, y = 520)
 
         # Botão para voltar para a tela das opções sobre a questão de produtos
