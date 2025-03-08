@@ -1,7 +1,7 @@
 from tkinter import * 
 from tkinter import messagebox 
 from tkinter import ttk 
-from comunicacao import login
+from comunicacao import comunicacao
 
 
 #Banco de dados
@@ -33,27 +33,27 @@ SenhaLabel = Label(text = "Senha: ", font = ("Times New Roman", 20 ), bg = "#f6f
 SenhaLabel.place(x = 57, y = 130)
 SenhaEntry = ttk.Entry(width = 30, show = "•") 
 SenhaEntry.place(x = 155, y = 140)
-#sou gay
+
 #Fazer login
 def FazerLogin():
 
     nome = LoginEntry.get()
     senha = SenhaEntry.get()
 
-    db = login() 
-    db.cursor.execute("""SELECT * FROM usuario WHERE nome = %s AND senha = %s""", (nome, senha))
+    db = comunicacao() 
+    db.cursor.execute("SELECT * FROM usuario WHERE nome = %s AND senha = %s", (nome, senha))
     VerifyLogin = db.cursor.fetchone()
 
     if VerifyLogin:
         messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Confirmado, Bem Vindo!")
         from Menu import TelaLoginCadastro
         TelaLoginCadastro()
-
     else:
         messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Negado. Verifique se esta cadastrado no sistema!")
 
 LoginButton = ttk.Button(text = "LOGIN", width = 15, command = FazerLogin)
 LoginButton.place(x = 170, y = 235)
+
 
 
 
