@@ -63,7 +63,7 @@ class TelaProdutos:
         PrecoEntry.place(x = 330, y = 460)
 
 
-        # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica que está faltando algum campo de entrada
+        # Def para registrar o produto e comunicar com o banco de dados, com um plus de caso o usuario deixe algo em branco, ele notifica e quando o mesmo cadastrar, as abas serão limpas
 
         def RegistrarProduto():
             
@@ -72,20 +72,19 @@ class TelaProdutos:
             genero = GeneroEntry.get()
             quantidade = QuantidadeEntry.get()
             preco = PrecoEntry.get()
-
-            if nome and descricao and genero and quantidade and preco:
-                RegistrarProduto(nome, descricao, genero, quantidade, preco)
-
-                messagebox.showerror("Success", "Usuario criado com sucesso!")
-            else:
-                db = comunicacao() 
-                db.RegistrarNoBanco(nome, descricao, genero, quantidade, preco) 
-                messagebox.showerror("Error","Todos os campos são obrigatórios")
             
             if nome == "" or descricao == "" or genero == "" or quantidade == "" or preco == "":
                 messagebox.showerror(title = "Erro de Registro", message = "PREENCHA TODOS OS CAMPOS") 
             else:
+                db = comunicacao() 
+                db.RegistrarProduto(nome, descricao, genero, quantidade, preco)
                 messagebox.showinfo("Success","Livro registrado com sucesso!") 
+
+                NomeEntry.delete(0, END) 
+                DescEntry.delete(0, END) 
+                GeneroEntry.delete(0, END) 
+                QuantidadeEntry.delete(0, END) 
+                PrecoEntry.delete(0, END)
 
         # Botão para registrar o produto no banco de dados
 
