@@ -11,23 +11,21 @@ class TelaLoginCadastro:
         self.master.resizable(width=False, height=False)
 
         # Botões de navegação
-        self.ProdutosButton = ttk.Button(self.master, text="Produtos", width=40, command=self.TelaProdutos)
+        self.ProdutosButton = ttk.Button(self.master, text = "Produtos", width = 40, command = jan.withdraw())
         self.ProdutosButton.place(x=100, y=35)
 
-        self.FuncionariosButton = ttk.Button(self.master, text="Funcionarios", width=40, command=self.TelaFuncionarios)
+        self.FuncionariosButton = ttk.Button(self.master, text = "Funcionarios", width = 40, command = self.TelaFuncionarios)
         self.FuncionariosButton.place(x=450, y=35)
 
-        self.FornecedoresButton = ttk.Button(self.master, text="Fornecedores", width=40, command=self.TelaFornecedores)
+        self.FornecedoresButton = ttk.Button(self.master, text = "Fornecedores", width = 40, command = self.TelaFornecedores)
         self.FornecedoresButton.place(x=800, y=35)
 
-        self.VoltarButton = ttk.Button(self.master, text="Voltar", width=40, command=self.Voltar)
+        self.VoltarButton = ttk.Button(self.master, text = "Voltar", width = 40, command = self.Voltar)
         self.VoltarButton.place(x=1150, y=35)
 
     def TelaProdutos(self):
-        self.ProdutosButton.place(x=5000)
-        self.FuncionariosButton.place(x=5000)
-        self.FornecedoresButton.place(x=5000)
-        self.VoltarButton.place(x=5000)
+        from produto import TelaProdutos
+        TelaProdutos()
 
     def TelaFuncionarios(self):
         self.ProdutosButton.place(x=5000)
@@ -45,7 +43,7 @@ class TelaLoginCadastro:
         # Aqui você pode adicionar o código para voltar à tela de login
         jan.deiconify()  # Caso você tenha a janela de login oculta (como o código original sugeria)
 
-# Criação da janela principal
+
 jan = Tk()
 tela = TelaLoginCadastro(jan)
 jan.mainloop()

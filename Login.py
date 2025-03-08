@@ -2,8 +2,18 @@ from tkinter import *
 from tkinter import messagebox 
 from tkinter import ttk 
 from comunicacao import login
-from Menu import TelaLoginCadastro
 
+
+#Banco de dados
+""" class login:
+    def __init__(self):
+        self.conn = mysql.connector.connect(
+            host = "localhost",
+            user = "root",
+            password = "",
+            database = "biblioteca_db"
+        )
+        self.cursor = self.conn.cursor()  """
 #Criação da tela
 jan = Tk() 
 jan.title("Tela de login e cadastro") 
@@ -36,7 +46,9 @@ def FazerLogin():
 
     if VerifyLogin:
         messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Confirmado, Bem Vindo!")
+        from Menu import TelaLoginCadastro
         TelaLoginCadastro()
+
     else:
         messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Negado. Verifique se esta cadastrado no sistema!")
 
