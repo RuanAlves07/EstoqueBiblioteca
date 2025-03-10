@@ -49,7 +49,10 @@ def cadastro_forn():
         cursor = conn.cursor()
         cursor.execute("INSERT INTO fornecedor (nome, nomefantasia, CNPJ, endereco) VALUES (%s, %s, %s, %s)", (nomeforn, nomefant, cnpj, end)) #Insere os dados do usuário na tabela
         conn.commit() # Confirma a inserção dos dados
-
+        if nomeforn == "" or nomefant == "" or cnpj == "" or cnpj == "" or end == "":
+                messagebox.showerror(title="Erro no Registro",message="PREENCHA TODOS OS CAMPOS") # Exibe mensagm de erro
+        else:
+                messagebox.showinfo("Sucesso","Funcionario registrado com sucesso!") # Exibe mensagem de Sucesso
         
 
     AddButton = ttk.Button(jan, text = "REGISTRAR FORNECEDOR", width = 30,command=RegistrarNoBanco)
