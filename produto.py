@@ -176,7 +176,7 @@ class TelaProdutos:
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
-    def GoToList(self):
+    def GoToList():
 
         produto_list = Tk()
         produto_list.title("PRODUTOS - LISTA")
