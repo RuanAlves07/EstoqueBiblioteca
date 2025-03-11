@@ -5,17 +5,41 @@ from comunicacao import comunicacao
 
 class TelaProdutos:
 
+    def __init__(self, root):
+        self.root = root
+        self.root.title("PRODUTOS - GERAL ")
+        self.root.geometry("400x600")
+        self.root.configure(background="#f6f3ec")
+        self.root.resizable(width=False, height=False)
+        #Label do titulo
+        Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
+        Titulolabel.place(x = 30, y = 75)
 
-    i = Tk() 
-    i.title("PRODUTOS - GERAL") 
-    i.geometry("400x600") 
-    i.configure(background = "#f6f3ec") 
-    i.resizable(width = False, height = False) 
+
+    #Button para ir no menu de registro dos produto
+        AButton = ttk.Button(root, text = "ADICIONAR PRODUTOS", width = 50, command = self.GoToAdicionar)
+        AButton.place(x = 45, y = 200)
+
+    #Button para ir no menu de remoção de produto
+        RemoveButton = ttk.Button(root, text = "EXCLUIR PRODUTOS", width = 50, command = self.GoToExcluir)
+        RemoveButton.place(x = 45, y = 300)
+
+    #Button para ir no menu de atualização de informação de produtos
+        UpdateButton = ttk.Button(root, text = "ATUALIZAR PRODUTOS", width = 50, command = self.GoToUpdate)
+        UpdateButton.place(x = 45, y = 400)
+
+    #Button para ir no menu de listagem de todos os produtos registrados
+        ListButton = ttk.Button(root, text = "LISTAR PRODUTOS", width = 50, command = self.GoToList)
+        ListButton.place(x = 45, y = 500)
+
+    #Button de voltar para tela de menu principal do sistema
+        VoltarButton = ttk.Button(text = "Voltar", width = 8)
+        VoltarButton.place(x = 10, y = 570)
 
 
     
     # Def para ir para a aba de adicionar livros
-    def GoToAdicionar():
+    def GoToAdicionar(self):
 
         produto_add = Tk()
         produto_add.title("PRODUTOS - REGISTRAR")
@@ -93,7 +117,7 @@ class TelaProdutos:
     
     # Def para ir para a aba de exclusões de livros
 
-    def GoToExcluir():
+    def GoToExcluir(self):
         
         produto_remove = Tk()
         produto_remove.title("PRODUTOS - EXCLUSÃO")
@@ -133,7 +157,7 @@ class TelaProdutos:
 
     # Def para ir para a aba de atualizar informação de algum livro já registrado
 
-    def GoToUpdate():
+    def GoToUpdate(self):
 
         produto_Update = Tk()
         produto_Update.title("PRODUTOS - ATUALIZAR")
@@ -182,7 +206,7 @@ class TelaProdutos:
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
-    def GoToList():
+    def GoToList(self):
 
         produto_list = Tk()
         produto_list.title("PRODUTOS - LISTA")
@@ -217,30 +241,9 @@ class TelaProdutos:
 
 
             
-    #Label do titulo
-    Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
-    Titulolabel.place(x = 30, y = 75)
 
 
-    #Button para ir no menu de registro dos produto
-    AButton = ttk.Button(text = "ADICIONAR PRODUTOS", width = 50, command = GoToAdicionar)
-    AButton.place(x = 45, y = 200)
-
-    #Button para ir no menu de remoção de produto
-    RemoveButton = ttk.Button(text = "EXCLUIR PRODUTOS", width = 50, command = GoToExcluir)
-    RemoveButton.place(x = 45, y = 300)
-
-    #Button para ir no menu de atualização de informação de produtos
-    UpdateButton = ttk.Button(text = "ATUALIZAR PRODUTOS", width = 50, command = GoToUpdate)
-    UpdateButton.place(x = 45, y = 400)
-
-    #Button para ir no menu de listagem de todos os produtos registrados
-    ListButton = ttk.Button(text = "LISTAR PRODUTOS", width = 50, command = GoToList)
-    ListButton.place(x = 45, y = 500)
-
-    #Button de voltar para tela de menu principal do sistema
-    VoltarButton = ttk.Button(text = "Voltar", width = 8)
-    VoltarButton.place(x = 10, y = 570)
-
-
-    i.mainloop()
+if __name__ == "__main__":
+    root = Tk()
+    app = TelaProdutos(root)
+    root.mainloop()
