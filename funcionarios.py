@@ -94,7 +94,6 @@ class GerenciadorFuncionarios:
             db = comunicacao()
             db.ListarFuncionario()    
             cursor = db.cursor()
-            cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, datanascimento FROM funcionario")
             funcionarios = cursor.fetchall()
             db.close()
 
@@ -186,6 +185,8 @@ class GerenciadorFuncionarios:
             if resposta:
                 db = comunicacao()
                 db.ExcluirFuncionario()
+                self.carregar_funcionarios()
+
                 carregar_funcionarios()
                 messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
 
