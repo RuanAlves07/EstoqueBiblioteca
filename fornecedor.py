@@ -162,7 +162,7 @@ class FornecedorApp:
 
     def sair(self):
         self.root.destroy()
-        from Menu import TelaLoginCadastro
+        from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro(self.root)
 
 if __name__ == "__main__":

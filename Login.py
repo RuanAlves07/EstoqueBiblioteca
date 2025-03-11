@@ -36,7 +36,7 @@ def FazerLogin():
 
     if VerifyLogin:
         messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Confirmado, Bem Vindo!")
-        from Menu import TelaLoginCadastro
+        from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro()
         
     else:
