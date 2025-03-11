@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+from comunicacao import comunicacao
 
 class TelaLoginCadastro:
     def __init__(self, root):
