@@ -39,7 +39,11 @@ class comunicacao:
 
     def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ, endereco):
         self.cursor.execute("UPDATE produto SET nome = %s, nomefantasia = %s, CNPJ = %s, endereco = %s WHERE idfornecedor = %s ",(idfornecedor, nome, nomefantasia, CNPJ, endereco)) 
-        self.conn.commit() 
+        self.conn.commit()
+    
+    def ListarFornecedor(self, idfornecedor):
+        self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor)) 
+        return self.cursor.fetchone() 
         
 
 
