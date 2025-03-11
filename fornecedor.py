@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import mysql.connector
+from comunicacao import comunicacao
 
 class FornecedorApp:
     def __init__(self, root):
@@ -73,13 +74,7 @@ class FornecedorApp:
         else:
             messagebox.showinfo("Sucesso", "Funcionario registrado com sucesso!")
 
-    def conectar_banco(self):
-        return mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="biblioteca_db"
-        )
+
 
     def excluir_forn(self):
         def carregar_fornecedores():
