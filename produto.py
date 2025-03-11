@@ -11,8 +11,9 @@ class TelaProdutos:
         self.root.geometry("400x600")
         self.root.configure(background="#f6f3ec")
         self.root.resizable(width=False, height=False)
+
         #Label do titulo
-        Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
+        Titulolabel = Label(root, text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
         Titulolabel.place(x = 30, y = 75)
 
 
@@ -33,7 +34,7 @@ class TelaProdutos:
         ListButton.place(x = 45, y = 500)
 
     #Button de voltar para tela de menu principal do sistema
-        VoltarButton = ttk.Button(text = "Voltar", width = 8)
+        VoltarButton = ttk.Button(root, text = "Voltar", width = 8, command = self.VoltarMenu)
         VoltarButton.place(x = 10, y = 570)
 
 
@@ -88,17 +89,17 @@ class TelaProdutos:
 
         def RegistrarProduto():
  
-             nome = NomeEntry.get()
-             descricao = DescEntry.get()
-             genero = GeneroEntry.get()
-             quantidade = QuantidadeEntry.get()
-             preco = PrecoEntry.get()
+            nome = NomeEntry.get()
+            descricao = DescEntry.get()
+            genero = GeneroEntry.get()
+            quantidade = QuantidadeEntry.get()
+            preco = PrecoEntry.get()
  
-             if nome and descricao and genero and quantidade and preco:
+            if nome and descricao and genero and quantidade and preco:
                  RegistrarProduto(nome, descricao, genero, quantidade, preco)
  
                  messagebox.showerror("Success", "Usuario criado com sucesso!")
-             else:
+            else:
                  db = comunicacao() 
                  db.RegistrarProduto(nome, descricao, genero, quantidade, preco) 
                  messagebox.showerror("Error","Todos os campos são obrigatórios")
@@ -110,7 +111,7 @@ class TelaProdutos:
 
         # Botão para voltar para a tela das opções sobre a questão de produtos
 
-        VoltarButton = ttk.Button(produto_add, text = "Voltar", width = 8)
+        VoltarButton = ttk.Button(produto_add, text = "Voltar", width = 8, command = produto_add.destroy)
         VoltarButton.place(x = 10, y = 570)
 
 
@@ -148,7 +149,7 @@ class TelaProdutos:
         RemoveButton = ttk.Button(produto_remove, text = "REMOVER LIVRO", width = 40) #command = RemoverNoBanco
         RemoveButton.place(x = 270, y = 320)
     
-        VoltarButton = ttk.Button(produto_remove, text = "Voltar", width = 8)
+        VoltarButton = ttk.Button(produto_remove, text = "Voltar", width = 8, command = produto_remove.destroy)
         VoltarButton.place(x = 10, y = 370)
         
 
@@ -201,7 +202,7 @@ class TelaProdutos:
         AttButton = ttk.Button(produto_Update, text = "ATUALIZAR PRODUTO", width = 40) #command = AtualizarNoBanco
         AttButton.place(x = 270, y = 520)
 
-        VoltarButton = ttk.Button(produto_Update, text = "Voltar", width = 8)
+        VoltarButton = ttk.Button(produto_Update, text = "Voltar", width = 8, command = produto_Update.destroy)
         VoltarButton.place(x = 10, y = 570)
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
@@ -236,12 +237,15 @@ class TelaProdutos:
 
         tree.pack(pady=10, padx=10, fill=BOTH, expand=False)
 
-        VoltarButton = ttk.Button(produto_list, text = "Voltar", width = 8)
+        VoltarButton = ttk.Button(produto_list, text = "Voltar", width = 8, command = produto_list.destroy)
         VoltarButton.place(x = 10, y = 270)
 
+    def VoltarMenu(self):
+        self.root.destroy()
+        from MenuAdm import TelaLoginCadastro
+        TelaLoginCadastro(self.root)
+            
 
-
-if __name__ == "__main__":
-    root = Tk()
-    app = TelaProdutos(root)
-    root.mainloop()
+root = Tk()
+app = TelaProdutos(root)
+root.mainloop()
