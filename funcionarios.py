@@ -3,6 +3,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 import mysql.connector
+from comunicacao import comunicacao
 
 class GerenciadorFuncionarios:
     def __init__(self, root):
@@ -64,10 +65,10 @@ class GerenciadorFuncionarios:
         self.NascEntry.place(x=350, y=340)
 
         # Botões
-        ttk.Button(jan_cadastro, text="REGISTRAR FUNCIONARIO", width=30, command=self.testebanco).place(x=300, y=520)
+        ttk.Button(jan_cadastro, text="REGISTRAR FUNCIONARIO", width=30, command=self.RegistrarFuncionario).place(x=300, y=520)
         ttk.Button(jan_cadastro, text="Fechar", width=10, command=jan_cadastro.destroy).place(x=10, y=570)
 
-    def testebanco(self):
+    def RegistrarFuncionario(self):
         nome = self.UsuarioEntry.get()
         telefone = self.TelefoneEntry.get()
         enderecofunc = self.EnderecoEntry.get()
@@ -77,14 +78,13 @@ class GerenciadorFuncionarios:
         if nome == "" or telefone == "" or enderecofunc == "" or email == "" or data_nascimento == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
-            conn = self.conectar_banco()
-            cursor = conn.cursor()
-            query = "INSERT INTO funcionario (nome, telefone, enderecofunc, email, datanascimento) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(query, (nome, telefone, enderecofunc, email, data_nascimento))
-            conn.commit()
-            cursor.close()
-            conn.close()
-            messagebox.showinfo("Sucesso", "Funcionario registrado com sucesso!")
+            db = comunicacao()
+            db.RegistrarFuncionario(nome, telefone, enderecofunc, email, data_nascimento)
+            messagebox.showinfo("Success", "Usuario criado com sucesso!")
+
+
+
+
 
     def listar_func(self):
         jan_listar = tk.Toplevel(self.root)
@@ -149,11 +149,8 @@ class GerenciadorFuncionarios:
         funcionario_id = tree.item(item_selecionado)["values"][0]
         resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario?")
         if resposta:
-            conn = self.conectar_banco()
-            cursor = conn.cursor()
-            cursor.execute("DELETE FROM funcionario WHERE idfuncionario = %s", (funcionario_id,))
-            conn.commit()
-            conn.close()
+            db = comunicacao()
+            db.ExcluirFuncionario("DELETE FROM funcionario WHERE idfuncionario = %s", (funcionario_id,))
             self.carregar_funcionarios(tree)
             messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
 
