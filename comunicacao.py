@@ -38,11 +38,27 @@ class comunicacao:
         self.conn.commit()
 
     def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ, endereco):
-        self.cursor.execute("UPDATE produto SET nome = %s, nomefantasia = %s, CNPJ = %s, endereco = %s WHERE idfornecedor = %s ",(idfornecedor, nome, nomefantasia, CNPJ, endereco)) 
+        self.cursor.execute("UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s, endereco = %s WHERE idfornecedor = %s ",(idfornecedor, nome, nomefantasia, CNPJ, endereco)) 
         self.conn.commit()
     
     def ListarFornecedor(self, idfornecedor):
         self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor)) 
+        return self.cursor.fetchone() 
+    
+    def RegistrarFuncionario(self, nome, telefone, enderecofunc, email, datanascimento):
+        self.cursor.execute("INSERT INTO funcionario (nome, telefone, enderecofunc, email, datanascimento) VALUES (%s, %s, %s, %s, %s)", (nome, telefone, enderecofunc, email, datanascimento))
+        self.conn.commit() 
+
+    def ExcluirFuncionario(self, idfuncionario):
+        self.cursor.execute("DELETE FROM funcionario WHERE idfuncionario = %s",(idfuncionario)) 
+        self.conn.commit()
+
+    def AtualizarFuncionario(self, idfuncionario, nome, telefone, enderecofunc, email, datanascimento):
+        self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)) 
+        self.conn.commit() 
+
+    def ListarFuncionario(self, idfuncionario):
+        self.cursor.execute("SELECT * FROM funcionario WHERE idfuncionario = %s", (idfuncionario)) 
         return self.cursor.fetchone() 
         
 
