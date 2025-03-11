@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-import mysql.connector
 from comunicacao import comunicacao
 
 class FornecedorApp:
