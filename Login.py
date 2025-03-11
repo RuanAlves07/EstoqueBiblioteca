@@ -4,16 +4,6 @@ from tkinter import ttk
 from comunicacao import comunicacao
 
 
-#Banco de dados
-""" class login:
-    def __init__(self):
-        self.conn = mysql.connector.connect(
-            host = "localhost",
-            user = "root",
-            password = "",
-            database = "biblioteca_db"
-        )mast
-        self.cursor = self.conn.cursor()  """
 #Criação da tela
 jan = Tk() 
 jan.title("Tela de login e cadastro") 

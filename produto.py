@@ -126,6 +126,10 @@ class TelaProdutos:
     
         VoltarButton = ttk.Button(produto_remove, text = "Voltar", width = 8)
         VoltarButton.place(x = 10, y = 370)
+        
+
+
+    
 
     # Def para ir para a aba de atualizar informação de algum livro já registrado
 
@@ -137,6 +141,8 @@ class TelaProdutos:
         produto_Update.configure(background="#f6f3ec")
         produto_Update.resizable(width=False, height=False)
 
+
+        #
 
         IDlabel = Label(produto_Update,text = "ID do Produto: ", font =("Times New Roman", 20))
         IDlabel.place(x = 100, y = 60)
@@ -183,6 +189,8 @@ class TelaProdutos:
         produto_list.geometry("800x300")
         produto_list.configure(background="#f6f3ec")
         produto_list.resizable(width=False, height=False)
+
+        # Colunas para identificar quais vão ser as informações que vão aparecer
 
         colunas = ("ID", "Nome", "Descrição", "Gênero", "Quantidade", "Preço")
         tree = ttk.Treeview(produto_list, columns=colunas, show="headings")
