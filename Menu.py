@@ -30,8 +30,8 @@ class TelaLoginCadastro:
         self.ProdutosButton.place(x=5000)
 
     def TelaFuncionarios(self):
-        from funcionarios import TelaProdutos
-        TelaProdutos(self.root)
+        from funcionarios import GerenciadorFuncionarios
+        GerenciadorFuncionarios(self.root)
         self.ProdutosButton.place(x=5000)
 
     def TelaFornecedores(self):
