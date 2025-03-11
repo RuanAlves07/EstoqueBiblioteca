@@ -242,7 +242,7 @@ class TelaProdutos:
     def VoltarMenu(self):
 
         self.root.destroy()
-        from Menu import TelaLoginCadastro
+        from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro(self.root)
             
 
