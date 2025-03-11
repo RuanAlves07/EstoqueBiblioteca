@@ -246,8 +246,6 @@ class TelaProdutos:
         TelaLoginCadastro(self.root)
             
 
-
-if __name__ == "__main__":
-    root = Tk()
-    app = TelaProdutos(root)
-    root.mainloop()
+root = Tk()
+app = TelaProdutos(root)
+root.mainloop()
