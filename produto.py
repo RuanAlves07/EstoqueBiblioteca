@@ -12,7 +12,7 @@ class TelaProdutos:
         self.root.configure(background="#f6f3ec")
         self.root.resizable(width=False, height=False)
         #Label do titulo
-        Titulolabel = Label(text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
+        Titulolabel = Label(root, text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
         Titulolabel.place(x = 30, y = 75)
 
 
@@ -33,7 +33,7 @@ class TelaProdutos:
         ListButton.place(x = 45, y = 500)
 
     #Button de voltar para tela de menu principal do sistema
-        VoltarButton = ttk.Button(text = "Voltar", width = 8, command = self.VoltarMenu)
+        VoltarButton = ttk.Button(root, text = "Voltar", width = 8, command = self.VoltarMenu)
         VoltarButton.place(x = 10, y = 570)
 
 
@@ -240,7 +240,6 @@ class TelaProdutos:
         VoltarButton.place(x = 10, y = 270)
 
     def VoltarMenu(self):
-
         self.root.destroy()
         from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro(self.root)
