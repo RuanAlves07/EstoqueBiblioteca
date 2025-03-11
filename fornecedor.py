@@ -65,14 +65,12 @@ class FornecedorApp:
         nomefant = self.ficticioEntry.get()
         cnpj = self.cnpjEntry.get()
         end = self.endEntry.get()
-        conn = self.conectar_banco()
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO fornecedor (nome, nomefantasia, CNPJ, endereco) VALUES (%s, %s, %s, %s)", (nomeforn, nomefant, cnpj, end))
-        conn.commit()
+        db = comunicacao()
+        db.RegistrarFornecedor(nomeforn,nomefant,cnpj,end)
         if nomeforn == "" or nomefant == "" or cnpj == "" or cnpj == "" or end == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
-            messagebox.showinfo("Sucesso", "Funcionario registrado com sucesso!")
+            messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
 
 
 
@@ -100,11 +98,9 @@ class FornecedorApp:
 
             resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este fornecedor?")
             if resposta:
-                conn = self.conectar_banco()
-                cursor = conn.cursor()
-                cursor.execute("DELETE FROM fornecedor WHERE idfornecedor = %s", (fornecedor_id,))
-                conn.commit()
-                conn.close()
+                db = comunicacao()
+                db.ExcluirFornecedor()
+                self.carregar_fornecedores()
 
                 carregar_fornecedores()
                 messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
@@ -141,14 +137,63 @@ class FornecedorApp:
         carregar_fornecedores()
 
     def listar_forn(self):
-        jan = Toplevel(self.root)
-        jan.title("Lista de Fornecedores")
-        jan.geometry("400x600")
-        jan.configure(background="#f6f3ec")
-        jan.resizable(width=False, height=False)
+        def carregar_fornecedores():
+            for item in tree.get_children():
+                tree.delete(item)
 
-        voltButton = ttk.Button(jan, text="Fechar", width=10, command=jan.destroy)
-        voltButton.place(x=10, y=570)
+            conn = self.conectar_banco()
+            cursor = conn.cursor()
+            cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
+            fornecedores = cursor.fetchall()
+            conn.close()
+
+            for fornecedor in fornecedores:
+                tree.insert("", "end", values=fornecedor)
+
+        def excluir_selecionado():
+            item_selecionado = tree.selection()
+            if not item_selecionado:
+                messagebox.showwarning("Atenção", "Selecione um fornecedor para excluir.")
+                return
+
+            fornecedor_id = tree.item(item_selecionado)["values"][0]
+
+            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este fornecedor?")
+            if resposta:
+                db = comunicacao()
+                db.ExcluirFornecedor()
+                self.carregar_fornecedores()
+
+                carregar_fornecedores()
+                messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
+
+        janela = Toplevel(self.root)
+        janela.title("Excluir Fornecedores")
+        janela.geometry("700x400")
+        janela.configure(background="#f6f3ec")
+        janela.resizable(width=False, height=False)
+
+        colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
+        tree = ttk.Treeview(janela, columns=colunas, show="headings")
+
+        tree.heading("ID", text="ID")
+        tree.heading("Nome", text="Nome")
+        tree.heading("Nome Fantasia", text="Nome Fantasia")
+        tree.heading("CNPJ", text="CNPJ")
+        tree.heading("Endereço", text="Endereço")
+
+        tree.column("ID", width=50, anchor="center")
+        tree.column("Nome", width=150)
+        tree.column("Nome Fantasia", width=150)
+        tree.column("CNPJ", width=120, anchor="center")
+        tree.column("Endereço", width=200)
+
+        tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+
+        bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
+        bt_fechar.pack(pady=5)
+
+        carregar_fornecedores()
 
     def atuu_funci(self):
         jan = Toplevel(self.root)
@@ -162,7 +207,7 @@ class FornecedorApp:
 
     def sair(self):
         self.root.destroy()
-        from Menu import TelaLoginCadastro
+        from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro(self.root)
 
 if __name__ == "__main__":
