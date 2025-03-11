@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+from comunicacao import comunicacao
 
 class TelaLoginCadastro:
     def __init__(self, root):
@@ -25,19 +26,18 @@ class TelaLoginCadastro:
 
     def TelaProdutos(self):
         from produto import TelaProdutos
-        TelaProdutos()
+        TelaProdutos(self.root)
+        self.ProdutosButton.place(x=5000)
 
     def TelaFuncionarios(self):
+        from funcionarios import TelaProdutos
+        TelaProdutos(self.root)
         self.ProdutosButton.place(x=5000)
-        self.FuncionariosButton.place(x=5000)
-        self.FornecedoresButton.place(x=5000)
-        self.VoltarButton.place(x=5000)
 
     def TelaFornecedores(self):
+        from fornecedor import FornecedorApp
+        FornecedorApp(self.root)
         self.ProdutosButton.place(x=5000)
-        self.FuncionariosButton.place(x=5000)
-        self.FornecedoresButton.place(x=5000)
-        self.VoltarButton.place(x=5000)
 
     def Voltar(self):
         # Aqui você pode adicionar o código para voltar à tela de login
