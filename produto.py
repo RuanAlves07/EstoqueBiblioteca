@@ -11,6 +11,7 @@ class TelaProdutos:
         self.root.geometry("400x600")
         self.root.configure(background="#f6f3ec")
         self.root.resizable(width=False, height=False)
+
         #Label do titulo
         Titulolabel = Label(root, text = "GERENCIADOR DE PRODUTOS", font =("Times New Roman", 18))
         Titulolabel.place(x = 30, y = 75)
@@ -88,17 +89,17 @@ class TelaProdutos:
 
         def RegistrarProduto():
  
-             nome = NomeEntry.get()
-             descricao = DescEntry.get()
-             genero = GeneroEntry.get()
-             quantidade = QuantidadeEntry.get()
-             preco = PrecoEntry.get()
+            nome = NomeEntry.get()
+            descricao = DescEntry.get()
+            genero = GeneroEntry.get()
+            quantidade = QuantidadeEntry.get()
+            preco = PrecoEntry.get()
  
-             if nome and descricao and genero and quantidade and preco:
+            if nome and descricao and genero and quantidade and preco:
                  RegistrarProduto(nome, descricao, genero, quantidade, preco)
  
                  messagebox.showerror("Success", "Usuario criado com sucesso!")
-             else:
+            else:
                  db = comunicacao() 
                  db.RegistrarProduto(nome, descricao, genero, quantidade, preco) 
                  messagebox.showerror("Error","Todos os campos são obrigatórios")
