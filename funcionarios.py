@@ -1,5 +1,5 @@
 
-
+from tkinter import *
 import tkinter as tk
 from tkinter import ttk, messagebox
 import mysql.connector
@@ -20,7 +20,7 @@ class GerenciadorFuncionarios:
         Titulolabel = tk.Label(self.root, text="GERENCIADOR DE FUNCIONARIOS", font=("Times New Roman", 18))
         Titulolabel.place(x=10, y=75)
 
-        # Botões
+        # Botões gay
         cadButton = ttk.Button(self.root, text="Cadastrar Funcionario", width=50, command=self.cadastro_func)
         cadButton.place(x=45, y=200)
 
@@ -150,17 +150,9 @@ class GerenciadorFuncionarios:
         resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario?")
         if resposta:
             db = comunicacao()
-            db.ExcluirFuncionario("DELETE FROM funcionario WHERE idfuncionario = %s", (funcionario_id,))
+            db.ExcluirFuncionario()
             self.carregar_funcionarios(tree)
             messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
-
-    def conectar_banco(self):
-        return mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="biblioteca_db"
-        )
 
     def sair(self):
         self.root.destroy()
