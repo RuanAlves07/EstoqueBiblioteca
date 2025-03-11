@@ -162,48 +162,49 @@ class TelaProdutos:
 
         produto_Update = Tk()
         produto_Update.title("PRODUTOS - ATUALIZAR")
-        produto_Update.geometry("800x600")
+        produto_Update.geometry("800x500")
         produto_Update.configure(background="#f6f3ec")
         produto_Update.resizable(width=False, height=False)
 
 
-        #
-
         IDlabel = Label(produto_Update,text = "ID do Produto: ", font =("Times New Roman", 20))
-        IDlabel.place(x = 100, y = 60)
+        IDlabel.place(x = 40, y = 15)
         IDEntry = ttk.Entry(produto_Update, width = 30)
-        IDEntry.place(x = 330, y = 70)
+        IDEntry.place(x = 230, y = 25)
+
+        BuscarButton = ttk.Button(produto_Update, text = "BUSCAR", width = 10) 
+        BuscarButton.place(x = 430, y = 25)
 
         Nomelabel = Label(produto_Update,text = "Nome do produto: ", font =("Times New Roman", 20))
-        Nomelabel.place(x = 90, y = 130)
+        Nomelabel.place(x = 40, y = 100)
         NomeEntry = ttk.Entry(produto_Update, width = 30)
-        NomeEntry.place(x = 330, y = 140)
+        NomeEntry.place(x = 295, y = 110)
 
         Desclabel = Label(produto_Update,text = "Descrição do produto: ", font =("Times New Roman", 20))
-        Desclabel.place(x = 60, y = 200)
+        Desclabel.place(x = 20, y = 170)
         DescEntry = ttk.Entry(produto_Update, width = 30)
-        DescEntry.place(x = 330, y = 210)
+        DescEntry.place(x = 295, y = 180)
 
-        Generolabel = Label(produto_Update,text = "Descrição do produto: ", font =("Times New Roman", 20))
-        Generolabel.place(x = 60, y = 280)
+        Generolabel = Label(produto_Update,text = "Gênero do produto: ", font =("Times New Roman", 20))
+        Generolabel.place(x = 30, y = 240)
         GeneroEntry = ttk.Entry(produto_Update, width = 30)
-        GeneroEntry.place(x = 330, y = 290)
+        GeneroEntry.place(x = 295, y = 250)
 
         Quantidadelabel = Label(produto_Update,text = "Quantidade do produto: ", font =("Times New Roman", 20))
-        Quantidadelabel.place(x = 50, y = 350)
+        Quantidadelabel.place(x = 20, y = 310)
         QuantidadeEntry = ttk.Entry(produto_Update, width = 30)
-        QuantidadeEntry.place(x = 330, y = 360)
+        QuantidadeEntry.place(x = 295, y = 320)
 
         Precolabel = Label(produto_Update,text = "Preço do produto: ", font =("Times New Roman", 20))
-        Precolabel.place(x = 80, y = 420)
+        Precolabel.place(x = 40, y = 370)
         PrecoEntry = ttk.Entry(produto_Update, width = 30)
-        PrecoEntry.place(x = 330, y = 430)
+        PrecoEntry.place(x = 295, y = 380)
 
         AttButton = ttk.Button(produto_Update, text = "ATUALIZAR PRODUTO", width = 40) #command = AtualizarNoBanco
-        AttButton.place(x = 270, y = 520)
+        AttButton.place(x = 270, y = 430)
 
         VoltarButton = ttk.Button(produto_Update, text = "Voltar", width = 8, command = produto_Update.destroy)
-        VoltarButton.place(x = 10, y = 570)
+        VoltarButton.place(x = 10, y = 470)
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
