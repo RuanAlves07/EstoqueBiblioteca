@@ -48,13 +48,11 @@ def FazerLogin():
         messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Confirmado, Bem Vindo!")
         from Menu import TelaLoginCadastro
         TelaLoginCadastro()
+        
     else:
         messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Negado. Verifique se esta cadastrado no sistema!")
 
 LoginButton = ttk.Button(text = "LOGIN", width = 15, command = FazerLogin)
 LoginButton.place(x = 170, y = 235)
-
-
-
 
 jan.mainloop()
