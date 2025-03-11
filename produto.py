@@ -240,8 +240,6 @@ class TelaProdutos:
         VoltarButton.place(x = 10, y = 270)
 
 
-            
-
 
 if __name__ == "__main__":
     root = Tk()
