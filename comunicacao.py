@@ -20,6 +20,7 @@ class comunicacao:
     def ExcluirProduto(self, idproduto):
         self.cursor.execute("DELETE FROM produto WHERE idproduto = %s",(idproduto)) 
         self.conn.commit()
+    
 
     def AtualizarProduto(self, idproduto, nome, descricao, genero, quantidade, preco):
         self.cursor.execute("UPDATE produto SET nome = %s, descricao = %s, genero = %s, quantidade = %s, preco = %s WHERE idproduto = %s ",(idproduto, nome, descricao, genero, quantidade, preco)) 
@@ -35,6 +36,10 @@ class comunicacao:
 
     def ExcluirFornecedor(self, idfornecedor):
         self.cursor.execute("DELETE FROM fornecedor WHERE idfornecedor = %s",(idfornecedor))    
+        self.conn.commit()
+
+    def carregar_fornecedores(self):
+        self.cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
         self.conn.commit()
 
     def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ, endereco):
@@ -53,6 +58,11 @@ class comunicacao:
         self.cursor.execute("DELETE FROM funcionario WHERE idfuncionario = %s",(idfuncionario)) 
         self.conn.commit()
 
+    def carregar_funcionario(self):
+        self.cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
+        self.conn.commit()
+
+
     def AtualizarFuncionario(self, idfuncionario, nome, telefone, enderecofunc, email, datanascimento):
         self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)) 
         self.conn.commit() 
@@ -60,7 +70,7 @@ class comunicacao:
     def ListarFuncionario(self, idfuncionario):
         self.cursor.execute("SELECT * FROM funcionario WHERE idfuncionario = %s", (idfuncionario)) 
         return self.cursor.fetchone() 
-        
+    
 
 
 
