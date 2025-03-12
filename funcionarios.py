@@ -162,11 +162,9 @@ class GerenciadorFuncionarios:
                 tree.delete(item)
         
 
-        conn = self.conectar_banco()
-        cursor = conn.cursor()
-        cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
-        funcionarios = cursor.fetchall()
-        conn.close()
+        db = comunicacao()
+        db.ExcluirFuncionario()
+        funcionarios = 
 
         for funcionario in funcionarios:
             tree.insert("", "end", values=funcionario)
@@ -214,7 +212,7 @@ class GerenciadorFuncionarios:
         ttk.Button(jan_excluir, text="Fechar", width=10, command=jan_excluir.destroy).pack(pady=5)
 
         # Carregar funcionários na tabela
-        self.carregar_funcionarios(tree)
+        carregar_funcionarios(tree)
     
 
     def sair(self):
