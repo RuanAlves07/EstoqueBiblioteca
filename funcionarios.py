@@ -87,20 +87,23 @@ class GerenciadorFuncionarios:
 
 
     def listar_func(self):
-        def carregar_funcionarios():
-            for item in tree.get_children():
-                tree.delete(item)
-
-            db = comunicacao()
-            db.ListarFuncionario()    
-            cursor = db.cursor()
-            funcionarios = cursor.fetchall()
-            db.close()
-
-            for funcionario in funcionarios:
-                tree.insert("", "end", values=funcionario)
-
         def listar_selecionado():
+            item_selecionado = tree.selection()
+            if not item_selecionado:
+                messagebox.showwarning("Atenção", "Selecione um Funcionario para procurar.")
+                return
+
+            funcionario_id = tree.item(item_selecionado)["values"][0]
+
+            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja procurar este funcionario ?")
+            if resposta:
+                db = comunicacao()
+                db.ExcluirFuncionario(funcionario_id)
+                self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
+                messagebox.showinfo("Sucesso", "Funcionario achado com sucesso!")
+
+
+        def carregar_funcionarios():
             item_selecionado = tree.selection()
             if not item_selecionado:
                 messagebox.showwarning("Atenção", "Selocione um funcionario para procurar.")
