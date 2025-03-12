@@ -134,6 +134,7 @@ class TelaProdutos:
                 self.carregar_produto(tree)  # Atualiza a treeview após a exclusão
                 messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
 
+
         produto_remove = Tk()
         produto_remove.title("PRODUTOS - EXCLUSÃO")
         produto_remove.geometry("800x400")
@@ -160,33 +161,28 @@ class TelaProdutos:
 
         tree.pack(pady=10, padx=10, fill=BOTH, expand=False)
 
-        RemoveButton = ttk.Button(produto_remove, text = "REMOVER LIVRO", width = 40, command = carregar_produto) 
+        RemoveButton = ttk.Button(produto_remove, text = "REMOVER LIVRO", width = 40, command = excluir_selecionado) 
         RemoveButton.place(x = 270, y = 320)
     
         VoltarButton = ttk.Button(produto_remove, text = "Voltar", width = 8, command = produto_remove.destroy)
         VoltarButton.place(x = 10, y = 370)
 
-        def carregar_produto(self, tree):
-        
-                for item in tree.get_children():
-                    tree.delete(item)
+        self.carregar_produto(tree)
 
-       
-                db = comunicacao()
-                cursor = db.conn.cursor()
-
-                try:
-                    cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM produto")
-                    produtos = cursor.fetchall()  
-
-            
-                    for produto in produtos:
-                        tree.insert("", "end", values=produto)
-                finally:
-                    cursor.close()  
+    def carregar_produto(self, tree):
+        for item in tree.get_children():
+            tree.delete(item)
+            db = comunicacao()
+            cursor = db.conn.cursor()
+        try:
+            cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM produto")
+            produtos = cursor.fetchall()  
+            for produto in produtos:
+                tree.insert("", "end", values=produto)
+        finally:
+            cursor.close()  
 
 
-    
 
     # Def para ir para a aba de atualizar informação de algum livro já registrado
 
