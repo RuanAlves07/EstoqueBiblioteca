@@ -44,11 +44,10 @@ class TelaLoginCadastro:
         self.ProdutosButton.place(x=5000)
 
     def Voltar(self):
-        # Aqui você pode adicionar o código para voltar à tela de login
-        jan.deiconify()  # Caso você tenha a janela de login oculta (como o código original sugeria)
+        from Login import TelaLoginCadastro
+        TelaLoginCadastro(self.root)
 
 
-if __name__ == "__main__":
-    jan = Tk()
-    tela = TelaLoginCadastro(jan)
-    jan.mainloop()
+root = Tk()
+tela = TelaLoginCadastro(root)
+root.mainloop()
