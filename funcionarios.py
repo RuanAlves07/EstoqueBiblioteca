@@ -229,7 +229,7 @@ class GerenciadorFuncionarios:
         self.root.destroy()
 
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = GerenciadorFuncionarios(root)
-    root.mainloop()
+
+root = tk.Tk()
+app = GerenciadorFuncionarios(root)
+root.mainloop()
