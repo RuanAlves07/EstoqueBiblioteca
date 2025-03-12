@@ -166,12 +166,12 @@ class GerenciadorFuncionarios:
                 messagebox.showwarning("Atenção", "Selecione um Funcionario para excluir.")
                 return
 
-            funcionario_id = tree.item(item_selecionado)["values"][0]
+            idfuncionario = tree.item(item_selecionado)["values"][0]
 
             resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario ?")
             if resposta:
                 db = comunicacao()
-                db.ExcluirFuncionario(funcionario_id)
+                db.ExcluirFuncionario(idfuncionario)
                 self.carregar_fornecedores(tree)  # Atualiza a treeview após a exclusão
                 messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
 
