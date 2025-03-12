@@ -96,12 +96,13 @@ class TelaProdutos:
             preco = PrecoEntry.get()
  
             if nome and descricao and genero and quantidade and preco:
-                 db = comunicacao() 
-                 db.RegistrarProduto(nome, descricao, genero, quantidade, preco) 
-                 messagebox.showinfo("Success", "Usuario criado com sucesso!")
+                db = comunicacao() 
+                db.RegistrarProduto(nome, descricao, genero, quantidade, preco) 
+ 
+                messagebox.showinfo("Success", "Usuario criado com sucesso!")
             else:
 
-                 messagebox.showerror("Error","Todos os campos são obrigatórios")
+                messagebox.showerror("Error","Todos os campos são obrigatórios")
 
         # Botão para registrar o produto no banco de dados
 
@@ -165,7 +166,7 @@ class TelaProdutos:
         VoltarButton = ttk.Button(produto_remove, text = "Voltar", width = 8, command = produto_remove.destroy)
         VoltarButton.place(x = 10, y = 370)
 
-        def carregar_produto(tree):
+        def carregar_produto(self, tree):
         
                 for item in tree.get_children():
                     tree.delete(item)
