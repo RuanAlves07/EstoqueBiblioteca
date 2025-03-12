@@ -157,36 +157,21 @@ class GerenciadorFuncionarios:
         jan_atualizar.resizable(width=False, height=False)
 
     def excluir_func(self):
-        def carregar_funcionarios(self, tree):
-            for item in tree.get_children():
-                tree.delete(item)
-        
-
-        db = comunicacao()
-        db.ExcluirFuncionario()
-        funcionarios = 
-
-        for funcionario in funcionarios:
-            tree.insert("", "end", values=funcionario)
-        
-
-
-        def excluir_selecionado(self, tree):
+        def excluir_selecionado():
             item_selecionado = tree.selection()
             if not item_selecionado:
-                messagebox.showwarning("Atenção", "Selecione um funcionario para excluir.")
+                messagebox.showwarning("Atenção", "Selecione um Funcionario para excluir.")
                 return
 
             funcionario_id = tree.item(item_selecionado)["values"][0]
 
-            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario?")
+            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario ?")
             if resposta:
                 db = comunicacao()
-                db.ExcluirFuncionario()
-                self.carregar_funcionarios()
-
-                carregar_funcionarios()
+                db.ExcluirFuncionario(funcionario_id)
+                self.carregar_fornecedores(tree)  # Atualiza a treeview após a exclusão
                 messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
+
 
         jan_excluir = tk.Toplevel(self.root)
         jan_excluir.title("Excluir Funcionarios")
@@ -208,12 +193,34 @@ class GerenciadorFuncionarios:
         tree.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
 
         # Botões
-        ttk.Button(jan_excluir, text="Excluir Selecionado", command=lambda: self.excluir_selecionado(tree)).pack(pady=5)
-        ttk.Button(jan_excluir, text="Fechar", width=10, command=jan_excluir.destroy).pack(pady=5)
+        bt_excluir = ttk.Button(jan_excluir, text="Excluir Selecionado", command=excluir_selecionado)
+        bt_excluir.pack(pady=5)
+        
+        bt_fechar = ttk.Button(jan_excluir, text="Fechar", width=10, command=jan_excluir.destroy)
+        bt_fechar.pack(pady=5)
 
         # Carregar funcionários na tabela
-        carregar_funcionarios(tree)
+        self.carregar_funcionarios(tree)
     
+    def carregar_funcionarios(self, tree):
+           # Limpa a treeview antes de carregar novos dados
+        for item in tree.get_children():
+            tree.delete(item)
+
+        # Obtém os dados dos fornecedores do banco de dados
+        db = comunicacao()
+        cursor = db.conn.cursor()  # Cria um novo cursor
+
+        try:
+            cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, datanascimento FROM funcionario")
+            funcionarios = cursor.fetchall()  # Consome todos os resultados
+
+            # Insere os fornecedores na treeview
+            for funcionario in funcionarios:
+                tree.insert("", "end", values=funcionario)
+        finally:
+            cursor.close()  # Fecha o cursor após o uso
+
 
     def sair(self):
         self.root.destroy()
