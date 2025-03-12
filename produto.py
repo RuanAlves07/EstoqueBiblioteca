@@ -268,10 +268,11 @@ class TelaProdutos:
         VoltarButton.place(x = 10, y = 270)
 
     def VoltarMenu(self):
-        self.root.destroy()
+        self.root.withdraw()
         from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro(self.root)
             
+
 
 root = Tk()
 app = TelaProdutos(root)

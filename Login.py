@@ -3,46 +3,49 @@ from tkinter import messagebox
 from tkinter import ttk 
 from comunicacao import comunicacao
 
+class TelaLoginCadastro:
+    def __init__(self):
+        # Criação da tela
+        self.root = Tk()
+        self.root.title("Tela de login e cadastro")
+        self.root.geometry("400x300")
+        self.root.configure(background="#f6f3ec")
+        self.root.resizable(width=False, height=False)
 
-#Criação da tela
-jan = Tk() 
-jan.title("Tela de login e cadastro") 
-jan.geometry("400x300") 
-jan.configure(background = "#f6f3ec") 
-jan.resizable(width = False, height = False) 
+        # Criando forma do usuário fazer login (Usuário e Senha)
+        self.LoginLabel = Label(self.root, text="Usuario: ", font=("Times New Roman", 20), bg="#f6f3ec", fg="Black")
+        self.LoginLabel.place(x=45, y=83)
+        self.LoginEntry = ttk.Entry(self.root, width=30)
+        self.LoginEntry.place(x=155, y=94)
+
+        self.SenhaLabel = Label(self.root, text="Senha: ", font=("Times New Roman", 20), bg="#f6f3ec", fg="Black")
+        self.SenhaLabel.place(x=57, y=130)
+        self.SenhaEntry = ttk.Entry(self.root, width=30, show="•")
+        self.SenhaEntry.place(x=155, y=140)
+
+        # Botão de login
+        self.LoginButton = ttk.Button(self.root, text="LOGIN", width=15, command=self.FazerLogin)
+        self.LoginButton.place(x=170, y=235)
+
+        # Iniciar a janela
+        self.root.mainloop()
+
+    def FazerLogin(self):
+        nome = self.LoginEntry.get()
+        senha = self.SenhaEntry.get()
+
+        db = comunicacao() 
+        db.cursor.execute("SELECT * FROM usuario WHERE nome = %s AND senha = %s", (nome, senha))
+        VerifyLogin = db.cursor.fetchone()
+
+        if VerifyLogin:
+            messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado, Bem Vindo!")
+            self.root.withdraw()
+            from MenuAdm import TelaLoginCadastro  
+            TelaLoginCadastro(self.root)
+        else:
+            messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no sistema!")
 
 
-
-#Criando forma do usuario fazer login (Usuario e Senha)
-LoginLabel = Label(text = "Usuario: ", font = ("Times New Roman", 20), bg = "#f6f3ec", fg = "Black") 
-LoginLabel.place(x = 45, y = 83) 
-LoginEntry = ttk.Entry(width = 30)  
-LoginEntry.place(x = 155, y = 94)
-
-SenhaLabel = Label(text = "Senha: ", font = ("Times New Roman", 20 ), bg = "#f6f3ec", fg = "Black") 
-SenhaLabel.place(x = 57, y = 130)
-SenhaEntry = ttk.Entry(width = 30, show = "•") 
-SenhaEntry.place(x = 155, y = 140)
-
-#Fazer login
-def FazerLogin():
-
-    nome = LoginEntry.get()
-    senha = SenhaEntry.get()
-
-    db = comunicacao() 
-    db.cursor.execute("SELECT * FROM usuario WHERE nome = %s AND senha = %s", (nome, senha))
-    VerifyLogin = db.cursor.fetchone()
-
-    if VerifyLogin:
-        messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Confirmado, Bem Vindo!")
-        from MenuAdm import TelaLoginCadastro
-        TelaLoginCadastro()
-        
-    else:
-        messagebox.showinfo(title = "INFO LOGIN", message = "Acesso Negado. Verifique se esta cadastrado no sistema!")
-
-LoginButton = ttk.Button(text = "LOGIN", width = 15, command = FazerLogin)
-LoginButton.place(x = 170, y = 235)
-
-jan.mainloop()
+if __name__ == "__main__":
+    app = TelaLoginCadastro()
