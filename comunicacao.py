@@ -21,6 +21,10 @@ class comunicacao:
         self.cursor.execute("DELETE FROM produto WHERE idproduto = %s",(idproduto)) 
         self.conn.commit()
     
+    def carregar_produto(self):
+        self.cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM usuario")
+        produtos = self.cursor.fetchall()
+        return produtos
 
     def AtualizarProduto(self, idproduto, nome, descricao, genero, quantidade, preco):
         self.cursor.execute("UPDATE produto SET nome = %s, descricao = %s, genero = %s, quantidade = %s, preco = %s WHERE idproduto = %s ",(idproduto, nome, descricao, genero, quantidade, preco)) 
