@@ -182,7 +182,7 @@ class FornecedorApp:
         from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro(self.root)
 
-if __name__ == "__main__":
-    root = Tk()
-    app = FornecedorApp(root)
-    root.mainloop()
+
+root = Tk()
+app = FornecedorApp(root)
+root.mainloop()
