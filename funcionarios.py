@@ -20,7 +20,7 @@ class GerenciadorFuncionarios:
         Titulolabel = tk.Label(self.root, text="GERENCIADOR DE FUNCIONARIOS", font=("Times New Roman", 18))
         Titulolabel.place(x=10, y=75)
 
-        # Botões gay
+        # Botões 
         cadButton = ttk.Button(self.root, text="Cadastrar Funcionario", width=50, command=self.cadastro_func)
         cadButton.place(x=45, y=200)
 
@@ -167,14 +167,18 @@ class GerenciadorFuncionarios:
                 return
 
             idfuncionario = tree.item(item_selecionado)["values"][0]
+            
 
             resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario ?")
             if resposta:
                 db = comunicacao()
-                db.ExcluirFuncionario(idfuncionario)
-                self.carregar_fornecedores(tree)  # Atualiza a treeview após a exclusão
-                messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
-
+                try:
+                    db.ExcluirFuncionario(idfuncionario)
+                    print("Funcionário excluído com sucesso.")
+                    self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
+                    messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
+                except Exception as e:
+                    messagebox.showerror("Erro", f"Erro ao excluir funcionário: {e}")
 
         jan_excluir = tk.Toplevel(self.root)
         jan_excluir.title("Excluir Funcionarios")
@@ -206,7 +210,7 @@ class GerenciadorFuncionarios:
         self.carregar_funcionarios(tree)
     
     def carregar_funcionarios(self, tree):
-           # Limpa a treeview antes de carregar novos dados
+        # Limpa a treeview antes de carregar novos dados
         for item in tree.get_children():
             tree.delete(item)
 
@@ -233,3 +237,30 @@ class GerenciadorFuncionarios:
 root = tk.Tk()
 app = GerenciadorFuncionarios(root)
 root.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
