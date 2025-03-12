@@ -178,7 +178,6 @@ class FornecedorApp:
         voltButton.place(x=10, y=570)
 
     def sair(self):
-        self.root.withdraw()
         from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro(self.root)
 
