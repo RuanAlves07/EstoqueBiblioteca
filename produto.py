@@ -96,12 +96,11 @@ class TelaProdutos:
             preco = PrecoEntry.get()
  
             if nome and descricao and genero and quantidade and preco:
-                 RegistrarProduto(nome, descricao, genero, quantidade, preco)
- 
-                 messagebox.showinfo("Success", "Usuario criado com sucesso!")
-            else:
                  db = comunicacao() 
                  db.RegistrarProduto(nome, descricao, genero, quantidade, preco) 
+                 messagebox.showinfo("Success", "Usuario criado com sucesso!")
+            else:
+
                  messagebox.showerror("Error","Todos os campos são obrigatórios")
 
         # Botão para registrar o produto no banco de dados
