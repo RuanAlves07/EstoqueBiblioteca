@@ -40,8 +40,10 @@ class comunicacao:
 
     def carregar_fornecedores(self):
         self.cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
-        self.conn.commit()
+        fornecedores = self.cursor.fetchall()
+        return fornecedores
 
+        
     def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ, endereco):
         self.cursor.execute("UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s, endereco = %s WHERE idfornecedor = %s ",(idfornecedor, nome, nomefantasia, CNPJ, endereco)) 
         self.conn.commit()

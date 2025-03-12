@@ -65,28 +65,13 @@ class FornecedorApp:
         cnpj = self.cnpjEntry.get()
         end = self.endEntry.get()
         db = comunicacao()
-        db.RegistrarFornecedor(nomeforn,nomefant,cnpj,end)
+        db.RegistrarFornecedor(nomeforn, nomefant, cnpj, end)
         if nomeforn == "" or nomefant == "" or cnpj == "" or cnpj == "" or end == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
 
-
-
     def excluir_forn(self):
-        def carregar_fornecedores():
-            for item in tree.get_children():
-                tree.delete(item)
-
-            conn = self.conectar_banco()
-            cursor = conn.cursor()
-            cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
-            fornecedores = cursor.fetchall()
-            conn.close()
-
-            for fornecedor in fornecedores:
-                tree.insert("", "end", values=fornecedor)
-
         def excluir_selecionado():
             item_selecionado = tree.selection()
             if not item_selecionado:
@@ -98,10 +83,8 @@ class FornecedorApp:
             resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este fornecedor?")
             if resposta:
                 db = comunicacao()
-                db.ExcluirFornecedor()
-                self.carregar_fornecedores()
-
-                carregar_fornecedores()
+                db.ExcluirFornecedor(fornecedor_id)
+                self.carregar_fornecedores(tree)  # Atualiza a treeview após a exclusão
                 messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
 
         janela = Toplevel(self.root)
@@ -133,41 +116,31 @@ class FornecedorApp:
         bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
         bt_fechar.pack(pady=5)
 
-        carregar_fornecedores()
+        # Carrega os fornecedores na treeview
+        self.carregar_fornecedores(tree)
 
-    def listar_forn(self):
-        def carregar_fornecedores():
-            for item in tree.get_children():
-                tree.delete(item)
+    def carregar_fornecedores(self, tree):
+        # Limpa a treeview antes de carregar novos dados
+        for item in tree.get_children():
+            tree.delete(item)
 
-            conn = self.conectar_banco()
-            cursor = conn.cursor()
+        # Obtém os dados dos fornecedores do banco de dados
+        db = comunicacao()
+        cursor = db.conn.cursor()  # Cria um novo cursor
+
+        try:
             cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
-            fornecedores = cursor.fetchall()
-            conn.close()
+            fornecedores = cursor.fetchall()  # Consome todos os resultados
 
+            # Insere os fornecedores na treeview
             for fornecedor in fornecedores:
                 tree.insert("", "end", values=fornecedor)
+        finally:
+            cursor.close()  # Fecha o cursor após o uso
 
-        def excluir_selecionado():
-            item_selecionado = tree.selection()
-            if not item_selecionado:
-                messagebox.showwarning("Atenção", "Selecione um fornecedor para excluir.")
-                return
-
-            fornecedor_id = tree.item(item_selecionado)["values"][0]
-
-            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este fornecedor?")
-            if resposta:
-                db = comunicacao()
-                db.ExcluirFornecedor()
-                self.carregar_fornecedores()
-
-                carregar_fornecedores()
-                messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
-
+    def listar_forn(self):
         janela = Toplevel(self.root)
-        janela.title("Excluir Fornecedores")
+        janela.title("Listar Fornecedores")
         janela.geometry("700x400")
         janela.configure(background="#f6f3ec")
         janela.resizable(width=False, height=False)
@@ -192,7 +165,8 @@ class FornecedorApp:
         bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
         bt_fechar.pack(pady=5)
 
-        carregar_fornecedores()
+        # Carrega os fornecedores na treeview
+        self.carregar_fornecedores(tree)
 
     def atuu_funci(self):
         jan = Toplevel(self.root)
