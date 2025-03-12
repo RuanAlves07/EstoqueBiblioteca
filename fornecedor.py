@@ -128,15 +128,14 @@ class FornecedorApp:
         db = comunicacao()
         cursor = db.conn.cursor()  # Cria um novo cursor
 
-        try:
-            cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
-            fornecedores = cursor.fetchall()  # Consome todos os resultados
+        
+        cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
+        fornecedores = cursor.fetchall()  # Consome todos os resultados
 
             # Insere os fornecedores na treeview
-            for fornecedor in fornecedores:
-                tree.insert("", "end", values=fornecedor)
-        finally:
-            cursor.close()  # Fecha o cursor após o uso
+        for fornecedor in fornecedores:
+            tree.insert("", "end", values=fornecedor)
+
 
     def listar_forn(self):
         janela = Toplevel(self.root)
