@@ -12,6 +12,9 @@ class TelaLoginCadastro:
         self.root.configure(background="#f6f3ec")
         self.root.resizable(width=False, height=False)
 
+        self.BemvindoLabel = Label(self.root, text="Seja Bem-vindo(a)!", font=("Times New Roman", 20), bg="#f6f3ec", fg="Black")
+        self.BemvindoLabel.place(x=90, y=30)
+
         # Criando forma do usuário fazer login (Usuário e Senha)
         self.LoginLabel = Label(self.root, text="Usuario: ", font=("Times New Roman", 20), bg="#f6f3ec", fg="Black")
         self.LoginLabel.place(x=45, y=83)
