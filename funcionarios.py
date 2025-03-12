@@ -162,11 +162,9 @@ class GerenciadorFuncionarios:
                 tree.delete(item)
         
 
-        conn = self.conectar_banco()
-        cursor = conn.cursor()
-        cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
-        funcionarios = cursor.fetchall()
-        conn.close()
+        db = comunicacao()
+        db.ExcluirFuncionario()
+        funcionarios = 
 
         for funcionario in funcionarios:
             tree.insert("", "end", values=funcionario)
