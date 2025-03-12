@@ -8,7 +8,7 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "",
+            password = "root",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
@@ -39,7 +39,7 @@ class comunicacao:
         self.conn.commit()
 
     def ExcluirFornecedor(self, idfornecedor):
-        self.cursor.execute("DELETE FROM fornecedor WHERE idfornecedor = %s",(idfornecedor))    
+        self.cursor.execute("DELETE FROM fornecedor WHERE idfornecedor = %s", (idfornecedor,))
         self.conn.commit()
 
     def carregar_fornecedores(self):
