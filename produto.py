@@ -173,7 +173,7 @@ class TelaProdutos:
         for item in tree.get_children():
             tree.delete(item)
             db = comunicacao()
-        cursor = db.conn.cursor()
+            cursor = db.conn.cursor()
         try:
             cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM produto")
             produtos = cursor.fetchall()  
