@@ -167,6 +167,8 @@ class TelaProdutos:
         VoltarButton = ttk.Button(produto_remove, text = "Voltar", width = 8, command = produto_remove.destroy)
         VoltarButton.place(x = 10, y = 370)
 
+        self.carregar_produto(tree)
+
     def carregar_produto(self, tree):
         for item in tree.get_children():
             tree.delete(item)
