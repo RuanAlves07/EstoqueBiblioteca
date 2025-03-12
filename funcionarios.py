@@ -87,12 +87,68 @@ class GerenciadorFuncionarios:
 
 
     def listar_func(self):
-        jan_listar = tk.Toplevel(self.root)
-        jan_listar.title("Lista de Funcionarios")
-        jan_listar.geometry("400x600")
-        jan_listar.configure(background="#f6f3ec")
-        jan_listar.resizable(width=False, height=False)
+        def carregar_funcionarios():
+            for item in tree.get_children():
+                tree.delete(item)
 
+            db = comunicacao()
+            db.ListarFuncionario()    
+            cursor = db.cursor()
+            funcionarios = cursor.fetchall()
+            db.close()
+
+            for funcionario in funcionarios:
+                tree.insert("", "end", values=funcionario)
+
+        def listar_selecionado():
+            item_selecionado = tree.selection()
+            if not item_selecionado:
+                messagebox.showwarning("Atenção", "Selocione um funcionario para procurar.")
+                return
+
+            funcionario_id = tree.item(item_selecionado)["values"][0]
+
+            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja procurar este funcionario?")
+            if resposta:
+                db = comunicacao()
+                db.ListarFuncionario()
+                self.carregar_funcionarios()
+
+                carregar_funcionarios()
+                messagebox.showinfo("Sucesso", "Funcionario achado com sucesso!")
+
+        janela = Toplevel(self.root)
+        janela.title("Listar Fornecedores")
+        janela.geometry("700x400")
+        janela.configure(background="#f6f3ec")
+        janela.resizable(width=False, height=False)
+
+        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email" "Data de Nascimento")
+        tree = ttk.Treeview(janela, columns=colunas, show="headings")
+
+        tree.heading("ID", text="ID")
+        tree.heading("Nome", text="Nome")
+        tree.heading("Telefone", text="Telefone")
+        tree.heading("Endereço", text="Endereço")
+        tree.heading("Email", text="Email")
+        tree.heading("Data de Nascimento", text="Endereço")
+
+        tree.column("ID", width=50, anchor="center")
+        tree.column("Nome", width=150)
+        tree.column("Telefone ", width=150)
+        tree.column("Endereço", width=120, anchor="center")
+        tree.column("Email ", width=180)
+        tree.column("Data de Nascimento", width=200)
+
+        tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+
+        bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
+        bt_fechar.pack(pady=5)
+
+        carregar_funcionarios()
+       
+
+        
     def atuu_func(self):
         jan_atualizar = tk.Toplevel(self.root)
         jan_atualizar.title("Atualizar Funcionarios")
@@ -101,6 +157,39 @@ class GerenciadorFuncionarios:
         jan_atualizar.resizable(width=False, height=False)
 
     def excluir_func(self):
+        def carregar_funcionarios(self, tree):
+            for item in tree.get_children():
+                tree.delete(item)
+        
+
+        conn = self.conectar_banco()
+        cursor = conn.cursor()
+        cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
+        funcionarios = cursor.fetchall()
+        conn.close()
+
+        for funcionario in funcionarios:
+            tree.insert("", "end", values=funcionario)
+        
+
+
+        def excluir_selecionado(self, tree):
+            item_selecionado = tree.selection()
+            if not item_selecionado:
+                messagebox.showwarning("Atenção", "Selecione um funcionario para excluir.")
+                return
+
+            funcionario_id = tree.item(item_selecionado)["values"][0]
+
+            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario?")
+            if resposta:
+                db = comunicacao()
+                db.ExcluirFuncionario()
+                self.carregar_funcionarios()
+
+                carregar_funcionarios()
+                messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
+
         jan_excluir = tk.Toplevel(self.root)
         jan_excluir.title("Excluir Funcionarios")
         jan_excluir.geometry("700x400")
@@ -126,33 +215,7 @@ class GerenciadorFuncionarios:
 
         # Carregar funcionários na tabela
         self.carregar_funcionarios(tree)
-
-    def carregar_funcionarios(self, tree):
-        for item in tree.get_children():
-            tree.delete(item)
-
-        conn = self.conectar_banco()
-        cursor = conn.cursor()
-        cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
-        funcionarios = cursor.fetchall()
-        conn.close()
-
-        for funcionario in funcionarios:
-            tree.insert("", "end", values=funcionario)
-
-    def excluir_selecionado(self, tree):
-        item_selecionado = tree.selection()
-        if not item_selecionado:
-            messagebox.showwarning("Atenção", "Selecione um funcionario para excluir.")
-            return
-
-        funcionario_id = tree.item(item_selecionado)["values"][0]
-        resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario?")
-        if resposta:
-            db = comunicacao()
-            db.ExcluirFuncionario()
-            self.carregar_funcionarios(tree)
-            messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
+    
 
     def sair(self):
         self.root.destroy()

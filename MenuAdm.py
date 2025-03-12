@@ -48,6 +48,7 @@ class TelaLoginCadastro:
         jan.deiconify()  # Caso você tenha a janela de login oculta (como o código original sugeria)
 
 
-jan = Tk()
-tela = TelaLoginCadastro(jan)
-jan.mainloop()
+if __name__ == "__main__":
+    jan = Tk()
+    tela = TelaLoginCadastro(jan)
+    jan.mainloop()
