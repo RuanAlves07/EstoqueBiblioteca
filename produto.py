@@ -98,7 +98,7 @@ class TelaProdutos:
             if nome and descricao and genero and quantidade and preco:
                  RegistrarProduto(nome, descricao, genero, quantidade, preco)
  
-                 messagebox.showerror("Success", "Usuario criado com sucesso!")
+                 messagebox.showinfo("Success", "Usuario criado com sucesso!")
             else:
                  db = comunicacao() 
                  db.RegistrarProduto(nome, descricao, genero, quantidade, preco) 
