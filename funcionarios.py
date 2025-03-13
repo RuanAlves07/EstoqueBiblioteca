@@ -276,18 +276,15 @@ class GerenciadorFuncionarios:
                 messagebox.showwarning("Atenção", "Selecione um Funcionario para excluir.")
                 return
 
-            idfuncionario = tree.item(item_selecionado)["values"][0]
+            funcionario_id = tree.item(item_selecionado)["values"][0]
             
 
             resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario ?")
             if resposta:
                 db = comunicacao()
-                try:
-                    db.ExcluirFuncionario(idfuncionario)
-                    self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
-                    messagebox.showinfo("Sucesso", "Funcionario excluído !")
-                except Exception as e:
-                    messagebox.showerror("Erro", f"Erro ao excluir funcionário: {e}")
+                db.ExcluirFornecedor(funcionario_id)
+                self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
+                messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
 
         jan_excluir = tk.Toplevel(self.root)
         jan_excluir.title("Excluir Funcionarios")
@@ -330,19 +327,17 @@ class GerenciadorFuncionarios:
         for item in tree.get_children():
             tree.delete(item)
 
-        # Obtém os dados dos fornecedores do banco de dados
+        # Obtém os dados dos funcionarios do banco de dados
         db = comunicacao()
         cursor = db.conn.cursor()  # Cria um novo cursor
 
-        try:
-            cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, datanascimento FROM funcionario")
-            funcionarios = cursor.fetchall()  # Consome todos os resultados
+         
+        cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, datanascimento FROM funcionario")
+        funcionarios = cursor.fetchall()  # Consome todos os resultados
 
-            # Insere os fornecedores na treeview
-            for funcionario in funcionarios:
-                tree.insert("", "end", values=funcionario)
-        finally:
-            cursor.close()  # Fecha o cursor após o uso
+            # Insere os funcionario na treeview
+        for funcionario in funcionarios:
+            tree.insert("", "end", values=funcionario)
 
 
     def sair(self):
