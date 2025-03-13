@@ -284,7 +284,7 @@ class GerenciadorFuncionarios:
                 db = comunicacao()
                 db.ExcluirFornecedor(funcionario_id)
                 self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
-                messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
+                messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
 
         jan_excluir = tk.Toplevel(self.root)
         jan_excluir.title("Excluir Funcionarios")
@@ -309,7 +309,7 @@ class GerenciadorFuncionarios:
         tree.column("Telefone", width=150)
         tree.column("Endereco", width=120, anchor="center")
         tree.column("Email", width=150)
-        tree.column("data_nascimento", width=200)
+        tree.column("Data de nascimento", width=200)
         tree.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
 
         # Botões
