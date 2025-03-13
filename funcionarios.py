@@ -171,9 +171,103 @@ class GerenciadorFuncionarios:
     def atuu_func(self):
         jan_atualizar = tk.Toplevel(self.root)
         jan_atualizar.title("Atualizar Funcionarios")
-        jan_atualizar.geometry("400x600")
+        jan_atualizar.geometry("800x600")
         jan_atualizar.configure(background="#f6f3ec")
         jan_atualizar.resizable(width=False, height=False)
+
+        # Campo para inserir o ID do fornecedor
+        id_label = Label(jan_atualizar, text="ID DO FUNCIONARIO: ", font=("Times New Roman", 15))
+        id_label.place(x=115, y=55)
+        self.idEntry = ttk.Entry(jan_atualizar, width=30)
+        self.idEntry.place(x=330, y=60)
+
+        # Botão para buscar o fornecedor
+        buscar_button = ttk.Button(jan_atualizar, text="Buscar Funcionario", width=20, command=self.buscar_funcionario)
+        buscar_button.place(x=330, y=100)
+
+        # Campos para editar as informações do fornecedor
+        funlabel = Label(jan_atualizar, text="NOME : ", font=("Times New Roman", 15))
+        funlabel.place(x=115, y=150)
+        self.funnomeEntry = ttk.Entry(jan_atualizar, width=30)
+        self.funnomeEntry.place(x=330, y=155)
+
+        funcionarios_telefone = Label(jan_atualizar, text="TELEFONE: ", font=("Times New Roman", 15))
+        funcionarios_telefone.place(x=115, y=200)
+        self.telefoneEntry = ttk.Entry(jan_atualizar, width=40)
+        self.telefoneEntry.place(x=330, y=205)
+
+        funcionarios_endereco = Label(jan_atualizar, text="ENDEREÇO: ", font=("Times New Roman", 15))
+        funcionarios_endereco.place(x=115, y=250)
+        self.enderecEntry = ttk.Entry(jan_atualizar, width=40)
+        self.enderecEntry.place(x=330, y=255)
+
+        funcionarios_email = Label(jan_atualizar, text="EMAIL: ", font=("Times New Roman", 15))
+        funcionarios_email.place(x=115, y=300)
+        self.emailEntry = ttk.Entry(jan_atualizar, width=40)
+        self.emailEntry.place(x=330, y=305)
+
+        funcionarios_nascimento = Label(jan_atualizar, text="DATA DE NASCIMENTO: ", font=("Times New Roman", 15))
+        funcionarios_nascimento.place(x=85, y=350)
+        self.nasciEntry = ttk.Entry(jan_atualizar, width=40)
+        self.nasciEntry.place(x=330, y=355)
+
+        # Botão para salvar as alterações
+        salvar_button = ttk.Button(jan_atualizar, text="Salvar Alterações", width=20, command=self.salvar_alteracoes)
+        salvar_button.place(x=330, y=400)
+
+    def buscar_funcionario(self):
+        idfuncionario = self.idEntry.get()
+        if not idfuncionario:
+            messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
+            return
+
+        db = comunicacao()
+        funcionario = db.buscar_funcionario_por_id(idfuncionario)
+
+        if not funcionario:
+            messagebox.showerror("Erro", "funcionario não encontrado.")
+            return
+
+        # Preenche os campos com as informações do funcionario
+        self.funnomeEntry.delete(0, END)
+        self.funnomeEntry.insert(0, funcionario[1])  # Nome 
+
+        self.telefoneEntry.delete(0, END)
+        self.telefoneEntry.insert(0, funcionario[2])  # Telefone
+
+        self.enderecEntry.delete(0, END)
+        self.enderecEntry.insert(0, funcionario[3])  # Endereço
+
+        self.emailEntry.delete(0, END)
+        self.emailEntry.insert(0, funcionario[4])  # Email
+
+        self.nasciEntry.delete(0, END)
+        self.nasciEntry.insert(0, funcionario[5])  # Data de nascimento
+
+
+    def salvar_alteracoes(self):
+        idfuncionario = self.idEntry.get()
+        nome = self.funnomeEntry.get()
+        telefone = self.telefoneEntry.get()
+        enderecofunc = self.enderecEntry.get()
+        email = self.emailEntry.get()
+        datanascimento = self.nasciEntry.get()
+
+        if not idfuncionario:
+            messagebox.showwarning("Atenção", "Por favor, insira o ID do funcionario.")
+            return
+
+        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or datanascimento == "":
+            messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
+            return
+
+        db = comunicacao()
+        db.atuu_func(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)
+        messagebox.showinfo("Sucesso", "Funcionario atualizado com sucesso!")
+    def sair(self):
+        from MenuAdm import TelaLoginCadastro
+        TelaLoginCadastro(self.root)
+  
 
     def excluir_func(self):
         def excluir_selecionado():
