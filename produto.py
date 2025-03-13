@@ -170,15 +170,17 @@ class TelaProdutos:
     def carregar_produto(self, tree):
         for item in tree.get_children():
             tree.delete(item)
-            db = comunicacao()
-            cursor = db.conn.cursor()
+
+        db = comunicacao()  # Define a comunicação com o banco
+        cursor = db.conn.cursor()  # Cria o cursor fora do loop
+    
         try:
             cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM produto")
             produtos = cursor.fetchall()  
             for produto in produtos:
                 tree.insert("", "end", values=produto)
         finally:
-            cursor.close()  
+            cursor.close()
 
 
 
