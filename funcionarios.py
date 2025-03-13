@@ -218,7 +218,7 @@ class GerenciadorFuncionarios:
     def buscar_funcionario(self):
         idfuncionario = self.idEntry.get()
         if not idfuncionario:
-            messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
+            messagebox.showwarning("Atenção", "Por favor, insira o ID do funcionario.")
             return
 
         db = comunicacao()
