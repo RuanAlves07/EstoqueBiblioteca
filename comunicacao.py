@@ -39,7 +39,8 @@ class comunicacao:
         self.conn.commit()
 
     def ExcluirFornecedor(self, idfornecedor):
-        self.cursor.execute("DELETE FROM fornecedor WHERE idfornecedor = %s",(idfornecedor))    
+        query = "DELETE FROM fornecedor WHERE idfornecedor = %s"
+        self.cursor.execute(query, (idfornecedor,))  # Note a vírgula após idfornecedor
         self.conn.commit()
 
     def carregar_fornecedores(self):
