@@ -87,6 +87,8 @@ class TelaProdutos:
 
         # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica que está faltando algum campo de entrada
 
+
+
         def RegistrarProduto():
  
             nome = NomeEntry.get()
@@ -114,7 +116,20 @@ class TelaProdutos:
         VoltarButton = ttk.Button(produto_add, text = "Voltar", width = 8, command = produto_add.destroy)
         VoltarButton.place(x = 10, y = 570)
 
+    def PuxarInfo(self, tree):
+        for item in tree.get_children():
+            tree.delete(item)
 
+        db = comunicacao()  # Define a comunicação com o banco
+        cursor = db.conn.cursor()  # Cria o cursor fora do loop
+    
+        try:
+            cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM produto")
+            produtos = cursor.fetchall()  
+            for produto in produtos:
+                tree.insert("", "end", values=produto)
+        finally:
+            cursor.close()
     
     # Def para ir para a aba de exclusões de livros
 
@@ -153,7 +168,7 @@ class TelaProdutos:
                 if resposta:
                     db = comunicacao()
                     db.ExcluirProduto(produto_id)
-                    self.carregar_produto(tree)  # Atualiza a treeview após a exclusão
+                    self.PuxarInfo(tree)  # Atualiza a treeview após a exclusão
                     messagebox.showinfo("Sucesso", "Produto excluído com sucesso!")
 
             
@@ -165,23 +180,7 @@ class TelaProdutos:
             VoltarButton.pack(pady=5)
 
         # Carrega os fornecedores na treeview
-            self.carregar_produto(tree)
-
-    def carregar_produto(self, tree):
-        for item in tree.get_children():
-            tree.delete(item)
-
-        db = comunicacao()  # Define a comunicação com o banco
-        cursor = db.conn.cursor()  # Cria o cursor fora do loop
-    
-        try:
-            cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM produto")
-            produtos = cursor.fetchall()  
-            for produto in produtos:
-                tree.insert("", "end", values=produto)
-        finally:
-            cursor.close()
-
+            self.PuxarInfo(tree)
 
 
     # Def para ir para a aba de atualizar informação de algum livro já registrado
@@ -234,6 +233,7 @@ class TelaProdutos:
         VoltarButton = ttk.Button(produto_Update, text = "Voltar", width = 8, command = produto_Update.destroy)
         VoltarButton.place(x = 10, y = 470)
 
+
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
     def GoToList(self):
@@ -268,6 +268,8 @@ class TelaProdutos:
 
         VoltarButton = ttk.Button(produto_list, text = "Voltar", width = 8, command = produto_list.destroy)
         VoltarButton.place(x = 10, y = 270)
+
+        self.PuxarInfo(tree)
 
     def VoltarMenu(self):
         self.root.withdraw()
