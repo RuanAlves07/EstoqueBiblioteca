@@ -25,6 +25,9 @@ class FornecedorApp:
 
         self.voltButton = ttk.Button(root, text="Fechar", width=10, command=self.sair)
         self.voltButton.place(x=10, y=570)
+        
+        Titulolabel = Label(self.root, text="GERENCIADOR DE FORNECEDORES", font=("Times New Roman", 18))
+        Titulolabel.place(x=10, y=75)
 
     def cadastro_forn(self):
         jan = Toplevel(self.root)
@@ -256,7 +259,7 @@ class FornecedorApp:
             return
 
         db = comunicacao()
-        db.atualizar_fornecedor(idfornecedor, nomeforn, nomefant, cnpj, end)
+        db.AtualizarFornecedor(idfornecedor, nomeforn, nomefant, cnpj, end)
         messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
     def sair(self):
         from MenuAdm import TelaLoginCadastro
