@@ -87,20 +87,36 @@ class GerenciadorFuncionarios:
 
 
     def listar_func(self):
-        def listar_selecionado():
-            item_selecionado = tree.selection()
-            if not item_selecionado:
-                messagebox.showwarning("Atenção", "Selecione um Funcionario para procurar.")
-                return
+        janela = Toplevel(self.root)
+        janela.title("Listar Fornecedores")
+        janela.geometry("700x400")
+        janela.configure(background="#f6f3ec")
+        janela.resizable(width=False, height=False)
 
-            funcionario_id = tree.item(item_selecionado)["values"][0]
+        colunas = ("ID", "Nome", "Telefone", "Endereco", "Email", "Data de nascimento")
+        tree = ttk.Treeview(janela, columns=colunas, show="headings")
 
-            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja procurar este funcionario ?")
-            if resposta:
-                db = comunicacao()
-                db.ExcluirFuncionario(funcionario_id)
-                self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
-                messagebox.showinfo("Sucesso", "Funcionario achado com sucesso!")
+        tree.heading("ID", text="ID")
+        tree.heading("Nome", text="Nome")
+        tree.heading("Telefone", text="Telefone")
+        tree.heading("Endereco", text="Endereco")
+        tree.heading("Email", text="Email")
+        tree.heading("Data de nascimento", text="Data de nascimento")
+
+        tree.column("ID", width=50, anchor="center")
+        tree.column("Nome", width=150)
+        tree.column("Telefone", width=150)
+        tree.column("Endereco", width=120, anchor="center")
+        tree.column("Email", width=200)
+        tree.column("Data de nascimento", width=240)
+
+        tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+
+        bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
+        bt_fechar.pack(pady=5)
+
+        # Carrega os fornecedores na treeview
+        self.carregar_fornecedores(tree)
 
 
         def carregar_funcionarios():
@@ -188,8 +204,15 @@ class GerenciadorFuncionarios:
         # Tabela (Treeview)
         colunas = ("ID", "Nome", "Telefone", "Endereco", "Email", "Data de nascimento")
         tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings")
-        for col in colunas:
-            tree.heading(col, text=col)
+        
+        tree.heading("ID", text="ID")
+        tree.heading("Nome", text="Nome")
+        tree.heading("Telefone", text="Telefone")
+        tree.heading("Endereco", text="Endereco")
+        tree.heading("Email", text="Email")
+        tree.heading("Data de nascimento", text="Data de nascimento")
+                
+
         tree.column("ID", width=50, anchor="center")
         tree.column("Nome", width=150)
         tree.column("Telefone", width=150)
