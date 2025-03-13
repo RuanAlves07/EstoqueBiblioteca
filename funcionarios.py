@@ -293,7 +293,7 @@ class GerenciadorFuncionarios:
         jan_excluir.resizable(width=False, height=False)
 
         # Tabela (Treeview)
-        colunas = ("ID", "Nome", "Telefone", "Endereco", "Email", "Data de nascimento")
+        colunas = ("ID", "Nome", "Telefone", "Endereco", "Email", "datanascimento")
         tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings")
         
         tree.heading("ID", text="ID")
@@ -301,7 +301,7 @@ class GerenciadorFuncionarios:
         tree.heading("Telefone", text="Telefone")
         tree.heading("Endereco", text="Endereco")
         tree.heading("Email", text="Email")
-        tree.heading("Data de nascimento", text="Data de nascimento")
+        tree.heading("datanascimento", text="Data de nascimento")
                 
 
         tree.column("ID", width=50, anchor="center")
@@ -309,7 +309,7 @@ class GerenciadorFuncionarios:
         tree.column("Telefone", width=150)
         tree.column("Endereco", width=120, anchor="center")
         tree.column("Email", width=150)
-        tree.column("data_nascimento", width=200)
+        tree.column("datanascimento", width=200)
         tree.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
 
         # Botões
