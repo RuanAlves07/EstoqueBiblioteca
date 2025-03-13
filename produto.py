@@ -119,55 +119,53 @@ class TelaProdutos:
     # Def para ir para a aba de exclusões de livros
 
     def GoToExcluir(self):
-        def excluir_selecionado():
-            item_selecionado = tree.selection()
-            if not item_selecionado:
-                messagebox.showwarning("Atenção", "Selecione um fornecedor para excluir.")
-                return
+            produto_remove = Toplevel(self.root)
+            produto_remove.title("PRODUTOS - EXCLUSÃO")
+            produto_remove.geometry("800x400")
+            produto_remove.configure(background="#f6f3ec")
+            produto_remove.resizable(width=False, height=False)
 
-            produto_id = tree.item(item_selecionado)["values"][0]
+            colunas = ("ID", "Nome", "Descrição", "Quantidade", "Preço")
+            tree = ttk.Treeview(produto_remove, columns=colunas, show="headings")
 
-            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este fornecedor?")
-            if resposta:
-                db = comunicacao()
-                db.ExcluirProduto(produto_id)
-                self.carregar_produto(tree)  # Atualiza a treeview após a exclusão
-                messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
+            tree.heading("ID", text="ID")
+            tree.heading("Nome", text="Nome")
+            tree.heading("Descrição", text="Descrição")
+            tree.heading("Quantidade", text="Quantidade")
+            tree.heading("Preço", text="Preço")
 
+            tree.column("ID", width=50, anchor="center")
+            tree.column("Nome", width=150)
+            tree.column("Descrição", width=150)
+            tree.column("Quantidade", width=120, anchor="center")
+            tree.column("Preço", width=200)
 
-        produto_remove = Tk()
-        produto_remove.title("PRODUTOS - EXCLUSÃO")
-        produto_remove.geometry("800x400")
-        produto_remove.configure(background="#f6f3ec")
-        produto_remove.resizable(width=False, height=False)
+            tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+            def excluir_selecionado():
+                item_selecionado = tree.selection()
+                if not item_selecionado:
+                    messagebox.showwarning("Atenção", "Selecione um produto para excluir.")
+                    return
+                
+                produto_id = tree.item(item_selecionado)["values"][0]
+                resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este produto?")
+                
+                if resposta:
+                    db = comunicacao()
+                    db.ExcluirProduto(produto_id)
+                    self.carregar_produto(tree)  # Atualiza a treeview após a exclusão
+                    messagebox.showinfo("Sucesso", "Produto excluído com sucesso!")
 
-        colunas = ("ID", "Nome", "Descrição", "Gênero", "Quantidade", "Preço")
-        tree = ttk.Treeview(produto_remove, columns=colunas, show="headings")
+            
 
-        tree.heading("ID", text="ID")
-        tree.heading("Nome", text="Nome")
-        tree.heading("Descrição", text="Descrição")
-        tree.heading("Gênero", text="Gênero")
-        tree.heading("Quantidade", text="Quantidade")
-        tree.heading("Preço", text="Preço")
+            RemoveButton = ttk.Button(produto_remove, text="Excluir Selecionado", command=excluir_selecionado)
+            RemoveButton.pack(pady=5)
 
+            VoltarButton = ttk.Button(produto_remove, text="Fechar", width=10, command=produto_remove.destroy)
+            VoltarButton.pack(pady=5)
 
-        tree.column("ID", width=50, anchor="center")
-        tree.column("Nome", width=100)
-        tree.column("Descrição", width=150)
-        tree.column("Gênero", width=120, anchor="center")
-        tree.column("Quantidade", width=120)
-        tree.column("Preço", width = 50)
-
-        tree.pack(pady=10, padx=10, fill=BOTH, expand=False)
-
-        RemoveButton = ttk.Button(produto_remove, text = "REMOVER LIVRO", width = 40, command = excluir_selecionado) 
-        RemoveButton.place(x = 270, y = 320)
-    
-        VoltarButton = ttk.Button(produto_remove, text = "Voltar", width = 8, command = produto_remove.destroy)
-        VoltarButton.place(x = 10, y = 370)
-
-        self.carregar_produto(tree)
+        # Carrega os fornecedores na treeview
+            self.carregar_produto(tree)
 
     def carregar_produto(self, tree):
         for item in tree.get_children():

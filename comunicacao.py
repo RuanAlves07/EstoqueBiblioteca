@@ -18,11 +18,11 @@ class comunicacao:
         self.conn.commit() 
 
     def ExcluirProduto(self, idproduto):
-        self.cursor.execute("DELETE FROM produto WHERE idproduto = %s",(idproduto)) 
+        self.cursor.execute("DELETE FROM produto WHERE idproduto = %s", (idproduto,)) 
         self.conn.commit()
     
     def carregar_produto(self):
-        self.cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM usuario")
+        self.cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM produto")
         produtos = self.cursor.fetchall()
         return produtos
 
