@@ -8,7 +8,7 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "",
+            password = "root",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
@@ -46,12 +46,16 @@ class comunicacao:
         self.cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
         fornecedores = self.cursor.fetchall()
         return fornecedores
-
+    
+    def buscar_fornecedor_por_id(self, idfornecedor):
+        self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor,))
+        return self.cursor.fetchone()  # Retorna uma tupla com os dados do fornecedor
         
     def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ, endereco):
-        self.cursor.execute("UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s, endereco = %s WHERE idfornecedor = %s ",(idfornecedor, nome, nomefantasia, CNPJ, endereco)) 
+        query = "UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s, endereco = %s WHERE idfornecedor = %s "
+        self.cursor.execute(query, (nome, nomefantasia, CNPJ, endereco, idfornecedor))
         self.conn.commit()
-    
+        
     def ListarFornecedor(self, idfornecedor):
         self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor)) 
         return self.cursor.fetchone() 

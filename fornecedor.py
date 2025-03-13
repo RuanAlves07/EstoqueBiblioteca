@@ -70,7 +70,12 @@ class FornecedorApp:
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
-
+            self.limpar_campos()
+    def limpar_campos(self):
+        self.fornomeEntry.delete(0, END)  # Limpa o campo NOME EMPRESARIAL
+        self.ficticioEntry.delete(0, END)  # Limpa o campo NOME DE FANTASIA
+        self.cnpjEntry.delete(0, END)  # Limpa o campo CNPJ
+        self.endEntry.delete(0, END)  # Limpa o campo ENDEREÇO
     def excluir_forn(self):
         def excluir_selecionado():
             item_selecionado = tree.selection()
@@ -170,13 +175,89 @@ class FornecedorApp:
     def atuu_funci(self):
         jan = Toplevel(self.root)
         jan.title("Atualizar Fornecedores")
-        jan.geometry("400x600")
+        jan.geometry("800x600")
         jan.configure(background="#f6f3ec")
         jan.resizable(width=False, height=False)
 
-        voltButton = ttk.Button(jan, text="Fechar", width=10, command=jan.destroy)
-        voltButton.place(x=10, y=570)
+        # Campo para inserir o ID do fornecedor
+        id_label = Label(jan, text="ID DO FORNECEDOR: ", font=("Times New Roman", 15))
+        id_label.place(x=115, y=55)
+        self.idEntry = ttk.Entry(jan, width=30)
+        self.idEntry.place(x=330, y=60)
 
+        # Botão para buscar o fornecedor
+        buscar_button = ttk.Button(jan, text="Buscar Fornecedor", width=20, command=self.buscar_fornecedor)
+        buscar_button.place(x=330, y=100)
+
+        # Campos para editar as informações do fornecedor
+        forlabel = Label(jan, text="NOME EMPRESARIAL: ", font=("Times New Roman", 15))
+        forlabel.place(x=115, y=150)
+        self.fornomeEntry = ttk.Entry(jan, width=30)
+        self.fornomeEntry.place(x=330, y=155)
+
+        fornecedores_ficticio = Label(jan, text="NOME DE FANTASIA: ", font=("Times New Roman", 15))
+        fornecedores_ficticio.place(x=115, y=200)
+        self.ficticioEntry = ttk.Entry(jan, width=40)
+        self.ficticioEntry.place(x=330, y=205)
+
+        fornecedores_cnpj = Label(jan, text="CNPJ DA EMPRESA: ", font=("Times New Roman", 15))
+        fornecedores_cnpj.place(x=115, y=250)
+        self.cnpjEntry = ttk.Entry(jan, width=40)
+        self.cnpjEntry.place(x=330, y=255)
+
+        fornecedores_END = Label(jan, text="ENDEREÇO DA EMPRESA: ", font=("Times New Roman", 15))
+        fornecedores_END.place(x=85, y=300)
+        self.endEntry = ttk.Entry(jan, width=40)
+        self.endEntry.place(x=330, y=305)
+
+        # Botão para salvar as alterações
+        salvar_button = ttk.Button(jan, text="Salvar Alterações", width=20, command=self.salvar_alteracoes)
+        salvar_button.place(x=330, y=350)
+
+    def buscar_fornecedor(self):
+        idfornecedor = self.idEntry.get()
+        if not idfornecedor:
+            messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
+            return
+
+        db = comunicacao()
+        fornecedor = db.buscar_fornecedor_por_id(idfornecedor)
+
+        if not fornecedor:
+            messagebox.showerror("Erro", "Fornecedor não encontrado.")
+            return
+
+        # Preenche os campos com as informações do fornecedor
+        self.fornomeEntry.delete(0, END)
+        self.fornomeEntry.insert(0, fornecedor[1])  # Nome empresarial
+
+        self.ficticioEntry.delete(0, END)
+        self.ficticioEntry.insert(0, fornecedor[2])  # Nome fantasia
+
+        self.cnpjEntry.delete(0, END)
+        self.cnpjEntry.insert(0, fornecedor[3])  # CNPJ
+
+        self.endEntry.delete(0, END)
+        self.endEntry.insert(0, fornecedor[4])  # Endereço
+
+    def salvar_alteracoes(self):
+        idfornecedor = self.idEntry.get()
+        nomeforn = self.fornomeEntry.get()
+        nomefant = self.ficticioEntry.get()
+        cnpj = self.cnpjEntry.get()
+        end = self.endEntry.get()
+
+        if not idfornecedor:
+            messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
+            return
+
+        if nomeforn == "" or nomefant == "" or cnpj == "" or end == "":
+            messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
+            return
+
+        db = comunicacao()
+        db.atualizar_fornecedor(idfornecedor, nomeforn, nomefant, cnpj, end)
+        messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
     def sair(self):
         from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro(self.root)
