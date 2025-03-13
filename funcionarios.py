@@ -174,9 +174,8 @@ class GerenciadorFuncionarios:
                 db = comunicacao()
                 try:
                     db.ExcluirFuncionario(idfuncionario)
-                    print("Funcionário excluído com sucesso.")
                     self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
-                    messagebox.showinfo("Sucesso", "Funcionario excluído com sucesso!")
+                    messagebox.showinfo("Sucesso", "Funcionario excluído !")
                 except Exception as e:
                     messagebox.showerror("Erro", f"Erro ao excluir funcionário: {e}")
 
@@ -187,7 +186,7 @@ class GerenciadorFuncionarios:
         jan_excluir.resizable(width=False, height=False)
 
         # Tabela (Treeview)
-        colunas = ("ID", "Nome", "Telefone", "Endereco", "Email", "data_nascimento")
+        colunas = ("ID", "Nome", "Telefone", "Endereco", "Email", "Data de nascimento")
         tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings")
         for col in colunas:
             tree.heading(col, text=col)
