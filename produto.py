@@ -141,7 +141,7 @@ class TelaProdutos:
             tree.column("Preço", width=200)
 
             tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
-            def ExclusãoProduto():
+            def ExclusaoProd():
                 item_selecionado = tree.selection()
                 if not item_selecionado:
                     messagebox.showwarning("Atenção", "Selecione um produto para excluir.")
@@ -152,13 +152,13 @@ class TelaProdutos:
                 
                 if resposta:
                     db = comunicacao()
-                    db.ExclusãoProduto(produto_id)
+                    db.ExcluirProduto(produto_id)
                     self.carregar_produto(tree)  # Atualiza a treeview após a exclusão
                     messagebox.showinfo("Sucesso", "Produto excluído com sucesso!")
 
             
 
-            RemoveButton = ttk.Button(produto_remove, text="Excluir Selecionado", command=ExclusãoProduto)
+            RemoveButton = ttk.Button(produto_remove, text="Excluir Selecionado", command=ExclusaoProd)
             RemoveButton.pack(pady=5)
 
             VoltarButton = ttk.Button(produto_remove, text="Fechar", width=10, command=produto_remove.destroy)
