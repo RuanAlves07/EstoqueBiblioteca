@@ -45,12 +45,13 @@ class TelaLoginCadastro:
             messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado, Bem Vindo!")
             self.root.destroy()
 
+            #Puxar do banco
             if nome == "IsaacAdmin":
                 from MenuAdm import Menuadm
                 Menuadm(self.root)
 
             else:
-                from MenuUsuario import MenuU # type: ignore
+                from MenuUsuario import MenuU 
                 MenuU(self.root)
         else:
             messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no sistema!")
