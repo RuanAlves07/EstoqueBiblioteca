@@ -196,38 +196,38 @@ class TelaProdutos:
 
         IDlabel = Label(produto_Update,text = "ID do Produto: ", font =("Times New Roman", 20))
         IDlabel.place(x = 40, y = 15)
-        IDEntry = ttk.Entry(produto_Update, width = 30)
-        IDEntry.place(x = 230, y = 25)
+        self.IDEntry = ttk.Entry(produto_Update, width = 30)
+        self.IDEntry.place(x = 230, y = 25)
 
-        BuscarButton = ttk.Button(produto_Update, text = "BUSCAR", width = 10) 
+        BuscarButton = ttk.Button(produto_Update, text = "BUSCAR", width = 10, command = self.BuscarProduto) 
         BuscarButton.place(x = 430, y = 25)
 
         Nomelabel = Label(produto_Update,text = "Nome do produto: ", font =("Times New Roman", 20))
         Nomelabel.place(x = 40, y = 100)
-        NomeEntry = ttk.Entry(produto_Update, width = 30)
-        NomeEntry.place(x = 295, y = 110)
+        self.NomeEntry = ttk.Entry(produto_Update, width = 30)
+        self.NomeEntry.place(x = 295, y = 110)
 
         Desclabel = Label(produto_Update,text = "Descrição do produto: ", font =("Times New Roman", 20))
         Desclabel.place(x = 20, y = 170)
-        DescEntry = ttk.Entry(produto_Update, width = 30)
-        DescEntry.place(x = 295, y = 180)
+        self.DescEntry = ttk.Entry(produto_Update, width = 30)
+        self.DescEntry.place(x = 295, y = 180)
 
         Generolabel = Label(produto_Update,text = "Gênero do produto: ", font =("Times New Roman", 20))
         Generolabel.place(x = 30, y = 240)
-        GeneroEntry = ttk.Entry(produto_Update, width = 30)
-        GeneroEntry.place(x = 295, y = 250)
+        self.GeneroEntry = ttk.Entry(produto_Update, width = 30)
+        self.GeneroEntry.place(x = 295, y = 250)
 
         Quantidadelabel = Label(produto_Update,text = "Quantidade do produto: ", font =("Times New Roman", 20))
         Quantidadelabel.place(x = 20, y = 310)
-        QuantidadeEntry = ttk.Entry(produto_Update, width = 30)
-        QuantidadeEntry.place(x = 295, y = 320)
+        self.QuantidadeEntry = ttk.Entry(produto_Update, width = 30)
+        self.QuantidadeEntry.place(x = 295, y = 320)
 
         Precolabel = Label(produto_Update,text = "Preço do produto: ", font =("Times New Roman", 20))
         Precolabel.place(x = 40, y = 370)
-        PrecoEntry = ttk.Entry(produto_Update, width = 30)
-        PrecoEntry.place(x = 295, y = 380)
+        self.PrecoEntry = ttk.Entry(produto_Update, width = 30)
+        self.PrecoEntry.place(x = 295, y = 380)
 
-        AttButton = ttk.Button(produto_Update, text = "ATUALIZAR PRODUTO", width = 40) #command = AtualizarNoBanco
+        AttButton = ttk.Button(produto_Update, text = "ATUALIZAR PRODUTO", width = 40, command = self.AtualizarInfos) 
         AttButton.place(x = 270, y = 430)
 
         VoltarButton = ttk.Button(produto_Update, text = "Voltar", width = 8, command = produto_Update.destroy)
@@ -275,9 +275,47 @@ class TelaProdutos:
         self.root.withdraw()
         from MenuAdm import TelaLoginCadastro
         TelaLoginCadastro(self.root)
-            
 
+    def AtualizarInfos(self):
+        idproduto = self.IDEntry.get()
+        nome = self.NomeEntry.get()
+        descricao = self.DescEntry.get()
+        genero = self.GeneroEntry.get()
+        quantidade = self.QuantidadeEntry.get()
+        preco = self.PrecoEntry.get()
 
+        if not idproduto:
+            messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
+            return
+        
+        try:
+            preco = int(preco)
+        except ValueError:
+            messagebox.showerror("Erro", "Preço devem ser valores numéricos!")
+            return
+
+        if nome == "" or descricao == "" or genero == "" or quantidade == "" or preco == "":
+            messagebox.showerror("Erro", "Todos os campos devem ser preenchidos!")
+            return
+
+        db = comunicacao()
+        db.AtualizarProduto(idproduto, nome, descricao, genero,  quantidade, preco)
+        messagebox.showinfo("Sucesso", "Produto atualizado com sucesso!")
+
+    def BuscarProduto(self):
+        idproduto = self.IDEntry.get()
+        if not idproduto:
+            messagebox.showwarning("Atenção", "Por favor, insira o ID do produto.")
+            return
+        
+        db = comunicacao()
+        produto = db.PuxarProdutoPorID(idproduto)
+        
+        if not produto:
+            messagebox.showerror("Erro", "Produto não encontrado.")
+            return
+
+    
 root = Tk()
 app = TelaProdutos(root)
 root.mainloop()

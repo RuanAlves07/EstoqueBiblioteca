@@ -27,12 +27,16 @@ class comunicacao:
         return produtos
 
     def AtualizarProduto(self, idproduto, nome, descricao, genero, quantidade, preco):
-        self.cursor.execute("UPDATE produto SET nome = %s, descricao = %s, genero = %s, quantidade = %s, preco = %s WHERE idproduto = %s ",(idproduto, nome, descricao, genero, quantidade, preco)) 
+        self.cursor.execute("UPDATE produto SET nome = %s, descricao = %s, genero = %s, quantidade = %s, preco = %s WHERE idproduto = %s ",(nome, descricao, genero, quantidade, preco, idproduto)) 
         self.conn.commit() 
 
     def ListarProduto(self, idproduto):
-        self.cursor.execute("SELECT * FROM produto WHERE idproduto = %s", (idproduto)) 
+        self.cursor.execute("SELECT * FROM produto WHERE idproduto = %s", (idproduto,)) 
         return self.cursor.fetchone() 
+    
+    def PuxarProdutoPorID(self, idproduto):
+        self.cursor.execute("SELECT * FROM produto WHERE idproduto = %s", (idproduto,))
+        return self.cursor.fetchone()
     
     def RegistrarFornecedor(self, nome, nomefantasia, CNPJ, endereco):
         self.cursor.execute("INSERT INTO fornecedor (nome, nomefantasia, CNPJ, endereco) VALUES (%s, %s, %s, %s)",(nome, nomefantasia, CNPJ, endereco))
