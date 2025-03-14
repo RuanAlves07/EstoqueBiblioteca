@@ -50,7 +50,7 @@ class TelaLoginCadastro:
                 Menuadm(self.root)
 
             else:
-                from MenuUsuario import MenuU # type: ignore
+                from MenuUsuario import MenuU 
                 MenuU(self.root)
         else:
             messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no sistema!")

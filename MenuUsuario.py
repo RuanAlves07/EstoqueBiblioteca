@@ -16,14 +16,23 @@ class MenuU:
 
         # Botão Fornecedores
         self.FornecedoresButton = ttk.Button(self.root, text="Fornecedores", width=20, command=self.TelaFornecedores)
-        self.FornecedoresButton.place(x=430, y=300)
-        Label(self.root, text="Aqui você pode\ncadastrar, listar, excluir\ne pesquisar os nossos\nfornecedores", font=("Arial", 10), bg="#f6f3ec").place(x=423, y=340)
+        self.FornecedoresButton.place(x=260, y=300)
+        Label(self.root, text="Aqui você pode\ncadastrar, listar, excluir\ne pesquisar os nossos\nfornecedores", font=("Arial", 10), bg="#f6f3ec").place(x=253, y=340)
+
+        self.ProdutosButton = ttk.Button(self.root, text="Produtos", width=20, command=self.TelaProdutos)
+        self.ProdutosButton.place(x=580, y=300)
+        Label(self.root, text="Na tela de produtos você pode\ncadastrar, listar, excluir\ne pesquisar os produtos", font=("Arial", 10), bg="#f6f3ec").place(x=550, y=340)
 
 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
         nova_janela = Toplevel(self.root)
         FornecedorApp(nova_janela)
+
+    def TelaProdutos(self):
+        from produto import TelaProdutos
+        nova_janela = Toplevel(self.root)
+        TelaProdutos(nova_janela)
 
 
 if __name__ == "__main__":
