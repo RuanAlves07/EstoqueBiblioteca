@@ -19,18 +19,18 @@ class Menuadm:
 
         # Botão Funcionários
         self.FuncionariosButton = ttk.Button(self.root, text="Funcionários", width=20, command=self.TelaFuncionarios)
-        self.FuncionariosButton.place(x=105, y=300)
-        Label(self.root, text="Tela de funcionários\nAqui você pode cadastrar, listar, excluir\ne pesquisar os funcionários da nossa biblioteca",font=("Arial", 10), bg="#f6f3ec").place(x=30, y=330)
+        self.FuncionariosButton.place(x=105, y=400)
+        Label(self.root, text="Tela de funcionários\nAqui você pode cadastrar, listar, excluir\ne pesquisar os funcionários da nossa biblioteca",font=("Arial", 10), bg="#f6f3ec").place(x=30, y=430)
 
         # Botão Fornecedores
         self.FornecedoresButton = ttk.Button(self.root, text="Fornecedores", width=20, command=self.TelaFornecedores)
-        self.FornecedoresButton.place(x=450, y=300)
-        Label(self.root, text="Aqui você pode\ncadastrar, listar, excluir\ne pesquisar os nossos\nfornecedores", font=("Arial", 10), bg="#f6f3ec").place(x=440, y=330)
+        self.FornecedoresButton.place(x=450, y=400)
+        Label(self.root, text="Aqui você pode\ncadastrar, listar, excluir\ne pesquisar os nossos\nfornecedores", font=("Arial", 10), bg="#f6f3ec").place(x=440, y=430)
 
         # Botão Produtos
         self.ProdutosButton = ttk.Button(self.root, text="Produtos", width=20, command=self.TelaProdutos)
-        self.ProdutosButton.place(x=770, y=300)
-        Label(self.root, text="Na tela de produtos você pode\ncadastrar, listar, excluir\ne pesquisar os produtos", font=("Arial", 10), bg="#f6f3ec").place(x=740, y=330)
+        self.ProdutosButton.place(x=770, y=400)
+        Label(self.root, text="Na tela de produtos você pode\ncadastrar, listar, excluir\ne pesquisar os produtos", font=("Arial", 10), bg="#f6f3ec").place(x=740, y=430)
 
     def TelaFuncionarios(self):
         from funcionarios import GerenciadorFuncionarios
