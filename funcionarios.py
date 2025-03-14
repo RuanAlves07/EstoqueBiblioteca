@@ -81,9 +81,14 @@ class GerenciadorFuncionarios:
             db = comunicacao()
             db.RegistrarFuncionario(nome, telefone, enderecofunc, email, data_nascimento)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
+        self.limpar_campos()
 
-
-
+    def limpar_campos(self):
+        self.UsuarioEntry.delete(0, END)  # Limpa o campo NOME 
+        self.TelefoneEntry.delete(0, END)  # Limpa o campo TELEFONE
+        self.EnderecoEntry.delete(0, END)  # Limpa o campo ENDERECO
+        self.EmailEntry.delete(0, END)  # Limpa o campo EMAIL
+        self.NascEntry.delete(0, END)  # Limpa o campo DATA DE NASCIMENTO
 
 
     def listar_func(self):
