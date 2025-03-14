@@ -81,9 +81,14 @@ class GerenciadorFuncionarios:
             db = comunicacao()
             db.RegistrarFuncionario(nome, telefone, enderecofunc, email, data_nascimento)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
+        self.limpar_campos()
 
-
-
+    def limpar_campos(self):
+        self.UsuarioEntry.delete(0, END)  # Limpa o campo NOME 
+        self.TelefoneEntry.delete(0, END)  # Limpa o campo TELEFONE
+        self.EnderecoEntry.delete(0, END)  # Limpa o campo ENDERECO
+        self.EmailEntry.delete(0, END)  # Limpa o campo EMAIL
+        self.NascEntry.delete(0, END)  # Limpa o campo DATA DE NASCIMENTO
 
 
     def listar_func(self):
@@ -116,7 +121,7 @@ class GerenciadorFuncionarios:
         bt_fechar.pack(pady=5)
 
         # Carrega os fornecedores na treeview
-        self.carregar_fornecedores(tree)
+        self.carregar_funcionarios(tree)
 
 
         def carregar_funcionarios():
@@ -136,11 +141,7 @@ class GerenciadorFuncionarios:
                 carregar_funcionarios()
                 messagebox.showinfo("Sucesso", "Funcionario achado com sucesso!")
 
-        janela = Toplevel(self.root)
-        janela.title("Listar Fornecedores")
-        janela.geometry("700x400")
-        janela.configure(background="#f6f3ec")
-        janela.resizable(width=False, height=False)
+        
 
         colunas = ("ID", "Nome", "Telefone", "Endereço", "Email" "Data de Nascimento")
         tree = ttk.Treeview(janela, columns=colunas, show="headings")
@@ -262,7 +263,7 @@ class GerenciadorFuncionarios:
             return
 
         db = comunicacao()
-        db.atuu_func(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)
+        db.AtualizarFuncionario(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)
         messagebox.showinfo("Sucesso", "Funcionario atualizado com sucesso!")
     def sair(self):
         from MenuAdm import TelaLoginCadastro
@@ -282,7 +283,7 @@ class GerenciadorFuncionarios:
             resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario ?")
             if resposta:
                 db = comunicacao()
-                db.ExcluirFornecedor(funcionario_id)
+                db.ExcluirFuncionario(funcionario_id)
                 self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
                 messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
 

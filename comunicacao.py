@@ -8,7 +8,7 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "root",
+            password = "",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
@@ -86,6 +86,10 @@ class comunicacao:
     def ListarFuncionario(self, idfuncionario):
         self.cursor.execute("SELECT * FROM funcionario WHERE idfuncionario = %s", (idfuncionario)) 
         return self.cursor.fetchone() 
+    
+    def buscar_funcionario_por_id(self, idfuncionario):
+        self.cursor.execute("SELECT * FROM funcionario WHERE idfuncionario = %s", (idfuncionario,))
+        return self.cursor.fetchone()  # Retorna uma tupla com os dados do funcionario
     
 
 
