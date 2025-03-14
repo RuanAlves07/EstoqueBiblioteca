@@ -168,7 +168,7 @@ class TelaProdutos:
                 if resposta:
                     db = comunicacao()
                     db.ExcluirProduto(produto_id)
-                    self.PuxarInfo(tree)  # Atualiza a treeview após a exclusão
+                    self.PuxarInfo(tree)  
                     messagebox.showinfo("Sucesso", "Produto excluído com sucesso!")
 
             
