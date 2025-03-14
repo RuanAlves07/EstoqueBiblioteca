@@ -38,14 +38,14 @@ class TelaLoginCadastro:
         senha = self.SenhaEntry.get()
 
         db = comunicacao() 
-        db.cursor.execute("SELECT * FROM usuario WHERE nome = %s AND senha = %s", (nome, senha))
+        db.cursor.execute("SELECT * FROM login WHERE nome = %s AND senha = %s", (nome, senha))
         VerifyLogin = db.cursor.fetchone()
+        db.close()
 
         if VerifyLogin:
+            tipo_usuario = VerifyLogin[0]
             messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado, Bem Vindo!")
-            self.root.withdraw()
-            from MenuAdm import TelaLoginCadastro  
-            TelaLoginCadastro(self.root)
+            TelaLoginCadastro.destroy()
         else:
             messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no sistema!")
 
