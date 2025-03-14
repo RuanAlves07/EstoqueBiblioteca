@@ -315,6 +315,22 @@ class TelaProdutos:
             messagebox.showerror("Erro", "Produto não encontrado.")
             return
 
+        
+        self.NomeEntry.delete(0, END)
+        self.NomeEntry.insert(0, produto[1])  # Nome
+
+        self.DescEntry.delete(0, END)
+        self.DescEntry.insert(0, produto[2])  # Descrição
+
+        self.GeneroEntry.delete(0, END)
+        self.GeneroEntry.insert(0, produto[3])  # Gênero
+
+        self.QuantidadeEntry.delete(0, END)
+        self.QuantidadeEntry.insert(0, produto[4])  # Quantidade
+
+        self.PrecoEntry.delete(0, END)
+        self.PrecoEntry.insert(0, produto[5])  # Preço
+
     
 root = Tk()
 app = TelaProdutos(root)
