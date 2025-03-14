@@ -116,7 +116,7 @@ class GerenciadorFuncionarios:
         bt_fechar.pack(pady=5)
 
         # Carrega os fornecedores na treeview
-        self.carregar_fornecedores(tree)
+        self.carregar_funcionarios(tree)
 
 
         def carregar_funcionarios():
@@ -136,11 +136,7 @@ class GerenciadorFuncionarios:
                 carregar_funcionarios()
                 messagebox.showinfo("Sucesso", "Funcionario achado com sucesso!")
 
-        janela = Toplevel(self.root)
-        janela.title("Listar Fornecedores")
-        janela.geometry("700x400")
-        janela.configure(background="#f6f3ec")
-        janela.resizable(width=False, height=False)
+        
 
         colunas = ("ID", "Nome", "Telefone", "Endereço", "Email" "Data de Nascimento")
         tree = ttk.Treeview(janela, columns=colunas, show="headings")
@@ -262,7 +258,7 @@ class GerenciadorFuncionarios:
             return
 
         db = comunicacao()
-        db.atuu_func(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)
+        db.AtualizarFuncionario(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)
         messagebox.showinfo("Sucesso", "Funcionario atualizado com sucesso!")
     def sair(self):
         from MenuAdm import TelaLoginCadastro
