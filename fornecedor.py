@@ -262,8 +262,8 @@ class FornecedorApp:
         db.AtualizarFornecedor(idfornecedor, nomeforn, nomefant, cnpj, end)
         messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
     def sair(self):
-        from MenuAdm import TelaLoginCadastro
-        TelaLoginCadastro(self.root)
+        from MenuAdm import Menuadm
+        Menuadm(self.root)
 
 
 root = Tk()
