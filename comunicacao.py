@@ -67,16 +67,8 @@ class comunicacao:
 
     def ExcluirFuncionario(self, idfuncionario):
         
-        try:
-            query = "DELETE FROM funcionario WHERE idfuncionario = %s"
-            self.cursor.execute(query, idfuncionario)
-            self.conn.commit()
-            print("Funcionário excluído com sucesso!")
-        except mysql.connector.Error as err:
-            print(f"Erro ao excluir funcionário: {err}")
-        finally:
-            self.cursor.close()
-            self.conn.close()
+        self.cursor.execute("DELETE FROM funcionario WHERE idfuncionario = %s", (idfuncionario,)) 
+        self.conn.commit()
 
     def carregar_funcionario(self):
         self.cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
