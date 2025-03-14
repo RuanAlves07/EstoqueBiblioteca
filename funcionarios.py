@@ -282,7 +282,7 @@ class GerenciadorFuncionarios:
             resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario ?")
             if resposta:
                 db = comunicacao()
-                db.ExcluirFornecedor(funcionario_id)
+                db.ExcluirFuncionario(funcionario_id)
                 self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
                 messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
 
