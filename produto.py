@@ -272,9 +272,8 @@ class TelaProdutos:
         self.PuxarInfo(tree)
 
     def VoltarMenu(self):
-        self.root.withdraw()
-        from MenuAdm import TelaLoginCadastro
-        TelaLoginCadastro(self.root)
+        from MenuAdm import Menuadm
+        Menuadm(self.root)
 
     def AtualizarInfos(self):
         idproduto = self.IDEntry.get()
