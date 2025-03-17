@@ -7,6 +7,9 @@ class Menuadm:
     def __init__(self, root):
         self.Abrir_Menu(root)
 
+    def BuscarUsuario(self, nome):
+        self.cursor.execute("SELECT * FROM login WHERE nome = %s", (nome,))
+        
     def Abrir_Menu(self, root):
         self.root = root
         self.root.title("MenuAdm")
@@ -14,7 +17,7 @@ class Menuadm:
         self.root.configure(background = "#f6f3ec")
         self.root.resizable(width= False, height = False)
 
-        self.BV = Label(self.root, text="BEM VINDO ISAAC", font=("Arial", 20, "bold"), bg="#f6f3ec")
+        self.BV = Label(self.root, text="BEM VINDO", font=("Arial", 20, "bold"), bg="#f6f3ec")
         self.BV.place(anchor ="center")
 
         self.InfoLabel = Label(self.root, text="Por favor, selecione uma das opções abaixo", font=("Arial", 14), bg="#f6f3ec")
@@ -25,6 +28,9 @@ class Menuadm:
         cadButton = ttk.Button(self.root, text="Cadastrar Usuario", width=20, command=self.CriarUsuario)
         cadButton.place(x=450, y=450)
         Label(self.root, text="Você pode cadastrar\n o seu usuario aqui", font=("Arial", 10), bg="#f6f3ec").place(x=450, y=490)
+
+        cadButton = ttk.Button(self.root, text="LogOff", width=20, command=self.LogOff)
+        cadButton.place(x=800, y=40)
 
         # Botão Funcionários
         self.FuncionariosButton = ttk.Button(self.root, text="Funcionários", width=20, command=self.TelaFuncionarios)
@@ -99,6 +105,13 @@ class Menuadm:
         self.UserNomeEntry.delete(0, END)  
         self.SenhaEntry.delete(0, END)  
         self.UserNomeCEntry.delete(0, END)
+
+    def LogOff(self):
+        
+        from Login import TelaLoginCadastro
+        nova_janela = Toplevel(self.root)
+        TelaLoginCadastro(nova_janela)
+
 
 if __name__ == "__main__":
     root = Tk()
