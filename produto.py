@@ -97,7 +97,7 @@ class TelaProdutos:
                 db = comunicacao() 
                 db.RegistrarProduto(nome, descricao, genero, quantidade, preco) 
  
-                messagebox.showinfo("Success", "Usuario criado com sucesso!")
+                messagebox.showinfo("Success", "produto registrado com sucesso!")
             else:
 
                 messagebox.showerror("Error","Todos os campos são obrigatórios")
