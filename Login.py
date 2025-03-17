@@ -35,30 +35,32 @@ class TelaLoginCadastro:
 
     # Def para fazer login
     def FazerLogin(self):
-        nome = self.LoginEntry.get()
-        senha = self.SenhaEntry.get()
+    nome = self.LoginEntry.get()
+    senha = self.SenhaEntry.get()
 
-        db = comunicacao() 
-        db.cursor.execute("SELECT * FROM login WHERE nome = %s AND senha = %s", (nome, senha))
-        VerifyLogin = db.cursor.fetchone()
+    db = comunicacao() 
+    db.cursor.execute("SELECT * FROM login WHERE nome = %s AND senha = %s", (nome, senha))
+    VerifyLogin = db.cursor.fetchone()
 
-        if VerifyLogin:
-            messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado, Bem Vindo!")
-            self.root.destroy()
-            adm = VerifyLogin[0]
+    if VerifyLogin:
+        messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado, Bem Vindo!")
+        self.root.destroy()
 
-            #Puxar do banco
-            if adm == 1:
-                from MenuAdm import Menuadm
-                menu_root = Toplevel(self.root)
-                menu = Menuadm(menu_root)
+        adm = VerifyLogin[0]
 
-            else:
-                from MenuUsuario import MenuU
-                menu_root = Toplevel(self.root)  # Criar uma nova janela em vez de Tk()
-                menu = MenuU(menu_root) 
+        if adm == 1:
+            from MenuAdm import Menuadm
+            root_menu = Tk()  
+            Menuadm(root_menu)
+            root_menu.mainloop()
+
         else:
-            messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no sistema!")
+            from MenuUsuario import MenuU
+            root_menu = Tk() 
+            MenuU(root_menu)
+            root_menu.mainloop()
+    else:
+        messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no sistema!")
 
 
 if __name__ == "__main__":
