@@ -29,9 +29,6 @@ class Menuadm:
         cadButton.place(x=450, y=450)
         Label(self.root, text="Você pode cadastrar\n o seu usuario aqui", font=("Arial", 10), bg="#f6f3ec").place(x=450, y=490)
 
-        cadButton = ttk.Button(self.root, text="LogOff", width=20, command=self.LogOff)
-        cadButton.place(x=800, y=40)
-
         # Botão Funcionários
         self.FuncionariosButton = ttk.Button(self.root, text="Funcionários", width=20, command=self.TelaFuncionarios)
         self.FuncionariosButton.place(x=105, y=250)
@@ -105,12 +102,6 @@ class Menuadm:
         self.UserNomeEntry.delete(0, END)  
         self.SenhaEntry.delete(0, END)  
         self.UserNomeCEntry.delete(0, END)
-
-    def LogOff(self):
-        
-        from Login import TelaLoginCadastro
-        nova_janela = Toplevel(self.root)
-        TelaLoginCadastro(nova_janela)
 
 
 if __name__ == "__main__":
