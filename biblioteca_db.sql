@@ -2,7 +2,9 @@ create table login(
 
 	idusuario int not null auto_increment,
 	nome text,
+    usuario text,
     senha text,
+    adm text,
     primary key (idusuario)
 
 );
