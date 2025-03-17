@@ -62,7 +62,7 @@ class Menuadm:
         jan.configure(background="#f6f3ec")
         jan.resizable(width=False, height=False)
 
-        UsuarioLabel = Label(jan, text="Nome: ", font=("Times New Roman", 15))
+        UsuarioLabel = Label(jan, text="Usuario: ", font=("Times New Roman", 15))
         UsuarioLabel.place(x=115, y=55)
         self.UserNomeEntry = ttk.Entry(jan, width=30)
         self.UserNomeEntry.place(x=230, y=60)
@@ -70,26 +70,34 @@ class Menuadm:
         SenhaLabel = Label(jan, text="Senha: ", font=("Times New Roman", 15))
         SenhaLabel.place(x=115, y=150)
         self.SenhaEntry = ttk.Entry(jan, width=40)
-        self.SenhaEntry.place(x=230, y=160)
+        self.SenhaEntry.place(x=230, y=155)
+
+        NomeCompletoLabel = Label(jan, text="Nome Completo: ", font=("Times New Roman", 15))
+        NomeCompletoLabel.place(x=115, y=265)
+        self.UserNomeCEntry = ttk.Entry(jan, width=30)
+        self.UserNomeCEntry.place(x=270, y=270)
+
 
         AddButton = ttk.Button(jan, text="REGISTRAR USUARIO", width=30, command=self.RegistrarUsuarios)
         AddButton.place(x=300, y=320)
 
     def RegistrarUsuarios(self):
-        nome = self.UserNomeEntry.get()
+        nome = self.UserNomeCEntry.get()
         senha = self.SenhaEntry.get()
+        Usuario = self.UserNomeEntry.get()
 
-        if nome == "" or senha == "":
+        if nome == "" or senha == "" or Usuario == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.RegistrarUsuario(nome, senha)
+            db.RegistrarCliente(nome, senha, Usuario)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
             self.limpar_campos()
 
     def limpar_campos(self):
-        self.UserNomeEntry.delete(0, END)  # Limpa o campo NOME 
-        self.SenhaEntry.delete(0, END)  # Limpa o campo TELEFONE
+        self.UserNomeEntry.delete(0, END)  
+        self.SenhaEntry.delete(0, END)  
+        self.UserNomeCEntry.delete(0, END)
 
 if __name__ == "__main__":
     root = Tk()
