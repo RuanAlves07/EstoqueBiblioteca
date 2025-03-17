@@ -33,8 +33,7 @@ class GerenciadorFuncionarios:
         atuButton = ttk.Button(self.root, text="Atualizar Funcionario", width=50, command=self.atuu_func)
         atuButton.place(x=45, y=500)
 
-        voltButton = ttk.Button(self.root, text="Fechar", width=10, command=self.sair)
-        voltButton.place(x=10, y=570)
+        
 
     def cadastro_func(self):
         jan_cadastro = tk.Toplevel(self.root)
@@ -66,7 +65,7 @@ class GerenciadorFuncionarios:
 
         # Botões
         ttk.Button(jan_cadastro, text="REGISTRAR FUNCIONARIO", width=30, command=self.RegistrarFuncionario).place(x=300, y=520)
-        ttk.Button(jan_cadastro, text="Fechar", width=10, command=jan_cadastro.destroy).place(x=10, y=570)
+        
 
     def RegistrarFuncionario(self):
         nome = self.UsuarioEntry.get()
@@ -117,8 +116,8 @@ class GerenciadorFuncionarios:
 
         tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
 
-        bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
-        bt_fechar.pack(pady=5)
+       
+       
 
         # Carrega os fornecedores na treeview
         self.carregar_funcionarios(tree)
@@ -162,9 +161,8 @@ class GerenciadorFuncionarios:
 
         tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
 
-        bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
-        bt_fechar.pack(pady=5)
-
+       
+       
         carregar_funcionarios()
        
 
@@ -317,8 +315,6 @@ class GerenciadorFuncionarios:
         bt_excluir = ttk.Button(jan_excluir, text="Excluir Selecionado", command=excluir_selecionado)
         bt_excluir.pack(pady=5)
         
-        bt_fechar = ttk.Button(jan_excluir, text="Fechar", width=10, command=jan_excluir.destroy)
-        bt_fechar.pack(pady=5)
 
         # Carregar funcionários na tabela
         self.carregar_funcionarios(tree)
