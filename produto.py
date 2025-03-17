@@ -83,8 +83,6 @@ class TelaProdutos:
 
         # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica que está faltando algum campo de entrada
 
-
-
         def RegistrarProduto():
  
             nome = NomeEntry.get()
@@ -112,12 +110,15 @@ class TelaProdutos:
         VoltarButton = ttk.Button(produto_add, text = "Voltar", width = 8, command = produto_add.destroy)
         VoltarButton.place(x = 10, y = 570)
 
+
+    # Def para puxar as informações da tabela e jogar tudo para a lista no qual aparece no código 
+
     def PuxarInfo(self, tree):
         for item in tree.get_children():
             tree.delete(item)
 
-        db = comunicacao()  # Define a comunicação com o banco
-        cursor = db.conn.cursor()  # Cria o cursor fora do loop
+        db = comunicacao()  
+        cursor = db.conn.cursor()  
     
         try:
             cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM produto")
@@ -152,6 +153,9 @@ class TelaProdutos:
             tree.column("Preço", width=200)
 
             tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+
+            # Def feita para realizar a exclusão do produto e já comunicar com o banco para apagar as informações do produto
+
             def ExclusaoProd():
                 item_selecionado = tree.selection()
                 if not item_selecionado:
@@ -175,7 +179,7 @@ class TelaProdutos:
             VoltarButton = ttk.Button(produto_remove, text="Fechar", width=10, command=produto_remove.destroy)
             VoltarButton.pack(pady=5)
 
-        # Carrega os fornecedores na treeview
+        
             self.PuxarInfo(tree)
 
 
@@ -190,41 +194,59 @@ class TelaProdutos:
         produto_Update.resizable(width=False, height=False)
 
 
+        # Label e caixa do ID do Produto dentro do Atualizar Informação
+
         IDlabel = Label(produto_Update,text = "ID do Produto: ", font =("Times New Roman", 20))
         IDlabel.place(x = 40, y = 15)
         self.IDEntry = ttk.Entry(produto_Update, width = 30)
         self.IDEntry.place(x = 230, y = 25)
 
+        # Label e caixa do buscar dentro do Atualizar Informação
+
         BuscarButton = ttk.Button(produto_Update, text = "BUSCAR", width = 10, command = self.BuscarProduto) 
         BuscarButton.place(x = 430, y = 25)
+
+        # Label e caixa do Nome do produto dentro do Atualizar Informação
 
         Nomelabel = Label(produto_Update,text = "Nome do produto: ", font =("Times New Roman", 20))
         Nomelabel.place(x = 40, y = 100)
         self.NomeEntry = ttk.Entry(produto_Update, width = 30)
         self.NomeEntry.place(x = 295, y = 110)
 
+        # Label e caixa da descrição do produto dentro do Atualizar Informação
+
         Desclabel = Label(produto_Update,text = "Descrição do produto: ", font =("Times New Roman", 20))
         Desclabel.place(x = 20, y = 170)
         self.DescEntry = ttk.Entry(produto_Update, width = 30)
         self.DescEntry.place(x = 295, y = 180)
+
+        # Label e caixa do genero do produto dentro do Atualizar Informação
 
         Generolabel = Label(produto_Update,text = "Gênero do produto: ", font =("Times New Roman", 20))
         Generolabel.place(x = 30, y = 240)
         self.GeneroEntry = ttk.Entry(produto_Update, width = 30)
         self.GeneroEntry.place(x = 295, y = 250)
 
+        # Label e caixa da quantidade do produto dentro do Atualizar Informação
+
         Quantidadelabel = Label(produto_Update,text = "Quantidade do produto: ", font =("Times New Roman", 20))
         Quantidadelabel.place(x = 20, y = 310)
         self.QuantidadeEntry = ttk.Entry(produto_Update, width = 30)
         self.QuantidadeEntry.place(x = 295, y = 320)
+
+        # Label e caixa do preço do produto dentro do Atualizar Informação
 
         Precolabel = Label(produto_Update,text = "Preço do produto: ", font =("Times New Roman", 20))
         Precolabel.place(x = 40, y = 370)
         self.PrecoEntry = ttk.Entry(produto_Update, width = 30)
         self.PrecoEntry.place(x = 295, y = 380)
 
+        # Botão para atualizar a informação com a ação de atualizarInfo e quando apertar, já comunicar com o banco e atualizar as informações
+
         AttButton = ttk.Button(produto_Update, text = "ATUALIZAR PRODUTO", width = 40, command = self.AtualizarInfos) 
         AttButton.place(x = 270, y = 430)
+
+        # Botão para voltar para a tela de menu principal dos produtos
 
         VoltarButton = ttk.Button(produto_Update, text = "Voltar", width = 8, command = produto_Update.destroy)
         VoltarButton.place(x = 10, y = 470)
@@ -262,12 +284,15 @@ class TelaProdutos:
 
         tree.pack(pady=10, padx=10, fill=BOTH, expand=False)
 
+        # Botão de voltar para voltar para a tela inicial da tela de produto
+
         VoltarButton = ttk.Button(produto_list, text = "Voltar", width = 8, command = produto_list.destroy)
         VoltarButton.place(x = 10, y = 270)
 
         self.PuxarInfo(tree)
 
 
+    # Def feita para a tela de "ATUALIZAR PRODUTO" no qual você pode buscar o mesmo pelo ID e identificar o que precisa alterar 
 
     def AtualizarInfos(self):
         idproduto = self.IDEntry.get()
@@ -277,6 +302,8 @@ class TelaProdutos:
         quantidade = self.QuantidadeEntry.get()
         preco = self.PrecoEntry.get()
 
+        # Notificação para inserir o ID do fornecedor, sem isso ele não vai alterar
+
         if not idproduto:
             messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
             return
@@ -284,16 +311,25 @@ class TelaProdutos:
         try:
             preco = int(preco)
         except ValueError:
+
+            # Se o preço não for um número de fato, ele vai dar erro e vai dar a notificação
+
             messagebox.showerror("Erro", "Preço devem ser valores numéricos!")
             return
+
+        # Verificação de todas as caixas, se alguma caixa estiver vazia ele vai dar a notificação
 
         if nome == "" or descricao == "" or genero == "" or quantidade == "" or preco == "":
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos!")
             return
+        
+        # Puxa as informações para o banco
 
         db = comunicacao()
         db.AtualizarProduto(idproduto, nome, descricao, genero,  quantidade, preco)
         messagebox.showinfo("Sucesso", "Produto atualizado com sucesso!")
+
+    # Def feita para conseguir puxar as informações do produto via ID
 
     def BuscarProduto(self):
         idproduto = self.IDEntry.get()
@@ -308,23 +344,33 @@ class TelaProdutos:
             messagebox.showerror("Erro", "Produto não encontrado.")
             return
 
-        
+        # Puxa o nome para as caixas
+
         self.NomeEntry.delete(0, END)
-        self.NomeEntry.insert(0, produto[1])  # Nome
+        self.NomeEntry.insert(0, produto[1])  
+
+        # Puxa a descrição para as caixas
 
         self.DescEntry.delete(0, END)
-        self.DescEntry.insert(0, produto[2])  # Descrição
+        self.DescEntry.insert(0, produto[2])  
+
+        # Puxa o gênero para as caixas
 
         self.GeneroEntry.delete(0, END)
-        self.GeneroEntry.insert(0, produto[3])  # Gênero
+        self.GeneroEntry.insert(0, produto[3])  
+
+        # Puxa a quantidade para as caixas
 
         self.QuantidadeEntry.delete(0, END)
-        self.QuantidadeEntry.insert(0, produto[4])  # Quantidade
+        self.QuantidadeEntry.insert(0, produto[4])  
+
+        # Puxa o preço para as caixas
 
         self.PrecoEntry.delete(0, END)
-        self.PrecoEntry.insert(0, produto[5])  # Preço
+        self.PrecoEntry.insert(0, produto[5])  
 
-    
+
+
 root = Tk()
 app = TelaProdutos(root)
 root.mainloop()
