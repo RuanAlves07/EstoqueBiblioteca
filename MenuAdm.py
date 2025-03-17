@@ -53,6 +53,5 @@ class Menuadm:
 
 if __name__ == "__main__":
     root = Tk()
-    app = Menuadm()
-    app.Abrir_Menu(root)
+    app = Menuadm(root)  
     root.mainloop()

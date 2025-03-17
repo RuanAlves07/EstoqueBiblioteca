@@ -33,6 +33,7 @@ class TelaLoginCadastro:
         # Iniciar a janela
         self.root.mainloop()
 
+    # Def para fazer login
     def FazerLogin(self):
         nome = self.LoginEntry.get()
         senha = self.SenhaEntry.get()
@@ -49,13 +50,13 @@ class TelaLoginCadastro:
             #Puxar do banco
             if adm == 1:
                 from MenuAdm import Menuadm
-                menu = Menuadm() 
-                menu.Abrir_Menu(Tk())  
+                menu_root = Toplevel(self.root)
+                menu = Menuadm(menu_root)
 
             else:
                 from MenuUsuario import MenuU
-                menu = MenuU()  
-                menu.Abrir_Menu(Tk())  
+                menu_root = Toplevel(self.root)  # Criar uma nova janela em vez de Tk()
+                menu = MenuU(menu_root) 
         else:
             messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no sistema!")
 

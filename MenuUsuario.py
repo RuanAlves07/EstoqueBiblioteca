@@ -38,9 +38,7 @@ class MenuU:
         nova_janela = Toplevel(self.root)
         TelaProdutos(nova_janela)
 
-
 if __name__ == "__main__":
     root = Tk()
-    app = MenuU()
-    app.Abrir_Menu(root)
+    app = MenuU(root)  
     root.mainloop()
