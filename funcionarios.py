@@ -174,17 +174,17 @@ class GerenciadorFuncionarios:
         jan_atualizar.configure(background="#f6f3ec")
         jan_atualizar.resizable(width=False, height=False)
 
-        # Campo para inserir o ID do fornecedor
+        # Campo para inserir o ID do funcionario
         id_label = Label(jan_atualizar, text="ID DO FUNCIONARIO: ", font=("Times New Roman", 15))
         id_label.place(x=115, y=55)
         self.idEntry = ttk.Entry(jan_atualizar, width=30)
         self.idEntry.place(x=330, y=60)
 
-        # Botão para buscar o fornecedor
+        # Botão para buscar o funcionario
         buscar_button = ttk.Button(jan_atualizar, text="Buscar Funcionario", width=20, command=self.buscar_funcionario)
         buscar_button.place(x=330, y=100)
 
-        # Campos para editar as informações do fornecedor
+        # Campos para editar as informações do funcionario
         funlabel = Label(jan_atualizar, text="NOME : ", font=("Times New Roman", 15))
         funlabel.place(x=115, y=150)
         self.funnomeEntry = ttk.Entry(jan_atualizar, width=30)
