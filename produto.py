@@ -33,10 +33,6 @@ class TelaProdutos:
         ListButton = ttk.Button(root, text = "LISTAR PRODUTOS", width = 50, command = self.GoToList)
         ListButton.place(x = 45, y = 500)
 
-    #Button de voltar para tela de menu principal do sistema
-        VoltarButton = ttk.Button(root, text = "Voltar", width = 8, command = self.VoltarMenu)
-        VoltarButton.place(x = 10, y = 570)
-
 
     
     # Def para ir para a aba de adicionar livros
@@ -271,9 +267,7 @@ class TelaProdutos:
 
         self.PuxarInfo(tree)
 
-    def VoltarMenu(self):
-        from MenuAdm import Menuadm
-        Menuadm(self.root)
+
 
     def AtualizarInfos(self):
         idproduto = self.IDEntry.get()
