@@ -4,7 +4,6 @@ create table login(
 	nome text,
     usuario text,
     senha text,
-    adm text,
     primary key (idusuario)
 
 );

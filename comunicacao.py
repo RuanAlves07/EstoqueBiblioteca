@@ -12,7 +12,11 @@ class comunicacao:
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
-            
+
+    def RegistrarCliente(self, nome, usuario, senha):
+        self.cursor.execute("INSERT INTO login (nome, usuario, senha) VALUES (%s, %s, %s)", (nome, usuario, senha))
+        self.conn.commit() 
+
     def RegistrarProduto(self, nome, descricao, genero, quantidade, preco):
         self.cursor.execute("INSERT INTO produto (nome, descricao, genero, quantidade, preco) VALUES (%s, %s, %s, %s, %s)", (nome, descricao, genero, quantidade, preco))
         self.conn.commit() 
