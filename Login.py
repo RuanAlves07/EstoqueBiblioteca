@@ -44,9 +44,10 @@ class TelaLoginCadastro:
         if VerifyLogin:
             messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado, Bem Vindo!")
             self.root.destroy()
+            adm = VerifyLogin[0]
 
             #Puxar do banco
-            if nome == "IsaacAdmin":
+            if adm == 1:
                 from MenuAdm import Menuadm
                 menu = Menuadm() 
                 menu.Abrir_Menu(Tk())  

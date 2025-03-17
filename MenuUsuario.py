@@ -2,6 +2,10 @@ from tkinter import *
 from tkinter import ttk
 
 class MenuU:
+
+    def __init__(self, root):
+        self.Abrir_Menu(root)
+
     def Abrir_Menu(self, root):
         self.root = root
         self.root.title("MenuUsuario")
