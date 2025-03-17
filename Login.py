@@ -48,11 +48,13 @@ class TelaLoginCadastro:
             #Puxar do banco
             if nome == "IsaacAdmin":
                 from MenuAdm import Menuadm
-                Menuadm(self.root)
+                menu = Menuadm() 
+                menu.Abrir_Menu(Tk())  
 
             else:
-                from MenuUsuario import MenuU 
-                MenuU(self.root)
+                from MenuUsuario import MenuU
+                menu = MenuU()  
+                menu.Abrir_Menu(Tk())  
         else:
             messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no sistema!")
 
