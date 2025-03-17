@@ -48,7 +48,7 @@ class comunicacao:
 
     def ExcluirFornecedor(self, idfornecedor):
         query = "DELETE FROM fornecedor WHERE idfornecedor = %s"
-        self.cursor.execute(query, (idfornecedor,))  # Note a vírgula após idfornecedor
+        self.cursor.execute(query, (idfornecedor,))  
         self.conn.commit()
 
     def carregar_fornecedores(self):
@@ -58,7 +58,7 @@ class comunicacao:
     
     def buscar_fornecedor_por_id(self, idfornecedor):
         self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor,))
-        return self.cursor.fetchone()  # Retorna uma tupla com os dados do fornecedor
+        return self.cursor.fetchone()  
         
     def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ, endereco):
         query = "UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s, endereco = %s WHERE idfornecedor = %s "
@@ -93,7 +93,7 @@ class comunicacao:
     
     def buscar_funcionario_por_id(self, idfuncionario):
         self.cursor.execute("SELECT * FROM funcionario WHERE idfuncionario = %s", (idfuncionario,))
-        return self.cursor.fetchone()  # Retorna uma tupla com os dados do funcionario
+        return self.cursor.fetchone()  
     
 
 
