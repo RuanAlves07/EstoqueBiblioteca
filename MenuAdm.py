@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
+from comunicacao import comunicacao
 
 class Menuadm:
     def __init__(self, root):
@@ -19,6 +21,9 @@ class Menuadm:
         self.InfoLabel.place(x = 300, y = 120)
 
         self.BV.place(x=500, y=80)
+
+        cadButton = ttk.Button(self.root, text="Cadastrar Usuario", width=50, command=self.CriarUsuario)
+        cadButton.place(x=350, y=250)
 
         # Botão Funcionários
         self.FuncionariosButton = ttk.Button(self.root, text="Funcionários", width=20, command=self.TelaFuncionarios)
@@ -50,6 +55,41 @@ class Menuadm:
         nova_janela = Toplevel(self.root)
         TelaProdutos(nova_janela)
 
+    def CriarUsuario(self):
+        jan = Toplevel(self.root)
+        jan.title("Cadastro de Usuario")
+        jan.geometry("800x400")
+        jan.configure(background="#f6f3ec")
+        jan.resizable(width=False, height=False)
+
+        UsuarioLabel = Label(jan, text="Nome: ", font=("Times New Roman", 15))
+        UsuarioLabel.place(x=115, y=55)
+        self.UserNomeEntry = ttk.Entry(jan, width=30)
+        self.UserNomeEntry.place(x=230, y=60)
+
+        SenhaLabel = Label(jan, text="Senha: ", font=("Times New Roman", 15))
+        SenhaLabel.place(x=115, y=150)
+        self.SenhaEntry = ttk.Entry(jan, width=40)
+        self.SenhaEntry.place(x=230, y=160)
+
+        AddButton = ttk.Button(jan, text="REGISTRAR USUARIO", width=30, command=self.RegistrarUsuarios)
+        AddButton.place(x=300, y=320)
+
+    def RegistrarUsuarios(self):
+        nome = self.UserNomeEntry.get()
+        senha = self.SenhaEntry.get()
+
+        if nome == "" or senha == "":
+            messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
+        else:
+            db = comunicacao()
+            db.RegistrarUsuario(nome, senha)
+            messagebox.showinfo("Success", "Usuario criado com sucesso!")
+            self.limpar_campos()
+
+    def limpar_campos(self):
+        self.UserNomeEntry.delete(0, END)  # Limpa o campo NOME 
+        self.SenhaEntry.delete(0, END)  # Limpa o campo TELEFONE
 
 if __name__ == "__main__":
     root = Tk()
