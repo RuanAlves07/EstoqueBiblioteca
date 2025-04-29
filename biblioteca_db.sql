@@ -28,7 +28,8 @@ create table fornecedor(
     nomefantasia varchar(60),
     CNPJ varchar(14),
     endereco varchar(40),
-    primary key (idfornecedor)
+    primary key (idfornecedor),
+    foreign key (idADM) references (adm)
 
 );
 
