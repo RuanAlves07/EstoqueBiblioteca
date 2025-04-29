@@ -223,6 +223,8 @@ class FornecedorApp:
         self.endEntry.delete(0, END)
         self.endEntry.insert(0, fornecedor[4])
 
+        db.AtualizarFornecedor(idfornecedor, nomeforn, nomefant, cnpj, end)
+        messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
     def salvar_alteracoes(self):
         idfornecedor = self.idEntry.get()
         nomeforn = self.fornomeEntry.get()
@@ -236,8 +238,6 @@ class FornecedorApp:
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
         db = comunicacao()
-        db.AtualizarFornecedor(idfornecedor, nomeforn, nomefant, cnpj, end)
-        messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
 
     def sair(self):
         from MenuAdm import Menuadm
