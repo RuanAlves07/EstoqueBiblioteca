@@ -99,7 +99,7 @@ class Menuadm:
         else:
             db = comunicacao()
             db.RegistrarCliente(nome, senha, Usuario)
-            messagebox.showinfo("Success", "Usuario criado com sucesso!")
+            messagebox.showinfo("Successo", "Usuario criado com sucesso!")
             self.limpar_campos()
 
     def limpar_campos(self):
