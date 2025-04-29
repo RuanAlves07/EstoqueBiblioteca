@@ -8,8 +8,8 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "",
-            database = "biblioteca_db"
+            password = "root",
+            database = "estoques_db"
         )
         self.cursor = self.conn.cursor()
 
