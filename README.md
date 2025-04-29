@@ -1,4 +1,4 @@
-# ❗ ESTOQUE P/ BIBLIOTECAS ❗
+
 
 Projeto conceito
 
@@ -23,3 +23,8 @@ PROJETO FINAL
 - vídeo funcionalidade sistema (s/ som)
 - Modelo relacional
 - Regra de negocio
+
+
+OUTROS
+
+- CUSTOMTKINTER (interface)
