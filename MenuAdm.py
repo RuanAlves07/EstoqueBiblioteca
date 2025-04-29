@@ -62,28 +62,32 @@ class Menuadm:
     def CriarUsuario(self):
         jan = Toplevel(self.root)
         jan.title("Cadastro de Usuario")
-        jan.geometry("500x300")
+        jan.geometry("650x250")
         jan.configure(background="#f6f3ec")
         jan.resizable(width=False, height=False)
 
         UsuarioLabel = Label(jan, text="Usuario: ", font=("Times New Roman", 15))
-        UsuarioLabel.place(x=70, y=55)
-        self.UserNomeEntry = ttk.Entry(jan, width=30)
-        self.UserNomeEntry.place(x=220, y=60)
+        UsuarioLabel.place(x=20, y=35)
+        self.UserNomeEntry = ttk.Entry(jan, width=25)
+        self.UserNomeEntry.place(x=100, y=40)
 
         SenhaLabel = Label(jan, text="Senha: ", font=("Times New Roman", 15))
-        SenhaLabel.place(x=70, y=100)
-        self.SenhaEntry = ttk.Entry(jan, width=30)
-        self.SenhaEntry.place(x=220, y=105)
+        SenhaLabel.place(x=30, y=80)
+        self.SenhaEntry = ttk.Entry(jan, width=25)
+        self.SenhaEntry.place(x=100, y=85)
 
         NomeCompletoLabel = Label(jan, text="Nome Completo: ", font=("Times New Roman", 15))
-        NomeCompletoLabel.place(x=70, y=145)
-        self.UserNomeCEntry = ttk.Entry(jan, width=30)
-        self.UserNomeCEntry.place(x=220, y=155)
+        NomeCompletoLabel.place(x=300, y=35)
+        self.UserNomeCEntry = ttk.Entry(jan, width=25)
+        self.UserNomeCEntry.place(x=450, y=40)
 
+        EmailLabel = Label(jan, text="E-mail: ",font=("Times New Roman", 15))
+        EmailLabel.place(x=350, y=80)
+        self.EmailEntry = ttk.Entry(jan, width=25)
+        self.EmailEntry.place(x=450, y=85)
 
         AddButton = ttk.Button(jan, text="REGISTRAR USUARIO", width=30, command=self.RegistrarUsuarios)
-        AddButton.place(x=150, y=240)
+        AddButton.place(x=220, y=180)
 
     def RegistrarUsuarios(self):
         nome = self.UserNomeEntry.get()
