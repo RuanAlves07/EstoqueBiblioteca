@@ -1,120 +1,127 @@
-from tkinter import *
-from tkinter import ttk
+import customtkinter as ctk
+from tkinter import ttk, messagebox
 from comunicacao import comunicacao
 
-class MenuU:
+ctk.set_appearance_mode("Light")  
+ctk.set_default_color_theme("blue")  
 
+class MenuU:
     def __init__(self, root):
         self.Abrir_Menu(root)
 
     def Abrir_Menu(self, root):
         self.root = root
-        self.root.title("MenuUsuario")
+        self.root.title("Menu Usuário")
         self.root.geometry("1000x600")
-        self.root.configure(background = "#f6f3ec")
-        self.root.resizable(width= False, height = False)
+        self.root.configure(bg="#f6f3ec")
+        self.root.resizable(False, False)
 
-        self.BV = Label(self.root, text="BEM VINDO", font=("Arial", 20, "bold"), bg="#f6f3ec")
-        self.BV.place(anchor ="center")
+        # Título centralizado
+        self.BV = ctk.CTkLabel(self.root, text="BEM-VINDO", font=("Arial", 24, "bold"))
+        self.BV.pack(pady=50)
 
-        self.BV.place(x=500, y=80)
+        # Frame principal para os botões
+        frame_botoes = ctk.CTkFrame(self.root, fg_color="transparent")
+        frame_botoes.pack(pady=80)
 
         # Botão Fornecedores
-        self.FornecedoresButton = ttk.Button(self.root, text="Fornecedores", width=20, command=self.listar_forn)
-        self.FornecedoresButton.place(x=260, y=300)
-        Label(self.root, text="Aqui você pode\ncadastrar, listar, excluir\ne pesquisar os nossos\nfornecedores", font=("Arial", 10), bg="#f6f3ec").place(x=253, y=340)
+        self.FornecedoresButton = ctk.CTkButton(
+            frame_botoes, text="Fornecedores", width=180, command=self.listar_forn
+        )
+        self.FornecedoresButton.grid(row=0, column=0, padx=80)
 
+        desc_forn = (
+            "Aqui você pode cadastrar,\nlistar, excluir "
+            "e pesquisar\nos nossos fornecedores"
+        )
+        ctk.CTkLabel(frame_botoes, text=desc_forn, font=("Arial", 10), wraplength=180).grid(
+            row=1, column=0, padx=80, pady=(5, 20)
+        )
 
-        self.ProdutosButton = ttk.Button(self.root, text="Produtos", width=20, command=self.GoToList)
-        self.ProdutosButton.place(x=580, y=300)
-        Label(self.root, text="Na tela de produtos você pode\ncadastrar, listar, excluir\ne pesquisar os produtos", font=("Arial", 10), bg="#f6f3ec").place(x=550, y=340)
+        # Botão Produtos
+        self.ProdutosButton = ctk.CTkButton(
+            frame_botoes, text="Produtos", width=180, command=self.GoToList
+        )
+        self.ProdutosButton.grid(row=0, column=1, padx=80)
 
-    
-    #Puxar informação de produtos
+        desc_prod = (
+            "Na tela de produtos você pode\n"
+            "cadastrar, listar, excluir\n"
+            "e pesquisar os produtos"
+        )
+        ctk.CTkLabel(frame_botoes, text=desc_prod, font=("Arial", 10), wraplength=180).grid(
+            row=1, column=1, padx=80, pady=(5, 20)
+        )
+
     def PuxarInfo(self, tree):
         for item in tree.get_children():
             tree.delete(item)
 
-        db = comunicacao()  # Define a comunicação com o banco
-        cursor = db.conn.cursor()  # Cria o cursor fora do loop
-    
+        db = comunicacao()
+        cursor = db.conn.cursor()
+
         try:
             cursor.execute("SELECT idproduto, nome, descricao, genero, quantidade, preco FROM produto")
-            produtos = cursor.fetchall()  
+            produtos = cursor.fetchall()
             for produto in produtos:
                 tree.insert("", "end", values=produto)
         finally:
             cursor.close()
 
-    #Listar do produto
     def GoToList(self):
-
-        produto_list = Tk()
+        produto_list = ctk.CTkToplevel(self.root)
         produto_list.title("PRODUTOS - LISTA")
         produto_list.geometry("800x300")
-        produto_list.configure(background="#f6f3ec")
-        produto_list.resizable(width=False, height=False)
-
-        # Colunas para identificar quais vão ser as informações que vão aparecer
+        produto_list.configure(bg="#f6f3ec")
+        produto_list.resizable(False, False)
 
         colunas = ("ID", "Nome", "Descrição", "Gênero", "Quantidade", "Preço")
         tree = ttk.Treeview(produto_list, columns=colunas, show="headings")
 
-        tree.heading("ID", text="ID")
-        tree.heading("Nome", text="Nome")
-        tree.heading("Descrição", text="Descrição")
-        tree.heading("Gênero", text="Gênero")
-        tree.heading("Quantidade", text="Quantidade")
-        tree.heading("Preço", text="Preço")
-
+        for col in colunas:
+            tree.heading(col, text=col)
+            tree.column(col, anchor="w" if col != "ID" else "center")
 
         tree.column("ID", width=50, anchor="center")
         tree.column("Nome", width=100)
         tree.column("Descrição", width=150)
         tree.column("Gênero", width=120, anchor="center")
         tree.column("Quantidade", width=120)
-        tree.column("Preço", width = 50)
+        tree.column("Preço", width=80)
 
-        tree.pack(pady=10, padx=10, fill=BOTH, expand=False)
+        tree.pack(pady=10, padx=10, fill="both", expand=False)
 
         self.PuxarInfo(tree)
 
-
-    #Buscar do fornecedores
+    # ============ Carregar dados dos FORNECEDORES ============
     def carregar_fornecedores(self, tree):
-        # Limpa a treeview antes de carregar novos dados
         for item in tree.get_children():
             tree.delete(item)
 
-        # Obtém os dados dos fornecedores do banco de dados
         db = comunicacao()
-        cursor = db.conn.cursor()  # Cria um novo cursor
+        cursor = db.conn.cursor()
 
-        
-        cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
-        fornecedores = cursor.fetchall()  # Consome todos os resultados
+        try:
+            cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
+            fornecedores = cursor.fetchall()
+            for fornecedor in fornecedores:
+                tree.insert("", "end", values=fornecedor)
+        finally:
+            cursor.close()
 
-            # Insere os fornecedores na treeview
-        for fornecedor in fornecedores:
-            tree.insert("", "end", values=fornecedor)
-
-
-    #Listar fornecedores
     def listar_forn(self):
-        janela = Toplevel(self.root)
+        janela = ctk.CTkToplevel(self.root)
         janela.title("Listar Fornecedores")
         janela.geometry("700x400")
-        janela.configure(background="#f6f3ec")
-        janela.resizable(width=False, height=False)
+        janela.configure(bg="#f6f3ec")
+        janela.resizable(False, False)
 
         colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
         tree = ttk.Treeview(janela, columns=colunas, show="headings")
 
-        tree.heading("ID", text="ID")
-        tree.heading("Nome", text="Nome")
-        tree.heading("Nome Fantasia", text="Nome Fantasia")
-        tree.heading("CNPJ", text="CNPJ")
-        tree.heading("Endereço", text="Endereço")
+        for col in colunas:
+            tree.heading(col, text=col)
+            tree.column(col, anchor="w" if col not in ["ID", "CNPJ"] else "center")
 
         tree.column("ID", width=50, anchor="center")
         tree.column("Nome", width=150)
@@ -122,26 +129,25 @@ class MenuU:
         tree.column("CNPJ", width=120, anchor="center")
         tree.column("Endereço", width=200)
 
-        tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+        tree.pack(pady=10, padx=10, fill="both", expand=True)
 
-        bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
-        bt_fechar.pack(pady=5)
+        bt_fechar = ctk.CTkButton(janela, text="Fechar", width=100, command=janela.destroy)
+        bt_fechar.pack(pady=10)
 
-        # Carrega os fornecedores na treeview
         self.carregar_fornecedores(tree)
-
 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
-        nova_janela = Toplevel(self.root)
+        nova_janela = ctk.CTkToplevel(self.root)
         FornecedorApp(nova_janela)
 
     def TelaProdutos(self):
         from produto import TelaProdutos
-        nova_janela = Toplevel(self.root)
+        nova_janela = ctk.CTkToplevel(self.root)
         TelaProdutos(nova_janela)
 
+
 if __name__ == "__main__":
-    root = Tk()
-    app = MenuU(root)  
+    root = ctk.CTk()
+    app = MenuU(root)
     root.mainloop()

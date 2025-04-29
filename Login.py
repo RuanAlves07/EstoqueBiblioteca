@@ -1,39 +1,59 @@
-from tkinter import * 
-from tkinter import messagebox 
-from tkinter import ttk 
+import customtkinter as ctk
+from tkinter import messagebox
 from comunicacao import comunicacao
+
+ctk.set_appearance_mode("Light")
+ctk.set_default_color_theme("blue")
 
 class TelaLoginCadastro:
     def __init__(self):
-        # Criação da tela
-        self.root = Tk()
-        self.root.title("Tela de login e cadastro")
-        self.root.geometry("400x300")
-        self.root.configure(background="#f6f3ec")
-        self.root.resizable(width=False, height=False)
+        self.root = ctk.CTk()
+        self.root.title("Sistema de Login")
+        self.root.state("zoomed")
+        self.root.configure(bg="#f6f3ec")
+        self.root.resizable(False, False)
 
-        self.BemvindoLabel = Label(self.root, text="Seja Bem-vindo(a)!", font=("Times New Roman", 20), bg="#f6f3ec", fg="Black")
-        self.BemvindoLabel.place(x=90, y=30)
-
-        # Criando forma do usuário fazer login (Usuário e Senha)
-        self.LoginLabel = Label(self.root, text="Usuario: ", font=("Times New Roman", 20), bg="#f6f3ec", fg="Black")
-        self.LoginLabel.place(x=45, y=83)
-        self.LoginEntry = ttk.Entry(self.root, width=30)
-        self.LoginEntry.place(x=155, y=94)
-
-        self.SenhaLabel = Label(self.root, text="Senha: ", font=("Times New Roman", 20), bg="#f6f3ec", fg="Black")
-        self.SenhaLabel.place(x=57, y=130)
-        self.SenhaEntry = ttk.Entry(self.root, width=30, show="•")
-        self.SenhaEntry.place(x=155, y=140)
-
-        # Botão de login
-        self.LoginButton = ttk.Button(self.root, text="LOGIN", width=15, command=self.FazerLogin)
-        self.LoginButton.place(x=170, y=235)
-
-        # Iniciar a janela
+        self.CU()
         self.root.mainloop()
 
-    # Def para fazer login
+    def center_window(self, window, width, height):
+        """Função para centralizar qualquer janela na tela"""
+        screen_width = window.winfo_screenwidth()
+        screen_height = window.winfo_screenheight()
+        x = (screen_width // 2) - (width // 2)
+        y = (screen_height // 2) - (height // 2)
+        window.geometry(f"{width}x{height}+{x}+{y}")
+
+    def CU(self):
+        JanelaMeio = ctk.CTkToplevel(self.root)
+        JanelaMeio.title("Login")
+        JanelaMeio.configure(bg="#f6f3ec")
+        JanelaMeio.resizable(False, False)
+
+        # Centralizar a nova janela
+        self.center_window(JanelaMeio, 400, 300)
+
+        # Ficar sempre em cima e focado
+        JanelaMeio.grab_set()
+        JanelaMeio.focus_force()
+
+        # Widgets
+        self.BemvindoLabel = ctk.CTkLabel(JanelaMeio, text="Seja Bem-vindo(a)!", font=("Times New Roman", 20), text_color="black")
+        self.BemvindoLabel.pack(pady=20)
+
+        self.LoginLabel = ctk.CTkLabel(JanelaMeio, text="Usuário:", font=("Arial", 14))
+        self.LoginLabel.pack(pady=5)
+        self.LoginEntry = ctk.CTkEntry(JanelaMeio, width=250, placeholder_text="Digite seu usuário")
+        self.LoginEntry.pack(pady=5)
+
+        self.SenhaLabel = ctk.CTkLabel(JanelaMeio, text="Senha:", font=("Arial", 14))
+        self.SenhaLabel.pack(pady=5)
+        self.SenhaEntry = ctk.CTkEntry(JanelaMeio, width=250, show="•", placeholder_text="Digite sua senha")
+        self.SenhaEntry.pack(pady=5)
+
+        self.LoginButton = ctk.CTkButton(JanelaMeio, text="LOGIN", width=150, command=self.FazerLogin)
+        self.LoginButton.pack(pady=20)
+
     def FazerLogin(self):
         nome = self.LoginEntry.get()
         senha = self.SenhaEntry.get()
@@ -43,24 +63,24 @@ class TelaLoginCadastro:
         VerifyLogin = db.cursor.fetchone()
 
         if VerifyLogin:
-            messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado, Bem Vindo!")
-            self.root.destroy()
+            messagebox.showinfo("INFO LOGIN", "Acesso Confirmado, Bem Vindo!")
+            self.root.withdraw()
 
             adm = VerifyLogin[0]
 
             if adm == 1:
                 from MenuAdm import Menuadm
-                root_menu = Tk()  
+                root_menu = ctk.CTk()
                 Menuadm(root_menu)
                 root_menu.mainloop()
-
             else:
                 from MenuUsuario import MenuU
-                root_menu = Tk() 
+                root_menu = ctk.CTk()
                 MenuU(root_menu)
                 root_menu.mainloop()
+
         else:
-            messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no sistema!")
+            messagebox.showerror("INFO LOGIN", "Acesso Negado. Verifique se está cadastrado no sistema!")
 
 
 if __name__ == "__main__":
