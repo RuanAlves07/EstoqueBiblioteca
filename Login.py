@@ -16,7 +16,7 @@ class TelaLoginCadastro:
         self.CU()
         self.root.mainloop()
 
-    def center_window(self, window, width, height):
+    def CentralizarJanela(self, window, width, height):
         """Função para centralizar qualquer janela na tela"""
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
@@ -31,7 +31,7 @@ class TelaLoginCadastro:
         JanelaMeio.resizable(False, False)
 
         # Centralizar a nova janela
-        self.center_window(JanelaMeio, 400, 300)
+        self.CentralizarJanela(JanelaMeio, 400, 300)
 
         # Ficar sempre em cima e focado
         JanelaMeio.grab_set()

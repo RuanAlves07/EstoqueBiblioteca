@@ -1,10 +1,10 @@
-create table login(
+create table usuarios(
 
 	idusuario int not null auto_increment,
 	nome varchar(40),
     usuario varchar(40),
     senha varchar(40),
-    adm varchar(1)
+    userperm varchar(3),
     primary key (idusuario)
 
 );
@@ -28,8 +28,7 @@ create table fornecedor(
     nomefantasia varchar(60),
     CNPJ varchar(14),
     endereco varchar(40),
-    primary key (idfornecedor),
-    foreign key (idADM) references (adm)
+    primary key (idfornecedor)
 
 );
 
@@ -47,7 +46,7 @@ create table funcionario(
 
 create table cliente(
 
-    NumeroNFe int not null auto_increment,
+    numeroNFe int not null auto_increment,
     NomeCliente text,
     QuantidadeVendas text,
     Produto text,
