@@ -66,9 +66,9 @@ class TelaLoginCadastro:
             messagebox.showinfo("INFO LOGIN", "Acesso Confirmado, Bem Vindo!")
             self.root.withdraw()
 
-            adm = VerifyLogin[0]
+            userperm = VerifyLogin[0]
 
-            if adm == 1:
+            if userperm == "sim":
                 from MenuAdm import Menuadm
                 root_menu = ctk.CTk()
                 Menuadm(root_menu)
