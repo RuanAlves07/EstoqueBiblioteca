@@ -16,13 +16,12 @@ class TelaLoginCadastro:
         self.JanelaPequena()
         self.root.mainloop()
 
-    def CentralizarJanela(self, window, width, height):
-        """Função para centralizar qualquer janela na tela"""
-        screen_width = window.winfo_screenwidth()
-        screen_height = window.winfo_screenheight()
-        x = (screen_width // 2) - (width // 2)
-        y = (screen_height // 2) - (height // 2)
-        window.geometry(f"{width}x{height}+{x}+{y}")
+    def CentralizarJanela(self, tela, width, height):
+        tela_width = tela.winfo_screenwidth()
+        tela_height = tela.winfo_screenheight()
+        x = (tela_width // 2) - (width // 2)
+        y = (tela_height // 2) - (height // 2)
+        tela.geometry(f"{width}x{height}+{x}+{y}")
 
     def JanelaPequena(self):
         JanelaMeio = ctk.CTkToplevel(self.root)
