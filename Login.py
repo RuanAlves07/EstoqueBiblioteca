@@ -8,29 +8,30 @@ ctk.set_default_color_theme("blue")
 class TelaLoginCadastro:
     def __init__(self):
         self.root = ctk.CTk()
-        self.root.title("")
+        self.root.title("Sistema de Login")
         self.root.state("zoomed")
         self.root.configure(bg="#f6f3ec")
         self.root.resizable(False, False)
 
-        self.JanelaMeio()
+        self.CU()
         self.root.mainloop()
 
-    def CentralizaçãoDaJanela(self, window, width, height):
+    def CentralizarJanela(self, window, width, height):
+        """Função para centralizar qualquer janela na tela"""
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
         x = (screen_width // 2) - (width // 2)
         y = (screen_height // 2) - (height // 2)
         window.geometry(f"{width}x{height}+{x}+{y}")
 
-    def JanelaMeio(self):
+    def CU(self):
         JanelaMeio = ctk.CTkToplevel(self.root)
         JanelaMeio.title("Login")
         JanelaMeio.configure(bg="#f6f3ec")
         JanelaMeio.resizable(False, False)
 
         # Centralizar a nova janela
-        self.CentralizaçãoDaJanela(JanelaMeio, 400, 300)
+        self.CentralizarJanela(JanelaMeio, 400, 300)
 
         # Ficar sempre em cima e focado
         JanelaMeio.grab_set()
@@ -54,20 +55,20 @@ class TelaLoginCadastro:
         self.LoginButton.pack(pady=20)
 
     def FazerLogin(self):
-        nome = self.LoginEntry.get()
+        usuario = self.LoginEntry.get()
         senha = self.SenhaEntry.get()
 
         db = comunicacao() 
-        db.cursor.execute("SELECT * FROM login WHERE nome = %s AND senha = %s", (nome, senha))
+        db.cursor.execute("SELECT * FROM usuarios WHERE usuario = %s AND senha = %s", (usuario, senha))
         VerifyLogin = db.cursor.fetchone()
 
         if VerifyLogin:
             messagebox.showinfo("INFO LOGIN", "Acesso Confirmado, Bem Vindo!")
             self.root.withdraw()
 
-            adm = VerifyLogin[0]
+            userperm = VerifyLogin[0]
 
-            if adm == 1:
+            if userperm == "sim":
                 from MenuAdm import Menuadm
                 root_menu = ctk.CTk()
                 Menuadm(root_menu)

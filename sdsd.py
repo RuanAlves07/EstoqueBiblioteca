@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox
 from comunicacao import comunicacao
+from tkinter import ttk
 
 # Configuração inicial do tema
 ctk.set_appearance_mode("Light")  # Pode ser "Dark" ou "System"
@@ -78,17 +79,17 @@ class FornecedorApp:
         voltButton.pack(pady=10)
 
     def RegistrarNoBanco(self):
-        nomeforn = self.fornomeEntry.get()
-        nomefant = self.ficticioEntry.get()
-        cnpj = self.cnpjEntry.get()
-        end = self.endEntry.get()
+        nome = self.fornomeEntry.get()
+        nomefantasia = self.ficticioEntry.get()
+        CNPJ = self.cnpjEntry.get()
+        endereco = self.endEntry.get()
 
-        if "" in [nomeforn, nomefant, cnpj, end]:
+        if "" in [nome, nomefantasia, CNPJ, endereco]:
             messagebox.showerror("Erro", "Preencha todos os campos!")
             return
 
         db = comunicacao()
-        db.RegistrarFornecedor(nomeforn, nomefant, cnpj, end)
+        db.RegistrarFornecedor(nome, nomefantasia, CNPJ, end)
         messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
         self.limpar_campos()
 
@@ -116,17 +117,22 @@ class FornecedorApp:
         janela.geometry("800x400")
 
         colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
+    
+        # Use ttk.Treeview em vez de ctk.Treeview
         tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
+    
         tree.heading("ID", text="ID")
         tree.heading("Nome", text="Nome")
         tree.heading("Nome Fantasia", text="Nome Fantasia")
         tree.heading("CNPJ", text="CNPJ")
         tree.heading("Endereço", text="Endereço")
+    
         tree.column("ID", width=50, anchor="center")
         tree.column("Nome", width=150)
         tree.column("Nome Fantasia", width=150)
         tree.column("CNPJ", width=120, anchor="center")
         tree.column("Endereço", width=200)
+    
         tree.pack(fill="both", expand=True, padx=10, pady=10)
 
         bt_excluir = ctk.CTkButton(janela, text="Excluir Selecionado", width=150, command=excluir_selecionado)
@@ -153,7 +159,7 @@ class FornecedorApp:
         janela.geometry("800x400")
 
         colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
-        tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
+        tree = ctk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
         tree.heading("ID", text="ID")
         tree.heading("Nome", text="Nome")
         tree.heading("Nome Fantasia", text="Nome Fantasia")
@@ -223,18 +229,18 @@ class FornecedorApp:
         self.endEntry.delete(0, END)
         self.endEntry.insert(0, fornecedor[4])
 
-        db.AtualizarFornecedor(idfornecedor, nomeforn, nomefant, cnpj, end)
+        db.AtualizarFornecedor(idfornecedor, nome, nomefantasia, CNPJ, endereco)
         messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
     def salvar_alteracoes(self):
         idfornecedor = self.idEntry.get()
-        nomeforn = self.fornomeEntry.get()
-        nomefant = self.ficticioEntry.get()
-        cnpj = self.cnpjEntry.get()
-        end = self.endEntry.get()
+        nome = self.fornomeEntry.get()
+        nomefantasia = self.ficticioEntry.get()
+        CNPJ = self.cnpjEntry.get()
+        endereco = self.endEntry.get()
         if not idfornecedor:
             messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
             return
-        if "" in [nomeforn, nomefant, cnpj, end]:
+        if "" in [nome, nomefantasia, CNPJ, endereco]:
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
         db = comunicacao()

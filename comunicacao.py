@@ -1,4 +1,6 @@
-#pip install mysql-connector-python
+# pip install mysql-connector-python
+# pip3 install customtkinter
+
 
 import mysql.connector
 
@@ -8,8 +10,8 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "root",
-            database = "estoques_db"
+            password = "",
+            database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
 
