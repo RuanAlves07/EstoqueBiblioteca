@@ -26,11 +26,14 @@
 
 # FALTANTE
 
-- Cliente
-- Comunicação entre produto e fornecedor (ALTISSIMA IMPORTANCIA!!!!!!!!)
-- padronizar as telas no front 
-- colocar a logo da empresa
-- fazer o slied (matheus)
-- fazer o video (Ruan gostoso)
-- DASHBOARD (adaptar na tela de menu)(ALTISSIMA IMPORTANCIA!!!!!!!!)
-- 
+- Cliente (Tela inteira) 🟥
+- Comunicação entre produto e fornecedor 🟨
+- padronizar as telas no front 🟨
+- colocar a logo da empresa 🟩
+- fazer o slide 🟥
+- fazer o video 🟥
+- DASHBOARD 🟨
+
+🟥 = Urgente
+🟨 = Intermediario
+🟩 = Baixo
