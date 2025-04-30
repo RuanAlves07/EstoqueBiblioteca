@@ -13,7 +13,7 @@ class TelaLoginCadastro:
         self.root.configure(bg="#f6f3ec")
         self.root.resizable(False, False)
 
-        self.CU()
+        self.JanelaPequena()
         self.root.mainloop()
 
     def CentralizarJanela(self, window, width, height):
@@ -24,7 +24,7 @@ class TelaLoginCadastro:
         y = (screen_height // 2) - (height // 2)
         window.geometry(f"{width}x{height}+{x}+{y}")
 
-    def CU(self):
+    def JanelaPequena(self):
         JanelaMeio = ctk.CTkToplevel(self.root)
         JanelaMeio.title("Login")
         JanelaMeio.configure(bg="#f6f3ec")
@@ -66,7 +66,7 @@ class TelaLoginCadastro:
             messagebox.showinfo("INFO LOGIN", "Acesso Confirmado, Bem Vindo!")
             self.root.withdraw()
 
-            userperm = VerifyLogin[0]
+            userperm = VerifyLogin[4]
 
             if userperm == "sim":
                 from MenuAdm import Menuadm
