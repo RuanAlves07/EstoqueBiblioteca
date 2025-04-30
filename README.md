@@ -1,13 +1,20 @@
 
 
-Projeto conceito
+# Projeto conceito
 
 - Sistema de estoque de livros para re-vendas (atacadão)
 - MER
 - MRN
 - Dicionário de dados
 
-Telas necessárias (CRUD)
+# PROJETO FINAL
+
+- Realizar slide (template professor)
+- vídeo funcionalidade sistema (s/ som)
+- Modelo relacional
+- Regra de negocio
+
+# Telas necessárias (CRUD)
 
 - Funcionário
 - Fornecedor
@@ -17,25 +24,16 @@ Telas necessárias (CRUD)
 - Cliente
 - Venda para o cliente (CNPJ)
 
-PROJETO FINAL
+# FALTANTE
 
-- Realizar slide (template professor)
-- vídeo funcionalidade sistema (s/ som)
-- Modelo relacional
-- Regra de negocio
+- Cliente (Tela inteira) 🟥
+- Comunicação entre produto e fornecedor 🟨
+- padronizar as telas no front 🟨
+- colocar a logo da empresa 🟩
+- fazer o slide 🟥
+- fazer o video 🟥
+- DASHBOARD 🟨
 
-
-OUTROS
-
-- CUSTOMTKINTER (interface)
-
-FALTANTE
-
-- Cliente
-- Comunicação entre produto e fornecedor (ALTISSIMA IMPORTANCIA!!!!!!!!)
-- padronizar as telas no front 
-- colocar a logo da empresa
-- fazer o slied (matheus)
-- fazer o video (Ruan gostoso)
-- DASHBOARD (adaptar na tela de menu)(ALTISSIMA IMPORTANCIA!!!!!!!!)
-- 
+🟥 = Urgente
+🟨 = Intermediario
+🟩 = Baixo
