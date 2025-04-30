@@ -28,3 +28,14 @@ PROJETO FINAL
 OUTROS
 
 - CUSTOMTKINTER (interface)
+
+FALTANTE
+
+- Cliente
+- Comunicação entre produto e fornecedor (ALTISSIMA IMPORTANCIA!!!!!!!!)
+- padronizar as telas no front 
+- colocar a logo da empresa
+- fazer o slied (matheus)
+- fazer o video (Ruan gostoso)
+- DASHBOARD (adaptar na tela de menu)(ALTISSIMA IMPORTANCIA!!!!!!!!)
+- 
