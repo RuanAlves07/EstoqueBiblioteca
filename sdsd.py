@@ -89,7 +89,7 @@ class FornecedorApp:
             return
 
         db = comunicacao()
-        db.RegistrarFornecedor(nome, nomefantasia, CNPJ, end)
+        db.RegistrarFornecedor(nome, nomefantasia, CNPJ, endereco)
         messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
         self.limpar_campos()
 
@@ -215,35 +215,46 @@ class FornecedorApp:
         if not idfornecedor:
             messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
             return
+
         db = comunicacao()
         fornecedor = db.buscar_fornecedor_por_id(idfornecedor)
+
         if not fornecedor:
             messagebox.showerror("Erro", "Fornecedor não encontrado.")
             return
-        self.fornomeEntry.delete(0, END)
-        self.fornomeEntry.insert(0, fornecedor[1])
-        self.ficticioEntry.delete(0, END)
-        self.ficticioEntry.insert(0, fornecedor[2])
-        self.cnpjEntry.delete(0, END)
-        self.cnpjEntry.insert(0, fornecedor[3])
-        self.endEntry.delete(0, END)
-        self.endEntry.insert(0, fornecedor[4])
 
-        db.AtualizarFornecedor(idfornecedor, nome, nomefantasia, CNPJ, endereco)
-        messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
+        # Preenche os campos com as informações do fornecedor
+        self.fornomeEntry.delete(0, )
+        self.fornomeEntry.insert(0, fornecedor[1])  # Nome empresarial
+
+        self.ficticioEntry.delete(0, )
+        self.ficticioEntry.insert(0, fornecedor[2])  # Nome fantasia
+
+        self.cnpjEntry.delete(0, )
+        self.cnpjEntry.insert(0, fornecedor[3])  # CNPJ
+
+        self.endEntry.delete(0, )
+        self.endEntry.insert(0, fornecedor[4])  # Endereço
+
+
     def salvar_alteracoes(self):
         idfornecedor = self.idEntry.get()
         nome = self.fornomeEntry.get()
         nomefantasia = self.ficticioEntry.get()
         CNPJ = self.cnpjEntry.get()
-        endereco = self.endEntry.get()
+        endereco= self.endEntry.get()
+
         if not idfornecedor:
             messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
             return
-        if "" in [nome, nomefantasia, CNPJ, endereco]:
+
+        if nome == "" or nomefantasia == "" or CNPJ == "" or endereco == "":
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
+
         db = comunicacao()
+        db.AtualizarFornecedor(idfornecedor, nome, nomefantasia, CNPJ, endereco)
+        messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
 
     def sair(self):
         from MenuAdm import Menuadm
