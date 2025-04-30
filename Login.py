@@ -8,30 +8,29 @@ ctk.set_default_color_theme("blue")
 class TelaLoginCadastro:
     def __init__(self):
         self.root = ctk.CTk()
-        self.root.title("Sistema de Login")
+        self.root.title("")
         self.root.state("zoomed")
         self.root.configure(bg="#f6f3ec")
         self.root.resizable(False, False)
 
-        self.CU()
+        self.JanelaMeio()
         self.root.mainloop()
 
-    def center_window(self, window, width, height):
-        """Função para centralizar qualquer janela na tela"""
+    def CentralizaçãoDaJanela(self, window, width, height):
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
         x = (screen_width // 2) - (width // 2)
         y = (screen_height // 2) - (height // 2)
         window.geometry(f"{width}x{height}+{x}+{y}")
 
-    def CU(self):
+    def JanelaMeio(self):
         JanelaMeio = ctk.CTkToplevel(self.root)
         JanelaMeio.title("Login")
         JanelaMeio.configure(bg="#f6f3ec")
         JanelaMeio.resizable(False, False)
 
         # Centralizar a nova janela
-        self.center_window(JanelaMeio, 400, 300)
+        self.CentralizaçãoDaJanela(JanelaMeio, 400, 300)
 
         # Ficar sempre em cima e focado
         JanelaMeio.grab_set()
