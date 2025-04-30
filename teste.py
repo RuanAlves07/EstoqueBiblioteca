@@ -37,7 +37,10 @@ class GerenciadorFuncionarios:
                       command=self.atuu_func).grid(row=2, column=0, padx=10, pady=10)
         ctk.CTkButton(btn_frame, text="Excluir Funcionário", width=300,
                       command=self.excluir_func).grid(row=3, column=0, padx=10, pady=10)
-
+        ctk.CTkButton(btn_frame, text="Fechar", width=300,
+                      command=self.excluir_func).grid(row=4, column=0, padx=10, pady=10)
+       
+        
     def cadastro_func(self):
         jan_cadastro = ctk.CTkToplevel(self.root)
         jan_cadastro.title("Cadastro de Funcionário")
@@ -68,27 +71,26 @@ class GerenciadorFuncionarios:
         # Botão Registrar
         ctk.CTkButton(jan_cadastro, text="REGISTRAR FUNCIONÁRIO", width=200,
                       command=self.RegistrarFuncionario).place(x=300, y=520)
+          # Switch para alternância de tema
+        self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
+        self.theme_switch.place(x=10, y=10)
+
+    def alternar_tema(self):
+        modo = "Dark" if self.theme_switch.get() == 1 else "Light"
+        ctk.set_appearance_mode(modo)
 
     def RegistrarFuncionario(self):
         nome = self.UsuarioEntry.get().strip()
         telefone = self.TelefoneEntry.get().strip()
-        endereco = self.EnderecoEntry.get().strip()
+        enderecofunc = self.EnderecoEntry.get().strip()
         email = self.EmailEntry.get().strip()
-        data_nasc = self.NascEntry.get().strip()
+        datanascimento = self.NascEntry.get().strip()
 
-<<<<<<< Updated upstream
-        if nome == "" or telefone == "" or endereco == "" or email == "" or data_nasc == "":
+        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or datanascimento == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.RegistrarFuncionario(nome, telefone, endereco, email, data_nasc)
-=======
-        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or data_nascimento == "":
-            messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
-        else:
-            db = comunicacao()
-            db.RegistrarFuncionario(nome, telefone, enderecofunc, email, data_nascimento)
->>>>>>> Stashed changes
+            db.RegistrarFuncionario(nome, telefone, enderecofunc, email, datanascimento)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
         self.limpar_campos()
     def limpar_campos(self, janela=None):
@@ -224,6 +226,12 @@ class GerenciadorFuncionarios:
                 messagebox.showinfo("Sucesso", "Funcionário excluído.")
 
         ctk.CTkButton(jan_excluir, text="Excluir Selecionado", command=excluir_selecionado).pack(pady=10)
+
+
+    def sair(self):
+        from MenuAdm import Menuadm
+        Menuadm(self.root)
+        self.root.withdraw()
 
 
 # Inicializa a aplicação
