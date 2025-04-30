@@ -54,43 +54,34 @@ class TelaProdutos:
         produto_add.configure(fg_color="#f6f3ec")
         produto_add.resizable(width=False, height=False)
 
-        # Comandos abaixos são referentes ao label, posição e caixa de entrada do nome do livro
-        Nomelabel = ctk.CTkLabel(produto_add, text="Nome do livro: ", font=("Times New Roman", 20))
-        Nomelabel.place(x=115, y=50)
-        NomeEntry = ctk.CTkEntry(produto_add, width=300)
-        NomeEntry.place(x=250, y=50)
+        frame = ctk.CTkFrame(produto_add, corner_radius=10)
+        frame.pack(padx=60, pady=50, fill="both", expand=True)
 
-        # Comandos abaixo são referentes ao label, posição e caixa de entrada da descrição do livro
-        Desclabel = ctk.CTkLabel(produto_add, text="Descrição do livro: ", font=("Times New Roman", 20))
-        Desclabel.place(x=75, y=150)
-        DescEntry = ctk.CTkEntry(produto_add, width=300)
-        DescEntry.place(x=250, y=150)
+        titulo = ctk.CTkLabel(frame, text="CADASTRO DE FORNECEDOR", font=("Segoe UI", 18, "bold"))
+        titulo.pack(pady=20)
 
-        # Comandos abaixo são referentes ao label, posição e caixa de entrada do gênero do livro
-        Generolabel = ctk.CTkLabel(produto_add, text="Gênero do livro: ", font=("Times New Roman", 20))
-        Generolabel.place(x=100, y=250)
-        GeneroEntry = ctk.CTkEntry(produto_add, width=300)
-        GeneroEntry.place(x=250, y=250)
+        self.NomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome do livro", width=300, height=40)
+        self.NomeEntry.pack(pady=10)
 
-        # Comandos abaixo são referentes ao label, posição e caixa de entrada da quantidade de livros
-        Quantidadelabel = ctk.CTkLabel(produto_add, text="Quantidade de livros: ", font=("Times New Roman", 20))
-        Quantidadelabel.place(x=75, y=350)
-        QuantidadeEntry = ctk.CTkEntry(produto_add, width=300)
-        QuantidadeEntry.place(x=250, y=350)
+        self.DescEntry = ctk.CTkEntry(frame, placeholder_text="Descrição do livro", width=300, height=40)
+        self.DescEntry.pack(pady=10)
 
-        # Comandos abaixo são referentes ao label, posição e caixa de entrada do preço do livro
-        Precolabel = ctk.CTkLabel(produto_add, text="Preço do livro: ", font=("Times New Roman", 20))
-        Precolabel.place(x=120, y=450)
-        PrecoEntry = ctk.CTkEntry(produto_add, width=300)
-        PrecoEntry.place(x=250, y=450)
+        self.GeneroEntry = ctk.CTkEntry(frame, placeholder_text="Gênero do livro", width=300, height=40)
+        self.GeneroEntry.pack(pady=10)
+
+        self.QuantidadeEntry = ctk.CTkEntry(frame, placeholder_text="Quantidade do livro", width=300, height=40)
+        self.QuantidadeEntry.pack(pady=10)
+
+        self.PrecoEntry = ctk.CTkEntry(frame, placeholder_text="Preço do livro", width=300, height= 40)
+        self.PrecoEntry.pack(pady = 10)
 
         # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica
         def RegistrarProduto():
-            nome = NomeEntry.get()
-            descricao = DescEntry.get()
-            genero = GeneroEntry.get()
-            quantidade = QuantidadeEntry.get()
-            preco = PrecoEntry.get()
+            nome = self.NomeEntry.get()
+            descricao = self.DescEntry.get()
+            genero = self.GeneroEntry.get()
+            quantidade = self.QuantidadeEntry.get()
+            preco = self.PrecoEntry.get()
 
             if nome and descricao and genero and quantidade and preco:
                 db = comunicacao()
@@ -107,6 +98,7 @@ class TelaProdutos:
         VoltarButton = ctk.CTkButton(produto_add, text="Voltar", width=80, fg_color="gray", command=produto_add.destroy)
         VoltarButton.place(x=10, y=570)
 
+    
     # Def para puxar as informações da tabela e jogar tudo para a lista
     def PuxarInfo(self, tree):
         for item in tree.get_children():
