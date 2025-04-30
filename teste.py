@@ -22,7 +22,7 @@ class GerenciadorFuncionarios:
     def criar_widgets(self):
         # Título
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FUNCIONÁRIOS",
-                                   font=("Arial", 24, "bold"))
+        font=("Arial", 24, "bold"))
         Titulolabel.pack(pady=50)
 
         # Botões principais
@@ -39,6 +39,15 @@ class GerenciadorFuncionarios:
                       command=self.excluir_func).grid(row=3, column=0, padx=10, pady=10)
         ctk.CTkButton(btn_frame, text="Fechar", width=300,
                       command=self.excluir_func).grid(row=4, column=0, padx=10, pady=10)
+        
+        self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
+        self.theme_switch.place(x=10, y=10)
+
+    
+
+    def alternar_tema(self):
+            modo = "Dark" if self.theme_switch.get() == 1 else "Light"
+            ctk.set_appearance_mode(modo)    
        
         
     def cadastro_func(self):
@@ -71,13 +80,8 @@ class GerenciadorFuncionarios:
         # Botão Registrar
         ctk.CTkButton(jan_cadastro, text="REGISTRAR FUNCIONÁRIO", width=200,
                       command=self.RegistrarFuncionario).place(x=300, y=520)
-          # Switch para alternância de tema
-        self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=10, y=10)
-
-    def alternar_tema(self):
-        modo = "Dark" if self.theme_switch.get() == 1 else "Light"
-        ctk.set_appearance_mode(modo)
+         
+       
 
     def RegistrarFuncionario(self):
         nome = self.UsuarioEntry.get().strip()
