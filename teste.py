@@ -76,11 +76,19 @@ class GerenciadorFuncionarios:
         email = self.EmailEntry.get().strip()
         data_nasc = self.NascEntry.get().strip()
 
+<<<<<<< Updated upstream
+        if nome == "" or telefone == "" or endereco == "" or email == "" or data_nasc == "":
+            messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
+        else:
+            db = comunicacao()
+            db.RegistrarFuncionario(nome, telefone, endereco, email, data_nasc)
+=======
         if nome == "" or telefone == "" or enderecofunc == "" or email == "" or data_nascimento == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
             db.RegistrarFuncionario(nome, telefone, enderecofunc, email, data_nascimento)
+>>>>>>> Stashed changes
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
         self.limpar_campos()
     def limpar_campos(self, janela=None):
