@@ -55,11 +55,11 @@ class TelaLoginCadastro:
         self.LoginButton.pack(pady=20)
 
     def FazerLogin(self):
-        nome = self.LoginEntry.get()
+        usuario = self.LoginEntry.get()
         senha = self.SenhaEntry.get()
 
         db = comunicacao() 
-        db.cursor.execute("SELECT * FROM login WHERE nome = %s AND senha = %s", (nome, senha))
+        db.cursor.execute("SELECT * FROM usuarios WHERE usuario = %s AND senha = %s", (usuario, senha))
         VerifyLogin = db.cursor.fetchone()
 
         if VerifyLogin:
