@@ -1,4 +1,6 @@
-#pip install mysql-connector-python
+# pip install mysql-connector-python
+# pip3 install customtkinter
+
 
 import mysql.connector
 
@@ -8,11 +10,15 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "",
+            password = "root",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
-            
+
+    def RegistrarCliente(self, nome, usuario, senha, email, userperm):
+        self.cursor.execute("INSERT INTO usuario (nome, usuario, senha, email, userperm) VALUES (%s, %s, %s, %s, %s)", (nome, usuario, senha, email, userperm))
+        self.conn.commit() 
+
     def RegistrarProduto(self, nome, descricao, genero, quantidade, preco):
         self.cursor.execute("INSERT INTO produto (nome, descricao, genero, quantidade, preco) VALUES (%s, %s, %s, %s, %s)", (nome, descricao, genero, quantidade, preco))
         self.conn.commit() 
@@ -44,7 +50,7 @@ class comunicacao:
 
     def ExcluirFornecedor(self, idfornecedor):
         query = "DELETE FROM fornecedor WHERE idfornecedor = %s"
-        self.cursor.execute(query, (idfornecedor,))  # Note a vírgula após idfornecedor
+        self.cursor.execute(query, (idfornecedor,))  
         self.conn.commit()
 
     def carregar_fornecedores(self):
@@ -54,7 +60,7 @@ class comunicacao:
     
     def buscar_fornecedor_por_id(self, idfornecedor):
         self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor,))
-        return self.cursor.fetchone()  # Retorna uma tupla com os dados do fornecedor
+        return self.cursor.fetchone()  
         
     def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ, endereco):
         query = "UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s, endereco = %s WHERE idfornecedor = %s "
@@ -89,7 +95,7 @@ class comunicacao:
     
     def buscar_funcionario_por_id(self, idfuncionario):
         self.cursor.execute("SELECT * FROM funcionario WHERE idfuncionario = %s", (idfuncionario,))
-        return self.cursor.fetchone()  # Retorna uma tupla com os dados do funcionario
+        return self.cursor.fetchone()  
     
 
 
