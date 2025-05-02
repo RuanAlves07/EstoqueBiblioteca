@@ -38,7 +38,7 @@ class GerenciadorFuncionarios:
         ctk.CTkButton(btn_frame, text="Excluir Funcionário", width=300,
                       command=self.excluir_func).grid(row=3, column=0, padx=10, pady=10)
         ctk.CTkButton(btn_frame, text="Fechar", width=300,
-                      command=self.excluir_func).grid(row=4, column=0, padx=10, pady=10)
+                      command=self.sair).grid(row=4, column=0, padx=10, pady=10)
         
         self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
         self.theme_switch.place(x=10, y=10)
