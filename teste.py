@@ -13,6 +13,7 @@ class GerenciadorFuncionarios:
         self.root.resizable(False, False)
         self.root.configure(bg="#2a2d2e")  # Fundo escuro moderno
 
+
         # Configuração do tema
         ctk.set_appearance_mode("Dark")
         ctk.set_default_color_theme("blue")
