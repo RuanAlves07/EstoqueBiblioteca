@@ -75,6 +75,16 @@ class TelaProdutos:
         self.PrecoEntry = ctk.CTkEntry(frame, placeholder_text="Preço do livro", width=300, height= 40)
         self.PrecoEntry.pack(pady = 10)
 
+        TipoLabel = ctk.CTkLabel(frame, text="É Administrador?", font=("Arial", 15))
+        TipoLabel.pack(pady = 10)
+
+        self.TipoEntry = ctk.CTkComboBox(
+            frame,
+            values=["Sim", "Não"],
+            width=120,
+            state="readonly"
+        )
+
         # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica
 
         def RegistrarProduto():
