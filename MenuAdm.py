@@ -85,16 +85,22 @@ class Menuadm:
     def TelaFuncionarios(self):
         from funcionarios import GerenciadorFuncionarios
         nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
         GerenciadorFuncionarios(nova_janela)
 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
         nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()
+        nova_janela.focus_force()
         FornecedorApp(nova_janela)
 
     def TelaProdutos(self):
         from produto import TelaProdutos
         nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()
+        nova_janela.focus_force()
         TelaProdutos(nova_janela)
 
     def CriarUsuario(self):
@@ -160,7 +166,7 @@ class Menuadm:
             messagebox.showerror("Erro no Registro", "PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.RegistrarCliente(nome, senha, usuario, email, tipo)  # Certifique-se que o backend aceita o campo tipo
+            db.RegistrarCliente(nome, senha, usuario, email, tipo) 
             messagebox.showinfo("Sucesso", "Usuário criado com sucesso!")
             self.limpar_campos()
 
