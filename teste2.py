@@ -64,20 +64,20 @@ class GerenciadorFuncionarios:
         title = ctk.CTkLabel(frame, text="CADASTRO DE FUNCIONARIOS", font=("Segoe UI", 18, "bold"))
         title.pack(pady=20)
 
-        self.fornomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome: ", width=300, height=40)
-        self.fornomeEntry.pack(pady=10)
+        self.funcnomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome: ", width=300, height=40)
+        self.funcnomeEntry.pack(pady=10)
 
-        self.ficticioEntry = ctk.CTkEntry(frame, placeholder_text= "Telefone: ", width=300, height=40)
-        self.ficticioEntry.pack(pady=10)
+        self.telefoneEntry = ctk.CTkEntry(frame, placeholder_text= "Telefone: ", width=300, height=40)
+        self.telefoneEntry.pack(pady=10)
 
-        self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text="Endereço: ", width=300, height=40)
-        self.cnpjEntry.pack(pady=10)
-
-        self.endEntry = ctk.CTkEntry(frame, placeholder_text="Email: ", width=300, height=40)
-        self.endEntry.pack(pady=10)
+        self.enderecoEntry = ctk.CTkEntry(frame, placeholder_text="Endereço: ", width=300, height=40)
+        self.enderecoEntry.pack(pady=10)
 
         self.gmailEntry = ctk.CTkEntry(frame, placeholder_text="Email: ", width=300, height=40)
         self.gmailEntry.pack(pady=10)
+
+        self.datanascEntry = ctk.CTkEntry(frame, placeholder_text="Email: ", width=300, height=40)
+        self.datanascEntry.pack(pady=10)
 
         AddButton = ctk.CTkButton(jan_cadastro, text="REGISTRAR FORNECEDOR", width=200, command=self.RegistrarFuncionario)
         AddButton.pack(pady=10)
@@ -110,7 +110,7 @@ class GerenciadorFuncionarios:
     def listar_func(self):
         jan_lista = ctk.CTkToplevel(self.root)
         jan_lista.title("Listar Funcionários")
-        jan_lista.geometry("1000x500")
+        jan_lista.geometry("800x400")
         jan_lista.resizable(True, True)
 
         colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
@@ -207,7 +207,7 @@ class GerenciadorFuncionarios:
     def excluir_func(self):
         jan_excluir = ctk.CTkToplevel(self.root)
         jan_excluir.title("Excluir Funcionário")
-        jan_excluir.geometry("1000x500")
+        jan_excluir.geometry("800x400")
         jan_excluir.resizable(True, True)
 
         colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
