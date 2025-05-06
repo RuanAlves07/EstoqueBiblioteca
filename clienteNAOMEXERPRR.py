@@ -29,7 +29,7 @@ class ClienteApp:
         self.listButton = ctk.CTkButton(self.root, text="Listar Clientes", width=300, command=self.listar_cli)
         self.listButton.pack(pady=10)
 
-
+''
 
         self.voltButton = ctk.CTkButton(self.root, text="Fechar", width=100, fg_color="gray", command=self.sair)
         self.voltButton.pack(pady=20)
