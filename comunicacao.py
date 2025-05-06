@@ -72,12 +72,12 @@ class comunicacao:
         return self.cursor.fetchone() 
     
     def RegistrarFuncionario(self, nome, telefone, enderecofunc, email, datanascimento):
-        self.cursor.execute("INSERT INTO funcionarios (nome, telefone, enderecofunc, email, datanascimento) VALUES (%s, %s, %s, %s, %s)", (nome, telefone, enderecofunc, email, datanascimento))
+        self.cursor.execute("INSERT INTO funcionario (nome, telefone, enderecofunc, email, datanascimento) VALUES (%s, %s, %s, %s, %s)", (nome, telefone, enderecofunc, email, datanascimento))
         self.conn.commit() 
 
     def ExcluirFuncionario(self, idfuncionario):
         
-        self.cursor.execute("DELETE FROM funcionarios WHERE idfuncionario = %s", (idfuncionario,)) 
+        self.cursor.execute("DELETE FROM funcionario WHERE idfuncionario = %s", (idfuncionario,)) 
         self.conn.commit()
 
     def carregar_funcionario(self):
@@ -86,15 +86,15 @@ class comunicacao:
 
 
     def AtualizarFuncionario(self, idfuncionario, nome, telefone, enderecofunc, email, datanascimento):
-        self.cursor.execute("UPDATE funcionarios SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)) 
+        self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)) 
         self.conn.commit() 
 
     def ListarFuncionario(self, idfuncionario):
-        self.cursor.execute("SELECT * FROM funcionarios WHERE idfuncionario = %s", (idfuncionario)) 
+        self.cursor.execute("SELECT * FROM funcionario WHERE idfuncionario = %s", (idfuncionario)) 
         return self.cursor.fetchone() 
     
     def buscar_funcionario_por_id(self, idfuncionario):
-        self.cursor.execute("SELECT * FROM funcionarios WHERE idfuncionario = %s", (idfuncionario,))
+        self.cursor.execute("SELECT * FROM funcionario WHERE idfuncionario = %s", (idfuncionario,))
         return self.cursor.fetchone()  
     
 
