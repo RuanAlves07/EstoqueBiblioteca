@@ -83,11 +83,11 @@ class GerenciadorFuncionarios:
 
 
     def RegistrarFuncionario(self):
-        nome = self.UsuarioEntry.get().strip()
-        telefone = self.TelefoneEntry.get().strip()
-        enderecofunc = self.EnderecoEntry.get().strip()
-        email = self.EmailEntry.get().strip()
-        datanascimento = self.NascEntry.get().strip()
+        nome = self.funcnomeEntry.get().strip()
+        telefone = self.telefoneEntry.get().strip()
+        enderecofunc = self.enderecoEntry.get().strip()
+        email = self.gmailEntry.get().strip()
+        datanascimento = self.datanascEntry.get().strip()
 
         if nome == "" or telefone == "" or enderecofunc == "" or email == "" or datanascimento == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
