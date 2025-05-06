@@ -24,20 +24,16 @@ class GerenciadorFuncionarios:
         Titulolabel.pack(pady=70)
 
         # Botões principais
-        btn_frame = ctk.CTkFrame(self.root)
-        btn_frame.pack(pady=20)
-
-        # Botões principais
-        self.cadButton = ctk.CTkButton(self.root, text="Cadastrar Fornecedor", width=300, command=self.cadastro_func)
+        self.cadButton = ctk.CTkButton(self.root, text="Cadastrar Funcionario", width=300, command=self.cadastro_func)
         self.cadButton.pack(pady=10)
 
-        self.excnButton = ctk.CTkButton(self.root, text="Excluir Fornecedor", width=300, command=self.excluir_func)
+        self.excnButton = ctk.CTkButton(self.root, text="Excluir Funcionario", width=300, command=self.excluir_func)
         self.excnButton.pack(pady=10)
 
-        self.listButton = ctk.CTkButton(self.root, text="Listar Fornecedores", width=300, command=self.listar_func)
+        self.listButton = ctk.CTkButton(self.root, text="Listar Funcionario", width=300, command=self.listar_func)
         self.listButton.pack(pady=10)
 
-        self.atuButton = ctk.CTkButton(self.root, text="Atualizar Fornecedor", width=300, command=self.atuu_func)
+        self.atuButton = ctk.CTkButton(self.root, text="Atualizar Funcionario", width=300, command=self.atuu_func)
         self.atuButton.pack(pady=10)
 
         self.voltButton = ctk.CTkButton(self.root, text="Fechar", width=100, fg_color="gray", command=self.sair)
@@ -76,10 +72,10 @@ class GerenciadorFuncionarios:
         self.gmailEntry = ctk.CTkEntry(frame, placeholder_text="Email: ", width=300, height=40)
         self.gmailEntry.pack(pady=10)
 
-        self.datanascEntry = ctk.CTkEntry(frame, placeholder_text="Email: ", width=300, height=40)
+        self.datanascEntry = ctk.CTkEntry(frame, placeholder_text="Data de nascimento: ", width=300, height=40)
         self.datanascEntry.pack(pady=10)
 
-        AddButton = ctk.CTkButton(jan_cadastro, text="REGISTRAR FORNECEDOR", width=200, command=self.RegistrarFuncionario)
+        AddButton = ctk.CTkButton(jan_cadastro, text="REGISTRAR FUNCIONARIO", width=200, command=self.RegistrarFuncionario)
         AddButton.pack(pady=10)
 
         voltButton = ctk.CTkButton(jan_cadastro, text="Fechar", width=100, fg_color="gray", command=jan_cadastro.destroy)
