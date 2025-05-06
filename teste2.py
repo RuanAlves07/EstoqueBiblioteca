@@ -9,13 +9,13 @@ class GerenciadorFuncionarios:
     def __init__(self, root):
         self.root = root
         self.root.title("Gerenciador de Funcionários")
-        self.root.geometry("1000x600")
+        self.root.geometry("500x600")
         self.root.resizable(False, False)
-        self.root.configure(bg="#2a2d2e")  # Fundo escuro moderno
+        self.root.configure(bg="#f6f6f6")  # Fundo escuro moderno
 
 
         # Configuração do tema
-        ctk.set_appearance_mode("Dark")
+        ctk.set_appearance_mode("Light")
         ctk.set_default_color_theme("blue")
 
         self.criar_widgets()
