@@ -18,33 +18,34 @@ class GerenciadorFuncionarios:
         ctk.set_appearance_mode("Light")
         ctk.set_default_color_theme("blue")
 
-        self.criar_widgets()
-
-    def criar_widgets(self):
-        # Título
+     # Título
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FUNCIONÁRIOS",
-        font=("Arial", 24, "bold"))
-        Titulolabel.pack(pady=50)
+        font=("Segoe UI", 22, "bold"))
+        Titulolabel.pack(pady=70)
 
         # Botões principais
         btn_frame = ctk.CTkFrame(self.root)
         btn_frame.pack(pady=20)
 
-        ctk.CTkButton(btn_frame, text="Cadastrar Funcionário", width=300,
-                      command=self.cadastro_func).grid(row=0, column=0, padx=10, pady=10)
-        ctk.CTkButton(btn_frame, text="Listar Funcionários", width=300,
-                      command=self.listar_func).grid(row=1, column=0, padx=10, pady=10)
-        ctk.CTkButton(btn_frame, text="Atualizar Funcionário", width=300,
-                      command=self.atuu_func).grid(row=2, column=0, padx=10, pady=10)
-        ctk.CTkButton(btn_frame, text="Excluir Funcionário", width=300,
-                      command=self.excluir_func).grid(row=3, column=0, padx=10, pady=10)
-        ctk.CTkButton(btn_frame, text="Fechar", width=300,
-                      command=self.sair).grid(row=4, column=0, padx=10, pady=10)
-        
+        # Botões principais
+        self.cadButton = ctk.CTkButton(self.root, text="Cadastrar Fornecedor", width=300, command=self.cadastro_func)
+        self.cadButton.pack(pady=10)
+
+        self.excnButton = ctk.CTkButton(self.root, text="Excluir Fornecedor", width=300, command=self.excluir_func)
+        self.excnButton.pack(pady=10)
+
+        self.listButton = ctk.CTkButton(self.root, text="Listar Fornecedores", width=300, command=self.listar_func)
+        self.listButton.pack(pady=10)
+
+        self.atuButton = ctk.CTkButton(self.root, text="Atualizar Fornecedor", width=300, command=self.atuu_func)
+        self.atuButton.pack(pady=10)
+
+        self.voltButton = ctk.CTkButton(self.root, text="Fechar", width=100, fg_color="gray", command=self.sair)
+        self.voltButton.pack(pady=20)
+
+        # Switch para alternância de tema
         self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
         self.theme_switch.place(x=10, y=10)
-
-    
 
     def alternar_tema(self):
             modo = "Dark" if self.theme_switch.get() == 1 else "Light"
@@ -57,32 +58,33 @@ class GerenciadorFuncionarios:
         jan_cadastro.geometry("800x600")
         jan_cadastro.resizable(False, False)
 
-        # Campos de entrada
-        ctk.CTkLabel(jan_cadastro, text="Nome:", font=("Arial", 16)).place(x=115, y=50)
-        self.UsuarioEntry = ctk.CTkEntry(jan_cadastro, width=300)
-        self.UsuarioEntry.place(x=210, y=60)
+        frame = ctk.CTkFrame(jan_cadastro, corner_radius=10)
+        frame.pack(padx=60, pady=50, fill="both", expand=True)
 
-        ctk.CTkLabel(jan_cadastro, text="Telefone:", font=("Arial", 16)).place(x=115, y=120)
-        self.TelefoneEntry = ctk.CTkEntry(jan_cadastro, width=300)
-        self.TelefoneEntry.place(x=240, y=130)
+        title = ctk.CTkLabel(frame, text="CADASTRO DE FUNCIONARIOS", font=("Segoe UI", 18, "bold"))
+        title.pack(pady=20)
 
-        ctk.CTkLabel(jan_cadastro, text="Endereço:", font=("Arial", 16)).place(x=115, y=190)
-        self.EnderecoEntry = ctk.CTkEntry(jan_cadastro, width=300)
-        self.EnderecoEntry.place(x=240, y=200)
+        self.fornomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome: ", width=300, height=40)
+        self.fornomeEntry.pack(pady=10)
 
-        ctk.CTkLabel(jan_cadastro, text="Email:", font=("Arial", 16)).place(x=115, y=260)
-        self.EmailEntry = ctk.CTkEntry(jan_cadastro, width=300)
-        self.EmailEntry.place(x=200, y=270)
+        self.ficticioEntry = ctk.CTkEntry(frame, placeholder_text= "Telefone: ", width=300, height=40)
+        self.ficticioEntry.pack(pady=10)
 
-        ctk.CTkLabel(jan_cadastro, text="Data de Nascimento:", font=("Arial", 16)).place(x=115, y=330)
-        self.NascEntry = ctk.CTkEntry(jan_cadastro, width=300)
-        self.NascEntry.place(x=350, y=340)
+        self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text="Endereço: ", width=300, height=40)
+        self.cnpjEntry.pack(pady=10)
 
-        # Botão Registrar
-        ctk.CTkButton(jan_cadastro, text="REGISTRAR FUNCIONÁRIO", width=200,
-                      command=self.RegistrarFuncionario).place(x=300, y=520)
-         
-       
+        self.endEntry = ctk.CTkEntry(frame, placeholder_text="Email: ", width=300, height=40)
+        self.endEntry.pack(pady=10)
+
+        self.gmailEntry = ctk.CTkEntry(frame, placeholder_text="Email: ", width=300, height=40)
+        self.gmailEntry.pack(pady=10)
+
+        AddButton = ctk.CTkButton(jan_cadastro, text="REGISTRAR FORNECEDOR", width=200, command=self.RegistrarFuncionario)
+        AddButton.pack(pady=10)
+
+        voltButton = ctk.CTkButton(jan_cadastro, text="Fechar", width=100, fg_color="gray", command=jan_cadastro.destroy)
+        voltButton.pack(pady=10)
+
 
     def RegistrarFuncionario(self):
         nome = self.UsuarioEntry.get().strip()
