@@ -159,21 +159,28 @@ class FornecedorApp:
         janela.geometry("800x400")
 
         colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
-        tree = ctk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
+    
+        # Use ttk.Treeview em vez de ctk.Treeview
+        tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
+    
         tree.heading("ID", text="ID")
         tree.heading("Nome", text="Nome")
         tree.heading("Nome Fantasia", text="Nome Fantasia")
         tree.heading("CNPJ", text="CNPJ")
         tree.heading("Endereço", text="Endereço")
+    
         tree.column("ID", width=50, anchor="center")
         tree.column("Nome", width=150)
         tree.column("Nome Fantasia", width=150)
         tree.column("CNPJ", width=120, anchor="center")
         tree.column("Endereço", width=200)
+    
         tree.pack(fill="both", expand=True, padx=10, pady=10)
 
         bt_fechar = ctk.CTkButton(janela, text="Fechar", width=100, fg_color="gray", command=janela.destroy)
         bt_fechar.pack(pady=5)
+
+        self.carregar_fornecedores(tree)
 
         self.carregar_fornecedores(tree)
 

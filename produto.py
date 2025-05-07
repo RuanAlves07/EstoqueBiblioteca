@@ -17,6 +17,8 @@ class TelaProdutos:
         self.root.configure(background="#f6f3ec")
         self.root.resizable(width=False, height=False)
 
+        root.iconbitmap(default = "icons/klipartz.com.ico") # Define o icone da janela
+
         # Label do título
         Titulolabel = Label(root, text="GERENCIADOR DE PRODUTOS", font=("Times New Roman", 18))
         Titulolabel.place(x=85, y=75)
@@ -57,7 +59,7 @@ class TelaProdutos:
         frame = ctk.CTkFrame(produto_add, corner_radius=10)
         frame.pack(padx=60, pady=50, fill="both", expand=True)
 
-        titulo = ctk.CTkLabel(frame, text="CADASTRO DE FORNECEDOR", font=("Segoe UI", 18, "bold"))
+        titulo = ctk.CTkLabel(frame, text="CADASTRO DE PRODUTO", font=("Segoe UI", 18, "bold"))
         titulo.pack(pady=20)
 
         self.NomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome do livro", width=300, height=40)
@@ -75,7 +77,18 @@ class TelaProdutos:
         self.PrecoEntry = ctk.CTkEntry(frame, placeholder_text="Preço do livro", width=300, height= 40)
         self.PrecoEntry.pack(pady = 10)
 
+        TipoLabel = ctk.CTkLabel(frame, text="É Administrador?", font=("Arial", 15))
+        TipoLabel.pack(pady = 10)
+
+        self.TipoEntry = ctk.CTkComboBox(
+            frame,
+            values=["Sim", "Não"],
+            width=120,
+            state="readonly"
+        )
+
         # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica
+
         def RegistrarProduto():
             nome = self.NomeEntry.get()
             descricao = self.DescEntry.get()
@@ -157,53 +170,49 @@ class TelaProdutos:
         self.PuxarInfo(tree)
 
     # Def para ir para a aba de atualizar informação de algum livro já registrado
+
     def GoToUpdate(self):
         produto_Update = ctk.CTkToplevel(self.root)
         produto_Update.title("PRODUTOS - ATUALIZAR")
-        produto_Update.geometry("800x500")
+        produto_Update.geometry("800x600")
         produto_Update.configure(fg_color="#f6f3ec")
         produto_Update.resizable(width=False, height=False)
 
-        IDlabel = ctk.CTkLabel(produto_Update, text="ID do Produto: ", font=("Times New Roman", 20))
-        IDlabel.place(x=40, y=15)
-        self.IDEntry = ctk.CTkEntry(produto_Update, width=300)
-        self.IDEntry.place(x=230, y=25)
+        frame = ctk.CTkFrame(produto_Update, corner_radius=10)
+        frame.pack(padx=60, pady=50, fill="both", expand=True)
+
+        titulo = ctk.CTkLabel(frame, text="ATUALIZAR PRODUTO", font=("Segoe UI", 18, "bold"))
+        titulo.pack(pady=20)
+
+        self.IDBox = ctk.CTkEntry(frame, placeholder_text="ID do Produto", width=300, height=40)
+        self.IDBox.pack(pady=10)        
 
         BuscarButton = ctk.CTkButton(produto_Update, text="BUSCAR", width=80, command=self.BuscarProduto)
-        BuscarButton.place(x=550, y=25)
+        BuscarButton.place(x=570, y=130)
 
-        Nomelabel = ctk.CTkLabel(produto_Update, text="Nome do produto: ", font=("Times New Roman", 20))
-        Nomelabel.place(x=40, y=100)
-        self.NomeEntry = ctk.CTkEntry(produto_Update, width=300)
-        self.NomeEntry.place(x=230, y=110)
+        self.NomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome do livro", width=300, height=40)
+        self.NomeEntry.pack(pady=10)
 
-        Desclabel = ctk.CTkLabel(produto_Update, text="Descrição do produto: ", font=("Times New Roman", 20))
-        Desclabel.place(x=20, y=170)
-        self.DescEntry = ctk.CTkEntry(produto_Update, width=300)
-        self.DescEntry.place(x=230, y=180)
+        self.DescEntry = ctk.CTkEntry(frame, placeholder_text="Descrição do livro", width=300, height=40)
+        self.DescEntry.pack(pady=10)
 
-        Generolabel = ctk.CTkLabel(produto_Update, text="Gênero do produto: ", font=("Times New Roman", 20))
-        Generolabel.place(x=30, y=240)
-        self.GeneroEntry = ctk.CTkEntry(produto_Update, width=300)
-        self.GeneroEntry.place(x=230, y=250)
+        self.GeneroEntry = ctk.CTkEntry(frame, placeholder_text="Gênero do livro", width=300, height=40)
+        self.GeneroEntry.pack(pady=10)
 
-        Quantidadelabel = ctk.CTkLabel(produto_Update, text="Quantidade do produto: ", font=("Times New Roman", 20))
-        Quantidadelabel.place(x=20, y=310)
-        self.QuantidadeEntry = ctk.CTkEntry(produto_Update, width=300)
-        self.QuantidadeEntry.place(x=230, y=320)
+        self.QuantidadeEntry = ctk.CTkEntry(frame, placeholder_text="Quantidade do livro", width=300, height=40)
+        self.QuantidadeEntry.pack(pady=10)
 
-        Precolabel = ctk.CTkLabel(produto_Update, text="Preço do produto: ", font=("Times New Roman", 20))
-        Precolabel.place(x=40, y=370)
-        self.PrecoEntry = ctk.CTkEntry(produto_Update, width=300)
-        self.PrecoEntry.place(x=230, y=380)
+        self.PrecoEntry = ctk.CTkEntry(frame, placeholder_text="Preço do livro", width=300, height= 40)
+        self.PrecoEntry.pack(pady = 10)
 
         AttButton = ctk.CTkButton(produto_Update, text="ATUALIZAR PRODUTO", width=200, command=self.AtualizarInfos)
-        AttButton.place(x=300, y=430)
+        AttButton.place(x=300, y=500)
 
         VoltarButton = ctk.CTkButton(produto_Update, text="Voltar", width=80, fg_color="gray", command=produto_Update.destroy)
-        VoltarButton.place(x=10, y=470)
+        VoltarButton.place(x=10, y=560)
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
+
     def GoToList(self):
         produto_list = ctk.CTkToplevel(self.root)
         produto_list.title("PRODUTOS - LISTA")
