@@ -203,7 +203,7 @@ class GerenciadorFuncionarios:
     def excluir_func(self):
         jan_excluir = ctk.CTkToplevel(self.root)
         jan_excluir.title("Excluir Funcionário")
-        jan_excluir.geometry("850x400")
+        jan_excluir.geometry("800x400")
         jan_excluir.resizable(True, True)
 
         colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
@@ -228,9 +228,13 @@ class GerenciadorFuncionarios:
                 self.carregar_funcionarios(tree)
                 messagebox.showinfo("Sucesso", "Funcionário excluído.")
 
-        ctk.CTkButton(jan_excluir, text="Excluir Selecionado", command=excluir_selecionado).pack(pady=10)
+        bt_excluir = ctk.CTkButton(jan_excluir, text="Excluir Selecionado", width=150, command=excluir_selecionado)
+        bt_excluir.pack(pady=10)
 
+        bt_fechar = ctk.CTkButton(jan_excluir, text="Fechar", width=100, fg_color="gray", command=jan_excluir.destroy)
+        bt_fechar.pack(pady=5)
 
+        self.carregar_fornecedores(tree)
     def sair(self):
         from MenuAdm import Menuadm
         Menuadm(self.root)
