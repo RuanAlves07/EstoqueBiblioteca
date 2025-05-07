@@ -14,7 +14,7 @@ class Menuadm:
         self.root.geometry("1000x600")
         self.root.configure(bg="transparent")
         self.root.resizable(False, False)
-        
+
         # Centralizar conteúdo na janela principal
         self.root.grid_rowconfigure(0, weight=1)
         self.root.grid_columnconfigure(0, weight=1)

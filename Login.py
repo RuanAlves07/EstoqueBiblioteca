@@ -1,6 +1,8 @@
 import customtkinter as ctk
+from customtkinter import CTkImage
 from tkinter import messagebox
 from comunicacao import comunicacao
+from PIL import Image
 
 ctk.set_appearance_mode("Light")
 ctk.set_default_color_theme("blue")
@@ -12,7 +14,6 @@ class TelaLoginCadastro:
         self.root.state("zoomed")
         self.root.configure(bg="#f6f3ec")
         self.root.resizable(False, False)
-
         self.JanelaPequena()
         self.root.mainloop()
 
@@ -31,8 +32,8 @@ class TelaLoginCadastro:
 
         # Centralizar a nova janela
         self.CentralizarJanela(JanelaMeio, 400, 300)
-        imagem_fundo = ctk.CTkImage(
-            light_image = ("icosn\pexels-photo-2908984..png.png"),
+        imagem_fundo = CTkImage(
+            light_image = ("icons/Cu.png"),
             size=(400, 300)
         )
 
