@@ -95,7 +95,7 @@ class GerenciadorFuncionarios:
             db = comunicacao()
             db.RegistrarFuncionario(nome, telefone, enderecofunc, email, datanascimento)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
-        self.limpar_campos()
+    
     def limpar_campos(self, janela=None):
         self.UsuarioEntry.delete(0, 'end')
         self.TelefoneEntry.delete(0, 'end')
@@ -207,10 +207,10 @@ class GerenciadorFuncionarios:
         jan_excluir.resizable(True, True)
 
         colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
-        tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=20)
+        tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=8)
         for col in colunas:
             tree.heading(col, text=col)
-            tree.column(col, width=150 if col in ["Nome", "Email"] else 100)
+            tree.column(col, width=120 if col in ["Nome", "Email"] else 100)
         tree.pack(padx=10, pady=10, fill="both", expand=True)
 
         self.carregar_funcionarios(tree)
@@ -228,13 +228,9 @@ class GerenciadorFuncionarios:
                 self.carregar_funcionarios(tree)
                 messagebox.showinfo("Sucesso", "Funcionário excluído.")
 
-        bt_excluir = ctk.CTkButton(jan_excluir, text="Excluir Selecionado", width=150, command=excluir_selecionado)
-        bt_excluir.pack(pady=10)
+        ctk.CTkButton(jan_excluir, text="Excluir Selecionado", command=excluir_selecionado).pack(pady=10)
 
-        bt_fechar = ctk.CTkButton(jan_excluir, text="Fechar", width=100, fg_color="gray", command=jan_excluir.destroy)
-        bt_fechar.pack(pady=5)
 
-        self.carregar_fornecedores(tree)
     def sair(self):
         from MenuAdm import Menuadm
         Menuadm(self.root)
