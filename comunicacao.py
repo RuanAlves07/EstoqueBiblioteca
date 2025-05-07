@@ -1,5 +1,7 @@
-# pip install mysql-connector-python
-# pip3 install customtkinter
+# pip install mysql-connector-python - Comunicação com o BD
+# pip3 install customtkinter - Comunicação com customtkinter, front end
+# python -m pip install -U pip - Comunicação com a Dasboard
+# python -m pip install -U matplotlib - Comunicação com a Dasboard
 
 
 import mysql.connector
