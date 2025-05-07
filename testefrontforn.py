@@ -23,8 +23,6 @@ class FornecedorApp:
             text="GERENCIADOR DE FORNECEDORES",
             font=("Segoe UI", 22, "bold")
         )
-        Titulolabel.pack(pady=70)
-        root.iconbitmap(default = "icosn/klipartz.com.ico") # Define o icone da janela
         # Botões principais
         self.cadButton = ctk.CTkButton(self.root, text="Cadastrar Fornecedor", width=300, command=self.cadastro_forn)
         self.cadButton.pack(pady=10)
