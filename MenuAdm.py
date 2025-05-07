@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from customtkinter import * #importação de todo o tkinter
 from tkinter import messagebox
 from comunicacao import comunicacao
 from tkinter import *
@@ -8,12 +9,14 @@ ctk.set_appearance_mode("Light")
 ctk.set_default_color_theme("blue")
 
 class Menuadm:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("MenuAdm")
-        self.root.geometry("1000x600")
-        self.root.configure(bg="transparent")
-        self.root.resizable(False, False)
+    def __init__(self):
+        self.root = ctk.CTk() #Chamando o customtkinter
+        self.root.title("Sistema de Login") #Titulo da Tela de fundo
+        self.root.state("zoomed") #Codigo para ela ficar em tela cheia
+        self.root.configure(bg="#f6f3ec") #Cor da tela
+        self.root.resizable(False, False) #Codigo para não poder alterar a altura nem largura
+        self.JanelaPequena() #Chamando a tela principal de login pequena
+        self.root.mainloop() #Executando as telas
 
         # Centralizar conteúdo na janela principal
         self.root.grid_rowconfigure(0, weight=1)
