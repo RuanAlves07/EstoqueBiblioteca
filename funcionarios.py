@@ -1,374 +1,244 @@
-
-from tkinter import *
 import tkinter as tk
 from tkinter import ttk, messagebox
+import customtkinter as ctk
 import mysql.connector
-from comunicacao import comunicacao
+from comunicacao import comunicacao  # Certifique-se de que esse módulo existe
+
 
 class GerenciadorFuncionarios:
     def __init__(self, root):
         self.root = root
-        self.root.title("Funcionarios")
-        self.root.geometry("400x600")
-        self.root.configure(background="#f6f3ec")
-        self.root.resizable(width=False, height=False)
+        self.root.title("Gerenciador de Funcionários")
+        self.root.geometry("500x600")
+        self.root.resizable(False, False)
+        self.root.configure(bg="#f6f6f6")  # Fundo escuro moderno
 
-        self.criar_widgets()
 
-    def criar_widgets(self):
-        # Título
-        Titulolabel = tk.Label(self.root, text="GERENCIADOR DE FUNCIONARIOS", font=("Times New Roman", 18))
-        Titulolabel.place(x=10, y=75)
+        # Configuração do tema
+        ctk.set_appearance_mode("Light")
+        ctk.set_default_color_theme("blue")
 
-        # Botões 
-        cadButton = ttk.Button(self.root, text="Cadastrar Funcionario", width=50, command=self.cadastro_func)
-        cadButton.place(x=45, y=200)
+     # Título
+        Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FUNCIONÁRIOS",
+        font=("Segoe UI", 22, "bold"))
+        Titulolabel.pack(pady=70)
 
-        excnButton = ttk.Button(self.root, text="Excluir Funcionario", width=50, command=self.excluir_func)
-        excnButton.place(x=45, y=300)
+        # Botões principais
+        self.cadButton = ctk.CTkButton(self.root, text="Cadastrar Funcionario", width=300, command=self.cadastro_func)
+        self.cadButton.pack(pady=10)
 
-        listButton = ttk.Button(self.root, text="Listar Funcionario", width=50, command=self.listar_func)
-        listButton.place(x=45, y=400)
+        self.excnButton = ctk.CTkButton(self.root, text="Excluir Funcionario", width=300, command=self.excluir_func)
+        self.excnButton.pack(pady=10)
 
-        atuButton = ttk.Button(self.root, text="Atualizar Funcionario", width=50, command=self.atuu_func)
-        atuButton.place(x=45, y=500)
+        self.listButton = ctk.CTkButton(self.root, text="Listar Funcionario", width=300, command=self.listar_func)
+        self.listButton.pack(pady=10)
 
+        self.atuButton = ctk.CTkButton(self.root, text="Atualizar Funcionario", width=300, command=self.atuu_func)
+        self.atuButton.pack(pady=10)
+
+        self.voltButton = ctk.CTkButton(self.root, text="Fechar", width=100, fg_color="gray", command=self.sair)
+        self.voltButton.pack(pady=20)
+
+        # Switch para alternância de tema
+        self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
+        self.theme_switch.place(x=10, y=10)
+
+    def alternar_tema(self):
+            modo = "Dark" if self.theme_switch.get() == 1 else "Light"
+            ctk.set_appearance_mode(modo)    
+       
         
-
     def cadastro_func(self):
-        jan_cadastro = tk.Toplevel(self.root)
-        jan_cadastro.title("Cadastro de Funcionarios")
+        jan_cadastro = ctk.CTkToplevel(self.root)
+        jan_cadastro.title("Cadastro de Funcionário")
         jan_cadastro.geometry("800x600")
-        jan_cadastro.configure(background="#f6f3ec")
-        jan_cadastro.resizable(width=False, height=False)
+        jan_cadastro.resizable(False, False)
 
-        # Campos de entrada
-        tk.Label(jan_cadastro, text="Nome:", font=("Times New Roman", 20)).place(x=115, y=50)
-        self.UsuarioEntry = ttk.Entry(jan_cadastro, width=40)
-        self.UsuarioEntry.place(x=210, y=60)
+        frame = ctk.CTkFrame(jan_cadastro, corner_radius=10)
+        frame.pack(padx=60, pady=50, fill="both", expand=True)
 
-        tk.Label(jan_cadastro, text="Telefone:", font=("Times New Roman", 20)).place(x=115, y=120)
-        self.TelefoneEntry = ttk.Entry(jan_cadastro, width=40)
-        self.TelefoneEntry.place(x=240, y=130)
+        title = ctk.CTkLabel(frame, text="CADASTRO DE FUNCIONARIOS", font=("Segoe UI", 18, "bold"))
+        title.pack(pady=20)
 
-        tk.Label(jan_cadastro, text="Endereço:", font=("Times New Roman", 20)).place(x=115, y=190)
-        self.EnderecoEntry = ttk.Entry(jan_cadastro, width=40)
-        self.EnderecoEntry.place(x=240, y=200)
+        self.funcnomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome: ", width=300, height=40)
+        self.funcnomeEntry.pack(pady=10)
 
-        tk.Label(jan_cadastro, text="Email:", font=("Times New Roman", 20)).place(x=115, y=260)
-        self.EmailEntry = ttk.Entry(jan_cadastro, width=40)
-        self.EmailEntry.place(x=200, y=270)
+        self.telefoneEntry = ctk.CTkEntry(frame, placeholder_text= "Telefone: ", width=300, height=40)
+        self.telefoneEntry.pack(pady=10)
 
-        tk.Label(jan_cadastro, text="Data de Nascimento:", font=("Times New Roman", 20)).place(x=115, y=330)
-        self.NascEntry = ttk.Entry(jan_cadastro, width=40)
-        self.NascEntry.place(x=350, y=340)
+        self.enderecoEntry = ctk.CTkEntry(frame, placeholder_text="Endereço: ", width=300, height=40)
+        self.enderecoEntry.pack(pady=10)
 
-        # Botões
-        ttk.Button(jan_cadastro, text="REGISTRAR FUNCIONARIO", width=30, command=self.RegistrarFuncionario).place(x=300, y=520)
-        
+        self.gmailEntry = ctk.CTkEntry(frame, placeholder_text="Email: ", width=300, height=40)
+        self.gmailEntry.pack(pady=10)
+
+        self.datanascEntry = ctk.CTkEntry(frame, placeholder_text="Data de nascimento: ", width=300, height=40)
+        self.datanascEntry.pack(pady=10)
+
+        AddButton = ctk.CTkButton(jan_cadastro, text="REGISTRAR FUNCIONARIO", width=200, command=self.RegistrarFuncionario)
+        AddButton.pack(pady=10)
+
+        voltButton = ctk.CTkButton(jan_cadastro, text="Fechar", width=100, fg_color="gray", command=jan_cadastro.destroy)
+        voltButton.pack(pady=10)
+
 
     def RegistrarFuncionario(self):
-        nome = self.UsuarioEntry.get()
-        telefone = self.TelefoneEntry.get()
-        enderecofunc = self.EnderecoEntry.get()
-        email = self.EmailEntry.get()
-        data_nascimento = self.NascEntry.get()
+        nome = self.funcnomeEntry.get().strip()
+        telefone = self.telefoneEntry.get().strip()
+        enderecofunc = self.enderecoEntry.get().strip()
+        email = self.gmailEntry.get().strip()
+        datanascimento = self.datanascEntry.get().strip()
 
-        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or data_nascimento == "":
+        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or datanascimento == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.RegistrarFuncionario(nome, telefone, enderecofunc, email, data_nascimento)
+            db.RegistrarFuncionario(nome, telefone, enderecofunc, email, datanascimento)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
-        self.limpar_campos()
-
-    def limpar_campos(self):
-        self.UsuarioEntry.delete(0, END)  # Limpa o campo NOME 
-        self.TelefoneEntry.delete(0, END)  # Limpa o campo TELEFONE
-        self.EnderecoEntry.delete(0, END)  # Limpa o campo ENDERECO
-        self.EmailEntry.delete(0, END)  # Limpa o campo EMAIL
-        self.NascEntry.delete(0, END)  # Limpa o campo DATA DE NASCIMENTO
-
+    
+    def limpar_campos(self, janela=None):
+        self.UsuarioEntry.delete(0, 'end')
+        self.TelefoneEntry.delete(0, 'end')
+        self.EnderecoEntry.delete(0, 'end')
+        self.EmailEntry.delete(0, 'end')
+        self.NascEntry.delete(0, 'end')
 
     def listar_func(self):
-        janela = Toplevel(self.root)
-        janela.title("Listar Fornecedores")
-        janela.geometry("700x400")
-        janela.configure(background="#f6f3ec")
-        janela.resizable(width=False, height=False)
+        jan_lista = ctk.CTkToplevel(self.root)
+        jan_lista.title("Listar Funcionários")
+        jan_lista.geometry("800x400")
+        jan_lista.resizable(True, True)
 
-        colunas = ("ID", "Nome", "Telefone", "Endereco", "Email", "Data de nascimento")
-        tree = ttk.Treeview(janela, columns=colunas, show="headings")
+        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
+        tree = ttk.Treeview(jan_lista, columns=colunas, show="headings", height=20)
 
-        tree.heading("ID", text="ID")
-        tree.heading("Nome", text="Nome")
-        tree.heading("Telefone", text="Telefone")
-        tree.heading("Endereco", text="Endereco")
-        tree.heading("Email", text="Email")
-        tree.heading("Data de nascimento", text="Data de nascimento")
+        for col in colunas:
+            tree.heading(col, text=col)
+            tree.column(col, width=150 if col == "Nome" or col == "Email" else 100)
 
-        tree.column("ID", width=50, anchor="center")
-        tree.column("Nome", width=150)
-        tree.column("Telefone", width=150)
-        tree.column("Endereco", width=120, anchor="center")
-        tree.column("Email", width=200)
-        tree.column("Data de nascimento", width=240)
+        tree.pack(padx=10, pady=10, fill="both", expand=True)
 
-        tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
-
-       
-       
-
-        # Carrega os fornecedores na treeview
         self.carregar_funcionarios(tree)
 
+    def carregar_funcionarios(self, tree):
+        for item in tree.get_children():
+            tree.delete(item)
 
-        def carregar_funcionarios():
-            item_selecionado = tree.selection()
-            if not item_selecionado:
-                messagebox.showwarning("Atenção", "Selocione um funcionario para procurar.")
-                return
+        db = comunicacao()
+        try:
+            cursor = db.conn.cursor()
+            cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, datanascimento FROM funcionario")
+            for row in cursor.fetchall():
+                tree.insert("", "end", values=row)
+        except Exception as e:
+            messagebox.showerror("Erro", f"Falha ao carregar funcionários: {e}")
 
-            funcionario_id = tree.item(item_selecionado)["values"][0]
-
-            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja procurar este funcionario?")
-            if resposta:
-                db = comunicacao()
-                db.ListarFuncionario()
-                self.carregar_funcionarios()
-
-                carregar_funcionarios()
-                messagebox.showinfo("Sucesso", "Funcionario achado com sucesso!")
-
-        
-
-        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email" "Data de Nascimento")
-        tree = ttk.Treeview(janela, columns=colunas, show="headings")
-
-        tree.heading("ID", text="ID")
-        tree.heading("Nome", text="Nome")
-        tree.heading("Telefone", text="Telefone")
-        tree.heading("Endereço", text="Endereço")
-        tree.heading("Email", text="Email")
-        tree.heading("Data de Nascimento", text="Endereço")
-
-        tree.column("ID", width=50, anchor="center")
-        tree.column("Nome", width=150)
-        tree.column("Telefone ", width=150)
-        tree.column("Endereço", width=120, anchor="center")
-        tree.column("Email ", width=180)
-        tree.column("Data de Nascimento", width=200)
-
-        tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
-
-       
-       
-        carregar_funcionarios()
-       
-
-        
     def atuu_func(self):
-        jan_atualizar = tk.Toplevel(self.root)
-        jan_atualizar.title("Atualizar Funcionarios")
+        jan_atualizar = ctk.CTkToplevel(self.root)
+        jan_atualizar.title("Atualizar Funcionário")
         jan_atualizar.geometry("800x600")
-        jan_atualizar.configure(background="#f6f3ec")
-        jan_atualizar.resizable(width=False, height=False)
+        jan_atualizar.resizable(False, False)
 
-        # Campo para inserir o ID do funcionario
-        id_label = Label(jan_atualizar, text="ID DO FUNCIONARIO: ", font=("Times New Roman", 15))
-        id_label.place(x=115, y=55)
-        self.idEntry = ttk.Entry(jan_atualizar, width=30)
-        self.idEntry.place(x=330, y=60)
+        ctk.CTkLabel(jan_atualizar, text="ID do Funcionário:", font=("Arial", 16)).place(x=115, y=50)
+        self.idEntry = ctk.CTkEntry(jan_atualizar, width=200)
+        self.idEntry.place(x=330, y=55)
 
-        # Botão para buscar o funcionario
-        buscar_button = ttk.Button(jan_atualizar, text="Buscar Funcionario", width=20, command=self.buscar_funcionario)
-        buscar_button.place(x=330, y=100)
+        ctk.CTkButton(jan_atualizar, text="Buscar Funcionário", command=self.buscar_funcionario).place(x=330, y=90)
 
-        # Campos para editar as informações do funcionario
-        funlabel = Label(jan_atualizar, text="NOME : ", font=("Times New Roman", 15))
-        funlabel.place(x=115, y=150)
-        self.funnomeEntry = ttk.Entry(jan_atualizar, width=30)
-        self.funnomeEntry.place(x=330, y=155)
+        # Campos atualizáveis
+        self.funnomeEntry = ctk.CTkEntry(jan_atualizar, width=300)
+        self.telefoneEntry = ctk.CTkEntry(jan_atualizar, width=300)
+        self.enderecEntry = ctk.CTkEntry(jan_atualizar, width=300)
+        self.emailEntry = ctk.CTkEntry(jan_atualizar, width=300)
+        self.nasciEntry = ctk.CTkEntry(jan_atualizar, width=300)
 
-        funcionarios_telefone = Label(jan_atualizar, text="TELEFONE: ", font=("Times New Roman", 15))
-        funcionarios_telefone.place(x=115, y=200)
-        self.telefoneEntry = ttk.Entry(jan_atualizar, width=40)
-        self.telefoneEntry.place(x=330, y=205)
+        labels = ["Nome", "Telefone", "Endereço", "Email", "Data de Nascimento"]
+        entries = [self.funnomeEntry, self.telefoneEntry, self.enderecEntry, self.emailEntry, self.nasciEntry]
 
-        funcionarios_endereco = Label(jan_atualizar, text="ENDEREÇO: ", font=("Times New Roman", 15))
-        funcionarios_endereco.place(x=115, y=250)
-        self.enderecEntry = ttk.Entry(jan_atualizar, width=40)
-        self.enderecEntry.place(x=330, y=255)
+        for i, label in enumerate(labels):
+            ctk.CTkLabel(jan_atualizar, text=label + ":", font=("Arial", 16)).place(x=115, y=150 + i * 50)
+            entries[i].place(x=330, y=155 + i * 50)
 
-        funcionarios_email = Label(jan_atualizar, text="EMAIL: ", font=("Times New Roman", 15))
-        funcionarios_email.place(x=115, y=300)
-        self.emailEntry = ttk.Entry(jan_atualizar, width=40)
-        self.emailEntry.place(x=330, y=305)
-
-        funcionarios_nascimento = Label(jan_atualizar, text="DATA DE NASCIMENTO: ", font=("Times New Roman", 15))
-        funcionarios_nascimento.place(x=85, y=350)
-        self.nasciEntry = ttk.Entry(jan_atualizar, width=40)
-        self.nasciEntry.place(x=330, y=355)
-
-        # Botão para salvar as alterações
-        salvar_button = ttk.Button(jan_atualizar, text="Salvar Alterações", width=20, command=self.salvar_alteracoes)
-        salvar_button.place(x=330, y=400)
+        ctk.CTkButton(jan_atualizar, text="Salvar Alterações", command=self.salvar_alteracoes).place(x=330, y=420)
 
     def buscar_funcionario(self):
         idfuncionario = self.idEntry.get()
         if not idfuncionario:
-            messagebox.showwarning("Atenção", "Por favor, insira o ID do funcionario.")
+            messagebox.showwarning("Atenção", "Por favor, insira o ID.")
             return
 
         db = comunicacao()
         funcionario = db.buscar_funcionario_por_id(idfuncionario)
-
         if not funcionario:
-            messagebox.showerror("Erro", "funcionario não encontrado.")
+            messagebox.showerror("Erro", "Funcionário não encontrado.")
             return
 
-        # Preenche os campos com as informações do funcionario
-        self.funnomeEntry.delete(0, END)
-        self.funnomeEntry.insert(0, funcionario[1])  # Nome 
-
-        self.telefoneEntry.delete(0, END)
-        self.telefoneEntry.insert(0, funcionario[2])  # Telefone
-
-        self.enderecEntry.delete(0, END)
-        self.enderecEntry.insert(0, funcionario[3])  # Endereço
-
-        self.emailEntry.delete(0, END)
-        self.emailEntry.insert(0, funcionario[4])  # Email
-
-        self.nasciEntry.delete(0, END)
-        self.nasciEntry.insert(0, funcionario[5])  # Data de nascimento
-
+        self.funnomeEntry.delete(0, 'end')
+        self.funnomeEntry.insert(0, funcionario[1])
+        self.telefoneEntry.delete(0, 'end')
+        self.telefoneEntry.insert(0, funcionario[2])
+        self.enderecEntry.delete(0, 'end')
+        self.enderecEntry.insert(0, funcionario[3])
+        self.emailEntry.delete(0, 'end')
+        self.emailEntry.insert(0, funcionario[4])
+        self.nasciEntry.delete(0, 'end')
+        self.nasciEntry.insert(0, funcionario[5])
 
     def salvar_alteracoes(self):
         idfuncionario = self.idEntry.get()
         nome = self.funnomeEntry.get()
         telefone = self.telefoneEntry.get()
-        enderecofunc = self.enderecEntry.get()
+        endereco = self.enderecEntry.get()
         email = self.emailEntry.get()
-        datanascimento = self.nasciEntry.get()
+        nascimento = self.nasciEntry.get()
 
-        if not idfuncionario:
-            messagebox.showwarning("Atenção", "Por favor, insira o ID do funcionario.")
-            return
-
-        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or datanascimento == "":
-            messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
+        if not idfuncionario or "" in [nome, telefone, endereco, email, nascimento]:
+            messagebox.showerror("Erro", "Preencha todos os campos.")
             return
 
         db = comunicacao()
-        db.AtualizarFuncionario(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)
-        messagebox.showinfo("Sucesso", "Funcionario atualizado com sucesso!")
-    def sair(self):
-        from MenuAdm import TelaLoginCadastro
-        TelaLoginCadastro(self.root)
-  
+        db.AtualizarFuncionario(idfuncionario, nome, telefone, endereco, email, nascimento)
+        messagebox.showinfo("Sucesso", "Funcionário atualizado com sucesso!")
 
     def excluir_func(self):
+        jan_excluir = ctk.CTkToplevel(self.root)
+        jan_excluir.title("Excluir Funcionário")
+        jan_excluir.geometry("800x400")
+        jan_excluir.resizable(True, True)
+
+        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
+        tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=8)
+        for col in colunas:
+            tree.heading(col, text=col)
+            tree.column(col, width=120 if col in ["Nome", "Email"] else 100)
+        tree.pack(padx=10, pady=10, fill="both", expand=True)
+
+        self.carregar_funcionarios(tree)
+
         def excluir_selecionado():
-            item_selecionado = tree.selection()
-            if not item_selecionado:
-                messagebox.showwarning("Atenção", "Selecione um Funcionario para excluir.")
+            selecionado = tree.selection()
+            if not selecionado:
+                messagebox.showwarning("Atenção", "Selecione um funcionário.")
                 return
-
-            funcionario_id = tree.item(item_selecionado)["values"][0]
-            
-
-            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este funcionario ?")
+            id_sel = tree.item(selecionado)["values"][0]
+            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir?")
             if resposta:
                 db = comunicacao()
-                db.ExcluirFuncionario(funcionario_id)
-                self.carregar_funcionarios(tree)  # Atualiza a treeview após a exclusão
-                messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
+                db.ExcluirFuncionario(id_sel)
+                self.carregar_funcionarios(tree)
+                messagebox.showinfo("Sucesso", "Funcionário excluído.")
 
-        jan_excluir = tk.Toplevel(self.root)
-        jan_excluir.title("Excluir Funcionarios")
-        jan_excluir.geometry("700x400")
-        jan_excluir.configure(background="#f6f3ec")
-        jan_excluir.resizable(width=False, height=False)
-
-        # Tabela (Treeview)
-        colunas = ("ID", "Nome", "Telefone", "Endereco", "Email", "datanascimento")
-        tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings")
-        
-        tree.heading("ID", text="ID")
-        tree.heading("Nome", text="Nome")
-        tree.heading("Telefone", text="Telefone")
-        tree.heading("Endereco", text="Endereco")
-        tree.heading("Email", text="Email")
-        tree.heading("datanascimento", text="Data de nascimento")
-                
-
-        tree.column("ID", width=50, anchor="center")
-        tree.column("Nome", width=150)
-        tree.column("Telefone", width=150)
-        tree.column("Endereco", width=120, anchor="center")
-        tree.column("Email", width=150)
-        tree.column("datanascimento", width=200)
-        tree.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
-
-        # Botões
-        bt_excluir = ttk.Button(jan_excluir, text="Excluir Selecionado", command=excluir_selecionado)
-        bt_excluir.pack(pady=5)
-        
-
-        # Carregar funcionários na tabela
-        self.carregar_funcionarios(tree)
-    
-    def carregar_funcionarios(self, tree):
-        # Limpa a treeview antes de carregar novos dados
-        for item in tree.get_children():
-            tree.delete(item)
-
-        # Obtém os dados dos funcionarios do banco de dados
-        db = comunicacao()
-        cursor = db.conn.cursor()  # Cria um novo cursor
-
-         
-        cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, datanascimento FROM funcionario")
-        funcionarios = cursor.fetchall()  # Consome todos os resultados
-
-            # Insere os funcionario na treeview
-        for funcionario in funcionarios:
-            tree.insert("", "end", values=funcionario)
+        ctk.CTkButton(jan_excluir, text="Excluir Selecionado", command=excluir_selecionado).pack(pady=10)
 
 
     def sair(self):
-        self.root.destroy()
+        from MenuAdm import Menuadm
+        Menuadm(self.root)
+        self.root.withdraw()
 
 
-
-root = tk.Tk()
-app = GerenciadorFuncionarios(root)
-root.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Inicializa a aplicação
+if __name__ == "__main__":
+    root = ctk.CTk()
+    app = GerenciadorFuncionarios(root)
+    root.mainloop()

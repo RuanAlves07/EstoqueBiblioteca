@@ -34,13 +34,13 @@ class TelaLoginCadastro: #Tela de fundo
         self.CentralizarJanela(JanelaMeio, 400, 300)
 
         # Carregar a imagem original
-        imagem_original = Image.open("icons/Cu.png")
+        imagem_original = Image.open("icons/TelaDeFundo.png")
 
         # Aplicar blur
-        imagem_borrada = imagem_original.filter(ImageFilter.GaussianBlur(radius=5))
+        imagem_borrada = imagem_original.filter(ImageFilter.GaussianBlur(radius = 4))
 
         # Criar o CTkImage
-        imagem_fundo = CTkImage(light_image=imagem_borrada, size=(1260, 960))
+        imagem_fundo = CTkImage(light_image=imagem_borrada, size=(1920, 1080))
 
         # Criar o label com a imagem borrada
         bg_label = CTkLabel(self.root, image=imagem_fundo, bg_color="white", text="")
