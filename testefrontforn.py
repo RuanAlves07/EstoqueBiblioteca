@@ -10,6 +10,7 @@ ctk.set_default_color_theme("blue")  # Cores personalizáveis
 
 class FornecedorApp:
     def __init__(self, root):
+
         self.root = root
         self.root.title("Gerenciador de Fornecedores")
         self.root.geometry("500x600")
@@ -23,7 +24,7 @@ class FornecedorApp:
             font=("Segoe UI", 22, "bold")
         )
         Titulolabel.pack(pady=70)
-
+        root.iconbitmap(default = "icosn/klipartz.com.ico") # Define o icone da janela
         # Botões principais
         self.cadButton = ctk.CTkButton(self.root, text="Cadastrar Fornecedor", width=300, command=self.cadastro_forn)
         self.cadButton.pack(pady=10)
