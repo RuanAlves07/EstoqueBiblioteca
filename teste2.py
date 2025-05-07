@@ -95,7 +95,7 @@ class GerenciadorFuncionarios:
             db = comunicacao()
             db.RegistrarFuncionario(nome, telefone, enderecofunc, email, datanascimento)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
-        self.limpar_campos()
+    
     def limpar_campos(self, janela=None):
         self.UsuarioEntry.delete(0, 'end')
         self.TelefoneEntry.delete(0, 'end')
@@ -203,14 +203,14 @@ class GerenciadorFuncionarios:
     def excluir_func(self):
         jan_excluir = ctk.CTkToplevel(self.root)
         jan_excluir.title("Excluir Funcionário")
-        jan_excluir.geometry("850x400")
+        jan_excluir.geometry("800x400")
         jan_excluir.resizable(True, True)
 
         colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
-        tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=20)
+        tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=8)
         for col in colunas:
             tree.heading(col, text=col)
-            tree.column(col, width=150 if col in ["Nome", "Email"] else 100)
+            tree.column(col, width=120 if col in ["Nome", "Email"] else 100)
         tree.pack(padx=10, pady=10, fill="both", expand=True)
 
         self.carregar_funcionarios(tree)
