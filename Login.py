@@ -1,28 +1,28 @@
-import customtkinter as ctk
-from customtkinter import CTkImage
-from tkinter import messagebox
-from comunicacao import comunicacao
-from PIL import Image
+import customtkinter as ctk #Renomeiar o customtkinter para ctk
+from customtkinter import * #importação de todo o tkinter
+from tkinter import messagebox #importar do tkinter as mensagens 
+from comunicacao import comunicacao #importar o banco de dados
+from PIL import Image, ImageFilter #importar da biblioteca "Pillow" imagem e filtro de imagem
 
-ctk.set_appearance_mode("Light")
-ctk.set_default_color_theme("blue")
+ctk.set_appearance_mode("Light") #Cor principal definida como "Claro"
+ctk.set_default_color_theme("blue") #Cor secundaria definida como "Azul"
 
-class TelaLoginCadastro:
+class TelaLoginCadastro: #Tela de fundo
     def __init__(self):
-        self.root = ctk.CTk()
-        self.root.title("Sistema de Login")
-        self.root.state("zoomed")
-        self.root.configure(bg="#f6f3ec")
-        self.root.resizable(False, False)
-        self.JanelaPequena()
-        self.root.mainloop()
+        self.root = ctk.CTk() #Chamando o customtkinter
+        self.root.title("Sistema de Login") #Titulo da Tela de fundo
+        self.root.state("zoomed") #Codigo para ela ficar em tela cheia
+        self.root.configure(bg="#f6f3ec") #Cor da tela
+        self.root.resizable(False, False) #Codigo para não poder alterar a altura nem largura
+        self.JanelaPequena() #Chamando a tela principal de login pequena
+        self.root.mainloop() #Executando as telas
 
-    def CentralizarJanela(self, tela, width, height):
-        tela_width = tela.winfo_screenwidth()
-        tela_height = tela.winfo_screenheight()
-        x = (tela_width // 2) - (width // 2)
-        y = (tela_height // 2) - (height // 2)
-        tela.geometry(f"{width}x{height}+{x}+{y}")
+    def CentralizarJanela(self, tela, width, height): 
+        tela_width = tela.winfo_screenwidth() #Obtem o tamanho da largura do monitor
+        tela_height = tela.winfo_screenheight() #Obtem o tamanho da altura do monitor
+        x = (tela_width // 2) - (width // 2) #Calcula a posição x para centralizar a janela
+        y = (tela_height // 2) - (height // 2) #Calcula a posição y para centralizar a janela
+        tela.geometry(f"{width}x{height}+{x}+{y}") #Define o tamanho e a posição da janela na tela
 
     def JanelaPequena(self):
         JanelaMeio = ctk.CTkToplevel(self.root)
@@ -32,13 +32,19 @@ class TelaLoginCadastro:
 
         # Centralizar a nova janela
         self.CentralizarJanela(JanelaMeio, 400, 300)
-        imagem_fundo = CTkImage(
-            light_image = ("icons/Cu.png"),
-            size=(400, 300)
-        )
 
-        bg_label = ctk.CTkLabel(JanelaMeio, image=imagem_fundo, text="")
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        # Carregar a imagem original
+        imagem_original = Image.open("icons/Cu.png")
+
+        # Aplicar blur
+        imagem_borrada = imagem_original.filter(ImageFilter.GaussianBlur(radius=5))
+
+        # Criar o CTkImage
+        imagem_fundo = CTkImage(light_image=imagem_borrada, size=(1260, 960))
+
+        # Criar o label com a imagem borrada
+        bg_label = CTkLabel(self.root, image=imagem_fundo, bg_color="white", text="")
+        bg_label.pack(pady=20)
 
         # Ficar sempre em cima e focado
         JanelaMeio.grab_set()
