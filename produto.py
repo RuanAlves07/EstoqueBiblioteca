@@ -17,7 +17,7 @@ class TelaProdutos:
         self.root.configure(background="#f6f3ec")
         self.root.resizable(width=False, height=False)
 
-        root.iconbitmap(default = "icosn/klipartz.com.ico") # Define o icone da janela
+        root.iconbitmap(default = "icons/klipartz.com.ico") # Define o icone da janela
 
         # Label do título
         Titulolabel = Label(root, text="GERENCIADOR DE PRODUTOS", font=("Times New Roman", 18))
