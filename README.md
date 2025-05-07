@@ -27,12 +27,13 @@
 # FALTANTE
 
 - Cliente (Tela inteira) 🟥
-- Comunicação entre produto e fornecedor 🟨
-- padronizar as telas no front 🟨
-- colocar a logo da empresa 🟩
 - fazer o slide 🟥
 - fazer o video 🟥
+- Atalhos de navegação 🟥
+- Comunicação entre produto e fornecedor 🟨
 - DASHBOARD 🟨
+- Terceira permissão de acesso, sendo: Admin (pode fazer tudo), Avançado (Só não pode realizar a exclusão) e Padrão (Apenas consulta) 🟩
+- colocar a logo da empresa 🟩
 
 🟥 = Urgente
 🟨 = Intermediario
