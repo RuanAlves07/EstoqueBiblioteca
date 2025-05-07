@@ -31,6 +31,13 @@ class TelaLoginCadastro:
 
         # Centralizar a nova janela
         self.CentralizarJanela(JanelaMeio, 400, 300)
+        imagem_fundo = ctk.CTkImage(
+            light_image = ("icosn\pexels-photo-2908984..png.png"),
+            size=(400, 300)
+        )
+
+        bg_label = ctk.CTkLabel(JanelaMeio, image=imagem_fundo, text="")
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         # Ficar sempre em cima e focado
         JanelaMeio.grab_set()
