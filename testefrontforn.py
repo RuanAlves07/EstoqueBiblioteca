@@ -16,32 +16,31 @@ class FornecedorApp:
         self.root.geometry("500x600")
         self.root.resizable(False, False)
         self.root.configure(bg="#f6f6f6")
+     # Título  
+        Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FORNECEDORES",
+        font=("Segoe UI", 22, "bold"))
+        Titulolabel.pack(pady=70)
 
-        # Título principal
-        Titulolabel = ctk.CTkLabel(
-            self.root,
-            text="GERENCIADOR DE FORNECEDORES",
-            font=("Segoe UI", 22, "bold")
-        )
-        # Botões principais
-        self.cadButton = ctk.CTkButton(self.root, text="Cadastrar Fornecedor", width=300, command=self.cadastro_forn)
-        self.cadButton.pack(pady=10)
+        # Botão para ir no menu de registro dos produto
+        AButton = ctk.CTkButton(root, text="ADICIONAR FORNECEDORES", width=300, command=self.cadastro_forn)
+        AButton.place(x=100, y=200)
 
-        self.excnButton = ctk.CTkButton(self.root, text="Excluir Fornecedor", width=300, command=self.excluir_forn)
-        self.excnButton.pack(pady=10)
+        # Botão para ir no menu de remoção de produto
+        RemoveButton = ctk.CTkButton(root, text="EXCLUIR FORNECEDORES", width=300, command=self.excluir_forn)
+        RemoveButton.place(x=100, y=300)
 
-        self.listButton = ctk.CTkButton(self.root, text="Listar Fornecedores", width=300, command=self.listar_forn)
-        self.listButton.pack(pady=10)
+        # Botão para ir no menu de atualização de informação de produtos
+        UpdateButton = ctk.CTkButton(root, text="ATUALIZAR FORNECEDORES", width=300, command=self.atuu_funci)
+        UpdateButton.place(x=100, y=400)
 
-        self.atuButton = ctk.CTkButton(self.root, text="Atualizar Fornecedor", width=300, command=self.atuu_funci)
-        self.atuButton.pack(pady=10)
+        # Botão para ir no menu de listagem de todos os produtos registrados
+        ListButton = ctk.CTkButton(root, text="LISTAR FORNECEDORES", width=300, command=self.listar_forn)
+        ListButton.place(x=100, y=500)
 
-        self.voltButton = ctk.CTkButton(self.root, text="Fechar", width=100, fg_color="gray", command=self.sair)
-        self.voltButton.pack(pady=20)
-
-        # Switch para alternância de tema
-        self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
+        # Switch para alternar entre Light/Dark Mode
+        self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
         self.theme_switch.place(x=10, y=10)
+
 
     def alternar_tema(self):
         modo = "Dark" if self.theme_switch.get() == 1 else "Light"
