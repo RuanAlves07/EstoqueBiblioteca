@@ -203,7 +203,7 @@ class GerenciadorFuncionarios:
     def excluir_func(self):
         jan_excluir = ctk.CTkToplevel(self.root)
         jan_excluir.title("Excluir Funcionário")
-        jan_excluir.geometry("800x400")
+        jan_excluir.geometry("850x400")
         jan_excluir.resizable(True, True)
 
         colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
