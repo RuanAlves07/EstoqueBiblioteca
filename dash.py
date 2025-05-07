@@ -381,11 +381,6 @@ class DashboardDistribuidora:
         janela = ctk.CTkToplevel(self.root)
         TelaProdutos(janela)
 
-    def abrir_gerenciador_clientes(self):
-        from cliente import ClienteApp
-        janela = ctk.CTkToplevel(self.root)
-        ClienteApp(janela)
-
     def abrir_gerenciador_fornecedores(self):
         from fornecedor import FornecedorApp
         janela = ctk.CTkToplevel(self.root)

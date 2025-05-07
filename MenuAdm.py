@@ -151,11 +151,10 @@ class Menuadm:
         y = (screen_height // 2) - (height // 2)
         window.geometry(f"{width}x{height}+{x}+{y}")
 
-class DashboardDistribuidora:
     def __init__(self, root):
         self.root = root
         self.root.title("Dashboard - Distribuidora de Livros")
-        self.root.geometry("1200x700")
+        self.root.geometry("1100x700")
         self.root.resizable(False, False)
         self.root.configure(bg="#f6f6f6")
 
@@ -259,13 +258,6 @@ class DashboardDistribuidora:
         )
         self.valor_clientes.pack(pady=5)
         
-        self.botao_clientes = ctk.CTkButton(
-            self.card_clientes, 
-            text="Gerenciar", 
-            width=100, 
-            command=self.abrir_gerenciador_clientes
-        )
-        self.botao_clientes.pack(pady=10)
 
         # Card 4 - Fornecedores
         self.card_fornecedores = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
@@ -523,23 +515,11 @@ class DashboardDistribuidora:
         janela = ctk.CTkToplevel(self.root)
         TelaProdutos(janela)
 
-    def abrir_gerenciador_clientes(self):
-        from cliente import ClienteApp
-        janela = ctk.CTkToplevel(self.root)
-        ClienteApp(janela)
-
     def abrir_gerenciador_fornecedores(self):
         from fornecedor import FornecedorApp
         janela = ctk.CTkToplevel(self.root)
         FornecedorApp(janela)
-
-if __name__ == "__main__":
-    root = ctk.CTk()
-    app = DashboardDistribuidora(root)
-    root.mainloop()
-
-
-
+  
 if __name__ == "__main__":
     root = ctk.CTk()
     app = Menuadm(root)
