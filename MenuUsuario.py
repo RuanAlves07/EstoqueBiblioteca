@@ -93,7 +93,6 @@ class MenuU:
 
         self.PuxarInfo(tree)
 
-    # ============ Carregar dados dos FORNECEDORES ============
     def carregar_fornecedores(self, tree):
         for item in tree.get_children():
             tree.delete(item)

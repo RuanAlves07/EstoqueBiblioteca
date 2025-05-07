@@ -17,6 +17,8 @@ class TelaProdutos:
         self.root.configure(background="#f6f3ec")
         self.root.resizable(width=False, height=False)
 
+        root.iconbitmap(default = "icons/klipartz.com.ico") # Define o icone da janela
+
         # Label do título
         Titulolabel = Label(root, text="GERENCIADOR DE PRODUTOS", font=("Times New Roman", 18))
         Titulolabel.place(x=85, y=75)
@@ -208,6 +210,10 @@ class TelaProdutos:
 
         VoltarButton = ctk.CTkButton(produto_Update, text="Voltar", width=80, fg_color="gray", command=produto_Update.destroy)
         VoltarButton.place(x=10, y=560)
+
+        self.GeneroCombo = CTkComboBox(frame, values=generos, width=300, height=40, font=("Segoe UI", 14))
+        self.GeneroCombo.pack(pady=10)
+        self.GeneroCombo.set("Selecione...")
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
