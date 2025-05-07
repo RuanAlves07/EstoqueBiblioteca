@@ -19,17 +19,6 @@ class TelaProdutos:
 
         root.iconbitmap(default = "icons/klipartz.com.ico") # Define o icone da janela
 
-        combobox_var = customtkinter.StringVar(value="option 2")  # set initial value
-
-        def combobox_callback(choice):
-            print("combobox dropdown clicked:", choice)
-
-        combobox = customtkinter.CTkComboBox(master=app,
-                                     values=["option 1", "option 2"],
-                                     command=combobox_callback,
-                                     variable=combobox_var)
-        combobox.pack(padx=20, pady=10)
-
         # Label do título
         Titulolabel = Label(root, text="GERENCIADOR DE PRODUTOS", font=("Times New Roman", 18))
         Titulolabel.place(x=85, y=75)
