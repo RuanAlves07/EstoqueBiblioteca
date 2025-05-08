@@ -24,7 +24,7 @@ class TelaProdutos:
         self.tabview = ctk.CTkTabview(root, width=180, height=10)
         self.tabview.place(x=5, y=5) 
  
-        self.tab_produto = self.tabview.add("Produto", command = self.produto)
+        self.tab_produto = self.tabview.add("Produto", command = self.GoToproduto)
         self.tab_produto = self.tabview.ad
         self.tab_fornecedor = self.tabview.add("Fornecedor")
         self.tab_cliente = self.tabview.add("Cliente")
