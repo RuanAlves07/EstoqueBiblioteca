@@ -2,6 +2,7 @@
 # pip3 install customtkinter - Comunicação com customtkinter, front end
 # python -m pip install -U pip - Comunicação com a Dasboard e BD
 # python -m pip install -U matplotlib - Geração dos graficos
+# pip install pillow
 
 
 import mysql.connector
