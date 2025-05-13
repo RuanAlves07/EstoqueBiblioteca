@@ -1,8 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-from comunicacao import comunicacao
 import customtkinter as ctk
+from comunicacao import comunicacao  # Certifique-se que 'comunicacao' está configurado corretamente
+
 
 # Configuração global do CustomTkinter
 ctk.set_appearance_mode("Light")
@@ -13,42 +14,49 @@ class TelaProdutos:
     def __init__(self, root):
         self.root = root
         self.root.title("PRODUTOS - GERAL ")
-        self.root.geometry("500x600")
+        self.root.geometry("800x600")
         self.root.configure(background="#f6f3ec")
         self.root.resizable(width=False, height=False)
 
-        root.iconbitmap(default = "icons/klipartz.com.ico") # Define o icone da janela
+        root.iconbitmap(default="icons/klipartz.com.ico")  # Define o ícone da janela
 
         # Label do título
         Titulolabel = Label(root, text="GERENCIADOR DE PRODUTOS", font=("Times New Roman", 18))
-        Titulolabel.place(x=85, y=75)
+        Titulolabel.place(x=220, y=75)
 
-        # Botão para ir no menu de registro dos produto
+        # Botão para ir no menu de registro dos produtos
         AButton = ctk.CTkButton(root, text="ADICIONAR PRODUTOS", width=300, command=self.GoToAdicionar)
-        AButton.place(x=100, y=200)
+        AButton.place(x=250, y=200)
 
         # Botão para ir no menu de remoção de produto
         RemoveButton = ctk.CTkButton(root, text="EXCLUIR PRODUTOS", width=300, command=self.GoToExcluir)
-        RemoveButton.place(x=100, y=300)
+        RemoveButton.place(x=250, y=300)
 
         # Botão para ir no menu de atualização de informação de produtos
         UpdateButton = ctk.CTkButton(root, text="ATUALIZAR PRODUTOS", width=300, command=self.GoToUpdate)
-        UpdateButton.place(x=100, y=400)
+        UpdateButton.place(x=250, y=400)
 
         # Botão para ir no menu de listagem de todos os produtos registrados
         ListButton = ctk.CTkButton(root, text="LISTAR PRODUTOS", width=300, command=self.GoToList)
-        ListButton.place(x=100, y=500)
+        ListButton.place(x=250, y=500)
 
         # Switch para alternar entre Light/Dark Mode
         self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=10, y=10)
+        self.theme_switch.place(x=660, y=20)
+
+    def GoToproduto(self):
+        from produto import TelaProdutos
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        TelaProdutos(nova_janela)
 
     # Função para alternar modo escuro/claro
     def alternar_tema(self):
         modo = "Dark" if self.theme_switch.get() == 1 else "Light"
         ctk.set_appearance_mode(modo)
 
-    # Def para ir para a aba de adicionar livros
+    # Métodos GoTo...
     def GoToAdicionar(self):
         produto_add = ctk.CTkToplevel(self.root)
         produto_add.title("PRODUTOS - REGISTRAR")
@@ -62,32 +70,20 @@ class TelaProdutos:
         titulo = ctk.CTkLabel(frame, text="CADASTRO DE PRODUTO", font=("Segoe UI", 18, "bold"))
         titulo.pack(pady=20)
 
-        self.NomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome do livro", width=300, height=40)
+        self.NomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome do produto", width=300, height=40)
         self.NomeEntry.pack(pady=10)
 
-        self.DescEntry = ctk.CTkEntry(frame, placeholder_text="Descrição do livro", width=300, height=40)
+        self.DescEntry = ctk.CTkEntry(frame, placeholder_text="Descrição do produto", width=300, height=40)
         self.DescEntry.pack(pady=10)
 
-        self.GeneroEntry = ctk.CTkEntry(frame, placeholder_text="Gênero do livro", width=300, height=40)
+        self.GeneroEntry = ctk.CTkEntry(frame, placeholder_text="Categoria do produto", width=300, height=40)
         self.GeneroEntry.pack(pady=10)
 
-        self.QuantidadeEntry = ctk.CTkEntry(frame, placeholder_text="Quantidade do livro", width=300, height=40)
+        self.QuantidadeEntry = ctk.CTkEntry(frame, placeholder_text="Quantidade do produto", width=300, height=40)
         self.QuantidadeEntry.pack(pady=10)
 
-        self.PrecoEntry = ctk.CTkEntry(frame, placeholder_text="Preço do livro", width=300, height= 40)
-        self.PrecoEntry.pack(pady = 10)
-
-        TipoLabel = ctk.CTkLabel(frame, text="É Administrador?", font=("Arial", 15))
-        TipoLabel.pack(pady = 10)
-
-        self.TipoEntry = ctk.CTkComboBox(
-            frame,
-            values=["Sim", "Não"],
-            width=120,
-            state="readonly"
-        )
-
-        # Def para informar que caso o usuário esqueça de informar algum campo, o sistema notifica
+        self.PrecoEntry = ctk.CTkEntry(frame, placeholder_text="Preço do produto", width=300, height=40)
+        self.PrecoEntry.pack(pady=10)
 
         def RegistrarProduto():
             nome = self.NomeEntry.get()
@@ -103,16 +99,12 @@ class TelaProdutos:
             else:
                 messagebox.showerror("Error", "Todos os campos são obrigatórios")
 
-        # Botão para registrar o produto no banco de dados
-        AddButton = ctk.CTkButton(produto_add, text="REGISTRAR LIVRO", width=200, command=RegistrarProduto)
+        AddButton = ctk.CTkButton(produto_add, text="REGISTRAR PRODUTO", width=200, command=RegistrarProduto)
         AddButton.place(x=300, y=520)
 
-        # Botão para voltar
         VoltarButton = ctk.CTkButton(produto_add, text="Voltar", width=80, fg_color="gray", command=produto_add.destroy)
         VoltarButton.place(x=10, y=570)
 
-    
-    # Def para puxar as informações da tabela e jogar tudo para a lista
     def PuxarInfo(self, tree):
         for item in tree.get_children():
             tree.delete(item)
@@ -125,6 +117,8 @@ class TelaProdutos:
                 tree.insert("", "end", values=produto)
         finally:
             cursor.close()
+
+
 
     # Def para ir para a aba de exclusões de livros
     def GoToExcluir(self):
@@ -210,6 +204,8 @@ class TelaProdutos:
 
         VoltarButton = ctk.CTkButton(produto_Update, text="Voltar", width=80, fg_color="gray", command=produto_Update.destroy)
         VoltarButton.place(x=10, y=560)
+
+
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
