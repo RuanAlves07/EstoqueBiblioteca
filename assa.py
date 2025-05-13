@@ -1,13 +1,14 @@
-
-import customtkinter as ctk
+import customtkinter
 from CTkMenuBar import *
 from fornecedor import FornecedorApp
-root = ctk.CTk()
+
+root = customtkinter.CTk()
 root.geometry("600x200")
 
-instancia = FornecedorApp()
-minhafun = instancia.cadastro_forn
+# ✅ Agora estamos passando o root corretamente
+instancia = FornecedorApp(root)
 
+minhafun = instancia.cadastro_forn
 menu = CTkMenuBar(root)
 button_1 = menu.add_cascade("File")
 button_2 = menu.add_cascade("Edit")
@@ -35,9 +36,3 @@ dropdown3.add_option(option="Update")
 
 dropdown4 = CustomDropdownMenu(widget=button_4)
 dropdown4.add_option(option="Hello World")
-
-
-if __name__ == "__main__":
-    root = ctk.CTk()
-    app = FornecedorApp(root)  # ✅ Agora passamos o root corretamente
-    root.mainloop()
