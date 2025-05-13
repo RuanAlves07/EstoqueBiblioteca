@@ -13,33 +13,33 @@ class FornecedorApp:
 
         self.root = root
         self.root.title("Gerenciador de Fornecedores")
-        self.root.geometry("500x600")
+        self.root.geometry("800x600")
         self.root.resizable(False, False)
         self.root.configure(bg="#f6f6f6")
      # Título  
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FORNECEDORES",
         font=("Segoe UI", 22, "bold"))
-        Titulolabel.pack(pady=70)
+        Titulolabel.place(x=220 , y = 75)
 
         # Botão para ir no menu de registro dos produto
         AButton = ctk.CTkButton(root, text="ADICIONAR FORNECEDORES", width=300, command=self.cadastro_forn)
-        AButton.place(x=100, y=200)
+        AButton.place(x=250, y=200)
 
         # Botão para ir no menu de remoção de produto
         RemoveButton = ctk.CTkButton(root, text="EXCLUIR FORNECEDORES", width=300, command=self.excluir_forn)
-        RemoveButton.place(x=100, y=300)
+        RemoveButton.place(x=250, y=300)
 
         # Botão para ir no menu de atualização de informação de produtos
         UpdateButton = ctk.CTkButton(root, text="ATUALIZAR FORNECEDORES", width=300, command=self.atuu_funci)
-        UpdateButton.place(x=100, y=400)
+        UpdateButton.place(x=250, y=400)
 
         # Botão para ir no menu de listagem de todos os produtos registrados
         ListButton = ctk.CTkButton(root, text="LISTAR FORNECEDORES", width=300, command=self.listar_forn)
-        ListButton.place(x=100, y=500)
+        ListButton.place(x=250, y=500)
 
         # Switch para alternar entre Light/Dark Mode
         self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=10, y=10)
+        self.theme_switch.place(x=600, y=30)
 
 
     def alternar_tema(self):
