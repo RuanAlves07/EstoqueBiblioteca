@@ -1,221 +1,219 @@
-from tkinter import *
+import customtkinter as ctk
 from tkinter import messagebox
-from tkinter import ttk
 from comunicacao import comunicacao
+from tkinter import ttk
+
+# Configuração inicial do tema
+ctk.set_appearance_mode("Light")  # Pode ser "Dark" ou "System"
+ctk.set_default_color_theme("blue")  # Cores personalizáveis
+
 
 class FornecedorApp:
     def __init__(self, root):
+
         self.root = root
-        self.root.title("Fornecedor")
-        self.root.geometry("400x600")
-        self.root.configure(background="#f6f3ec")
-        self.root.resizable(width=False, height=False)
+        self.root.title("Gerenciador de Fornecedores")
+        self.root.geometry("800x600")
+        self.root.resizable(False, False)
+        self.root.configure(bg="#f6f6f6")
+     # Título  
+        Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FORNECEDORES",
+        font=("Segoe UI", 22, "bold"))
+        Titulolabel.place(x=220 , y = 75)
 
-        self.cadButton = ttk.Button(root, text="Cadastrar Fornecedor", width=50, command=self.cadastro_forn)
-        self.cadButton.place(x=45, y=200)
+        # Botão para ir no menu de registro dos produto
+        AButton = ctk.CTkButton(root, text="ADICIONAR FORNECEDORES", width=300, command=self.cadastro_forn)
+        AButton.place(x=250, y=200)
 
-        self.excnButton = ttk.Button(root, text="Excluir Fornecedor", width=50, command=self.excluir_forn)
-        self.excnButton.place(x=45, y=300)
+        # Botão para ir no menu de remoção de produto
+        RemoveButton = ctk.CTkButton(root, text="EXCLUIR FORNECEDORES", width=300, command=self.excluir_forn)
+        RemoveButton.place(x=250, y=300)
 
-        self.listButton = ttk.Button(root, text="Listar Fornecedor", width=50, command=self.listar_forn)
-        self.listButton.place(x=45, y=400)
+        # Botão para ir no menu de atualização de informação de produtos
+        UpdateButton = ctk.CTkButton(root, text="ATUALIZAR FORNECEDORES", width=300, command=self.atuu_funci)
+        UpdateButton.place(x=250, y=400)
 
-        self.atuButton = ttk.Button(root, text="Atualizar Fornecedor", width=50, command=self.atuu_funci)
-        self.atuButton.place(x=45, y=500)
+        # Botão para ir no menu de listagem de todos os produtos registrados
+        ListButton = ctk.CTkButton(root, text="LISTAR FORNECEDORES", width=300, command=self.listar_forn)
+        ListButton.place(x=250, y=500)
 
-        self.voltButton = ttk.Button(root, text="Fechar", width=10, command=self.sair)
-        self.voltButton.place(x=10, y=570)
-        
-        Titulolabel = Label(self.root, text="GERENCIADOR DE FORNECEDORES", font=("Times New Roman", 18))
-        Titulolabel.place(x=10, y=75)
+        # Switch para alternar entre Light/Dark Mode
+        self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
+        self.theme_switch.place(x=600, y=30)
+
+
+    def alternar_tema(self):
+        modo = "Dark" if self.theme_switch.get() == 1 else "Light"
+        ctk.set_appearance_mode(modo)
 
     def cadastro_forn(self):
-        jan = Toplevel(self.root)
+        jan = ctk.CTkToplevel(self.root)
         jan.title("Cadastro de Fornecedores")
         jan.geometry("800x600")
-        jan.configure(background="#f6f3ec")
-        jan.resizable(width=False, height=False)
+        jan.resizable(False, False)
 
-        forlabel = Label(jan, text="NOME EMPRESARIAL: ", font=("Times New Roman", 15))
-        forlabel.place(x=115, y=55)
-        self.fornomeEntry = ttk.Entry(jan, width=30)
-        self.fornomeEntry.place(x=330, y=60)
+        frame = ctk.CTkFrame(jan, corner_radius=10)
+        frame.pack(padx=60, pady=50, fill="both", expand=True)
 
-        fornecedores_ficticio = Label(jan, text="NOME DE FANTASIA: ", font=("Times New Roman", 15))
-        fornecedores_ficticio.place(x=115, y=150)
-        self.ficticioEntry = ttk.Entry(jan, width=40)
-        self.ficticioEntry.place(x=330, y=160)
+        title = ctk.CTkLabel(frame, text="CADASTRO DE FORNECEDOR", font=("Segoe UI", 18, "bold"))
+        title.pack(pady=20)
 
-        fornecedores_cnpj = Label(jan, text="CNPJ DA EMPRESA: ", font=("Times New Roman", 15))
-        fornecedores_cnpj.place(x=115, y=255)
-        self.cnpjEntry = ttk.Entry(jan, width=40)
-        self.cnpjEntry.place(x=330, y=260)
+        self.fornomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome Empresarial", width=300, height=40)
+        self.fornomeEntry.pack(pady=10)
 
-        fornecedores_END = Label(jan, text="ENDEREÇO DA EMPRESA: ", font=("Times New Roman", 15))
-        fornecedores_END.place(x=85, y=350)
-        self.endEntry = ttk.Entry(jan, width=40)
-        self.endEntry.place(x=330, y=360)
+        self.ficticioEntry = ctk.CTkEntry(frame, placeholder_text="Nome de Fantasia", width=300, height=40)
+        self.ficticioEntry.pack(pady=10)
 
-        AddButton = ttk.Button(jan, text="REGISTRAR FORNECEDOR", width=30, command=self.RegistrarNoBanco)
-        AddButton.place(x=300, y=520)
+        self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text="CNPJ da Empresa", width=300, height=40)
+        self.cnpjEntry.pack(pady=10)
 
-        voltButton = ttk.Button(jan, text="Fechar", width=10, command=jan.destroy)
-        voltButton.place(x=10, y=570)
+        self.endEntry = ctk.CTkEntry(frame, placeholder_text="Endereço da Empresa", width=300, height=40)
+        self.endEntry.pack(pady=10)
+
+        AddButton = ctk.CTkButton(jan, text="REGISTRAR FORNECEDOR", width=200, command=self.RegistrarNoBanco)
+        AddButton.pack(pady=10)
+
+        voltButton = ctk.CTkButton(jan, text="Fechar", width=100, fg_color="gray", command=jan.destroy)
+        voltButton.pack(pady=10)
 
     def RegistrarNoBanco(self):
-        nomeforn = self.fornomeEntry.get()
-        nomefant = self.ficticioEntry.get()
-        cnpj = self.cnpjEntry.get()
-        end = self.endEntry.get()
+        nome = self.fornomeEntry.get()
+        nomefantasia = self.ficticioEntry.get()
+        CNPJ = self.cnpjEntry.get()
+        endereco = self.endEntry.get()
+
+        if "" in [nome, nomefantasia, CNPJ, endereco]:
+            messagebox.showerror("Erro", "Preencha todos os campos!")
+            return
+
         db = comunicacao()
-        db.RegistrarFornecedor(nomeforn, nomefant, cnpj, end)
-        if nomeforn == "" or nomefant == "" or cnpj == "" or cnpj == "" or end == "":
-            messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
-        else:
-            messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
-            self.limpar_campos()
+        db.RegistrarFornecedor(nome, nomefantasia, CNPJ, endereco)
+        messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
+        self.limpar_campos()
+
     def limpar_campos(self):
-        self.fornomeEntry.delete(0, END)  # Limpa o campo NOME EMPRESARIAL
-        self.ficticioEntry.delete(0, END)  # Limpa o campo NOME DE FANTASIA
-        self.cnpjEntry.delete(0, END)  # Limpa o campo CNPJ
-        self.endEntry.delete(0, END)  # Limpa o campo ENDEREÇO
+        self.fornomeEntry.delete(0, 'end')
+        self.ficticioEntry.delete(0, 'end')
+        self.cnpjEntry.delete(0, 'end')
+        self.endEntry.delete(0, 'end')
+
     def excluir_forn(self):
         def excluir_selecionado():
             item_selecionado = tree.selection()
             if not item_selecionado:
-                messagebox.showwarning("Atenção", "Selecione um fornecedor para excluir.")
+                messagebox.showwarning("Atenção", "Selecione um fornecedor.")
                 return
-
             fornecedor_id = tree.item(item_selecionado)["values"][0]
-
-            resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir este fornecedor?")
-            if resposta:
+            if messagebox.askyesno("Confirmação", f"Excluir fornecedor ID {fornecedor_id}?"):
                 db = comunicacao()
                 db.ExcluirFornecedor(fornecedor_id)
-                self.carregar_fornecedores(tree)  # Atualiza a treeview após a exclusão
-                messagebox.showinfo("Sucesso", "Fornecedor excluído com sucesso!")
+                self.carregar_fornecedores(tree)
+                messagebox.showinfo("Sucesso", "Fornecedor excluído!")
 
-        janela = Toplevel(self.root)
-        janela.title("Excluir Fornecedores")
-        janela.geometry("700x400")
-        janela.configure(background="#f6f3ec")
-        janela.resizable(width=False, height=False)
+        janela = ctk.CTkToplevel(self.root)
+        janela.title("Excluir Fornecedor")
+        janela.geometry("800x400")
 
         colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
-        tree = ttk.Treeview(janela, columns=colunas, show="headings")
-
+    
+        # Use ttk.Treeview em vez de ctk.Treeview
+        tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
+    
         tree.heading("ID", text="ID")
         tree.heading("Nome", text="Nome")
         tree.heading("Nome Fantasia", text="Nome Fantasia")
         tree.heading("CNPJ", text="CNPJ")
         tree.heading("Endereço", text="Endereço")
-
+    
         tree.column("ID", width=50, anchor="center")
         tree.column("Nome", width=150)
         tree.column("Nome Fantasia", width=150)
         tree.column("CNPJ", width=120, anchor="center")
         tree.column("Endereço", width=200)
+    
+        tree.pack(fill="both", expand=True, padx=10, pady=10)
 
-        tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+        bt_excluir = ctk.CTkButton(janela, text="Excluir Selecionado", width=150, command=excluir_selecionado)
+        bt_excluir.pack(pady=10)
 
-        bt_excluir = ttk.Button(janela, text="Excluir Selecionado", command=excluir_selecionado)
-        bt_excluir.pack(pady=5)
-
-        bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
+        bt_fechar = ctk.CTkButton(janela, text="Fechar", width=100, fg_color="gray", command=janela.destroy)
         bt_fechar.pack(pady=5)
 
-        # Carrega os fornecedores na treeview
         self.carregar_fornecedores(tree)
 
     def carregar_fornecedores(self, tree):
-        # Limpa a treeview antes de carregar novos dados
         for item in tree.get_children():
             tree.delete(item)
-
-        # Obtém os dados dos fornecedores do banco de dados
         db = comunicacao()
-        cursor = db.conn.cursor()  # Cria um novo cursor
-
-        
+        cursor = db.conn.cursor()
         cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
-        fornecedores = cursor.fetchall()  # Consome todos os resultados
-
-            # Insere os fornecedores na treeview
-        for fornecedor in fornecedores:
-            tree.insert("", "end", values=fornecedor)
-
+        fornecedores = cursor.fetchall()
+        for f in fornecedores:
+            tree.insert("", "end", values=f)
 
     def listar_forn(self):
-        janela = Toplevel(self.root)
-        janela.title("Listar Fornecedores")
-        janela.geometry("700x400")
-        janela.configure(background="#f6f3ec")
-        janela.resizable(width=False, height=False)
+        janela = ctk.CTkToplevel(self.root)
+        janela.title("Lista de Fornecedores")
+        janela.geometry("800x400")
 
         colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
-        tree = ttk.Treeview(janela, columns=colunas, show="headings")
-
+    
+        # Use ttk.Treeview em vez de ctk.Treeview
+        tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
+    
         tree.heading("ID", text="ID")
         tree.heading("Nome", text="Nome")
         tree.heading("Nome Fantasia", text="Nome Fantasia")
         tree.heading("CNPJ", text="CNPJ")
         tree.heading("Endereço", text="Endereço")
-
+    
         tree.column("ID", width=50, anchor="center")
         tree.column("Nome", width=150)
         tree.column("Nome Fantasia", width=150)
         tree.column("CNPJ", width=120, anchor="center")
         tree.column("Endereço", width=200)
+    
+        tree.pack(fill="both", expand=True, padx=10, pady=10)
 
-        tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
-
-        bt_fechar = ttk.Button(janela, text="Fechar", width=10, command=janela.destroy)
+        bt_fechar = ctk.CTkButton(janela, text="Fechar", width=100, fg_color="gray", command=janela.destroy)
         bt_fechar.pack(pady=5)
 
-        # Carrega os fornecedores na treeview
+        self.carregar_fornecedores(tree)
+
         self.carregar_fornecedores(tree)
 
     def atuu_funci(self):
-        jan = Toplevel(self.root)
-        jan.title("Atualizar Fornecedores")
+        jan = ctk.CTkToplevel(self.root)
+        jan.title("Atualizar Fornecedor")
         jan.geometry("800x600")
-        jan.configure(background="#f6f3ec")
-        jan.resizable(width=False, height=False)
+        jan.resizable(False, False)
 
-        # Campo para inserir o ID do fornecedor
-        id_label = Label(jan, text="ID DO FORNECEDOR: ", font=("Times New Roman", 15))
-        id_label.place(x=115, y=55)
-        self.idEntry = ttk.Entry(jan, width=30)
-        self.idEntry.place(x=330, y=60)
+        frame = ctk.CTkFrame(jan, corner_radius=10)
+        frame.pack(padx=60, pady=50, fill="both", expand=True)
 
-        # Botão para buscar o fornecedor
-        buscar_button = ttk.Button(jan, text="Buscar Fornecedor", width=20, command=self.buscar_fornecedor)
-        buscar_button.place(x=330, y=100)
+        title = ctk.CTkLabel(frame, text="ATUALIZAR FORNECEDOR", font=("Segoe UI", 18, "bold"))
+        title.pack(pady=10)
 
-        # Campos para editar as informações do fornecedor
-        forlabel = Label(jan, text="NOME EMPRESARIAL: ", font=("Times New Roman", 15))
-        forlabel.place(x=115, y=150)
-        self.fornomeEntry = ttk.Entry(jan, width=30)
-        self.fornomeEntry.place(x=330, y=155)
+        self.idEntry = ctk.CTkEntry(frame, placeholder_text="Digite o ID do Fornecedor", width=300, height=40)
+        self.idEntry.pack(pady=10)
 
-        fornecedores_ficticio = Label(jan, text="NOME DE FANTASIA: ", font=("Times New Roman", 15))
-        fornecedores_ficticio.place(x=115, y=200)
-        self.ficticioEntry = ttk.Entry(jan, width=40)
-        self.ficticioEntry.place(x=330, y=205)
+        buscar_button = ctk.CTkButton(frame, text="Buscar Fornecedor", width=150, command=self.buscar_fornecedor)
+        buscar_button.pack(pady=10)
 
-        fornecedores_cnpj = Label(jan, text="CNPJ DA EMPRESA: ", font=("Times New Roman", 15))
-        fornecedores_cnpj.place(x=115, y=250)
-        self.cnpjEntry = ttk.Entry(jan, width=40)
-        self.cnpjEntry.place(x=330, y=255)
+        self.fornomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome Empresarial", width=300, height=40)
+        self.fornomeEntry.pack(pady=10)
 
-        fornecedores_END = Label(jan, text="ENDEREÇO DA EMPRESA: ", font=("Times New Roman", 15))
-        fornecedores_END.place(x=85, y=300)
-        self.endEntry = ttk.Entry(jan, width=40)
-        self.endEntry.place(x=330, y=305)
+        self.ficticioEntry = ctk.CTkEntry(frame, placeholder_text="Nome de Fantasia", width=300, height=40)
+        self.ficticioEntry.pack(pady=10)
 
-        # Botão para salvar as alterações
-        salvar_button = ttk.Button(jan, text="Salvar Alterações", width=20, command=self.salvar_alteracoes)
-        salvar_button.place(x=330, y=350)
+        self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text="CNPJ da Empresa", width=300, height=40)
+        self.cnpjEntry.pack(pady=10)
+
+        self.endEntry = ctk.CTkEntry(frame, placeholder_text="Endereço da Empresa", width=300, height=40)
+        self.endEntry.pack(pady=10)
+
+        salvar_button = ctk.CTkButton(frame, text="Salvar Alterações", width=150, command=self.salvar_alteracoes)
+        salvar_button.pack(pady=20)
 
     def buscar_fornecedor(self):
         idfornecedor = self.idEntry.get()
@@ -231,41 +229,45 @@ class FornecedorApp:
             return
 
         # Preenche os campos com as informações do fornecedor
-        self.fornomeEntry.delete(0, END)
+        self.fornomeEntry.delete(0, )
         self.fornomeEntry.insert(0, fornecedor[1])  # Nome empresarial
 
-        self.ficticioEntry.delete(0, END)
+        self.ficticioEntry.delete(0, )
         self.ficticioEntry.insert(0, fornecedor[2])  # Nome fantasia
 
-        self.cnpjEntry.delete(0, END)
+        self.cnpjEntry.delete(0, )
         self.cnpjEntry.insert(0, fornecedor[3])  # CNPJ
 
-        self.endEntry.delete(0, END)
+        self.endEntry.delete(0, )
         self.endEntry.insert(0, fornecedor[4])  # Endereço
+
 
     def salvar_alteracoes(self):
         idfornecedor = self.idEntry.get()
-        nomeforn = self.fornomeEntry.get()
-        nomefant = self.ficticioEntry.get()
-        cnpj = self.cnpjEntry.get()
-        end = self.endEntry.get()
+        nome = self.fornomeEntry.get()
+        nomefantasia = self.ficticioEntry.get()
+        CNPJ = self.cnpjEntry.get()
+        endereco= self.endEntry.get()
 
         if not idfornecedor:
             messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
             return
 
-        if nomeforn == "" or nomefant == "" or cnpj == "" or end == "":
+        if nome == "" or nomefantasia == "" or CNPJ == "" or endereco == "":
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
 
         db = comunicacao()
-        db.AtualizarFornecedor(idfornecedor, nomeforn, nomefant, cnpj, end)
+        db.AtualizarFornecedor(idfornecedor, nome, nomefantasia, CNPJ, endereco)
         messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
+
     def sair(self):
         from MenuAdm import Menuadm
         Menuadm(self.root)
+        self.root.withdraw()
 
 
-root = Tk()
-app = FornecedorApp(root)
-root.mainloop()
+if __name__ == "__main__":
+    root = ctk.CTk()
+    app = FornecedorApp(root)
+    root.mainloop()

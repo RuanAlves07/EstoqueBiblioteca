@@ -2,12 +2,15 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import customtkinter as ctk
-from comunicacao import comunicacao  # Certifique-se que 'comunicacao' está configurado corretamente
+from comunicacao import comunicacao  
+from CTkMenuBar import *
 
 
 # Configuração global do CustomTkinter
 ctk.set_appearance_mode("Light")
 ctk.set_default_color_theme("blue")
+
+
 
 
 class TelaProdutos:
@@ -19,6 +22,29 @@ class TelaProdutos:
         self.root.resizable(width=False, height=False)
 
         root.iconbitmap(default="icons/klipartz.com.ico")  # Define o ícone da janela
+
+        BarraNavegabilidade = CTkMenuBar(root)
+        botao_1 = BarraNavegabilidade.add_cascade("Produtos")
+        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores")
+        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios")
+
+        submenu1 = CustomDropdownMenu(widget = botao_1)
+        submenu1.add_option(option = "Adicionar Produtos")
+        submenu1.add_option(option = "Excluir Produtos")
+        submenu1.add_option(option = "Atualizar Produtos")
+        submenu1.add_option(option = "Listar Produtos")
+
+        submenu2 = CustomDropdownMenu(widget=botao_2)
+        submenu2.add_option(option="Adicionar Fornecedores")
+        submenu2.add_option(option="Excluir Fornecedores")
+        submenu2.add_option(option="Atualizar Fornecedores")
+        submenu2.add_option(option="Listar Fornecedores")
+
+        submenu3 = CustomDropdownMenu(widget=botao_3)
+        submenu3.add_option(option="Adicionar Funcionarios")
+        submenu3.add_option(option="Excluir Funcionarios")
+        submenu3.add_option(option="Atualizar Funcionarios")
+        submenu3.add_option(option="Listar Funcionarios")
 
         # Label do título
         Titulolabel = Label(root, text="GERENCIADOR DE PRODUTOS", font=("Times New Roman", 18))
@@ -42,7 +68,8 @@ class TelaProdutos:
 
         # Switch para alternar entre Light/Dark Mode
         self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=660, y=20)
+        self.theme_switch.place(x=660, y=30)
+
 
     def GoToproduto(self):
         from produto import TelaProdutos
