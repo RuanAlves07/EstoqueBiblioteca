@@ -20,21 +20,6 @@ class TelaProdutos:
 
         root.iconbitmap(default="icons/klipartz.com.ico")  # Define o ícone da janela
 
-
-        self.tabview = ctk.CTkTabview(root, width=180, height=10)
-        self.tabview.place(x=5, y=5) 
- 
-        self.tab_produto = self.tabview.add("Produto", command = self.produto)
-        self.tab_produto = self.tabview.ad
-        self.tab_fornecedor = self.tabview.add("Fornecedor")
-        self.tab_cliente = self.tabview.add("Cliente")
-        self.tab_funcionario = self.tabview.add("Funcionário")
-
-    
-        
-
-        self.tabview.set("Produto")
-
         # Label do título
         Titulolabel = Label(root, text="GERENCIADOR DE PRODUTOS", font=("Times New Roman", 18))
         Titulolabel.place(x=220, y=75)
