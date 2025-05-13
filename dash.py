@@ -42,8 +42,8 @@ class DashboardDistribuidora:
 
         # Linha 0 - Botões para navegação de telas
 
-        self.frame_linha0 = ctk.CTkFrame(self.frame_principal, fg_color="white")
-        self.frame_linha0.pack(fill="x", pady=0)
+        self.frame_linha0 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
+        self.frame_linha0.pack(fill="x", pady=5)
 
         
         #Botão de abrir estoque
@@ -53,29 +53,65 @@ class DashboardDistribuidora:
             width=200, 
             command=self.abrir_gerenciador_estoque
         )
-        self.botao_Bestoque.place(x = 70, y = 50)
+        self.botao_Bestoque.place(x = 400, y = 50)
+
+        #Descrição de produtos
+        self.label_Bestoque = ctk.CTkLabel(
+            self.frame_linha0, 
+            text="Na tela de produtos você pode\ncadastrar, listar, excluir\ne pesquisar os produtos", 
+            font=("Segoe UI", 14, "bold")
+        )
+        self.label_Bestoque.place(x = 395, y = 90)
 
 
+        #Botão para funcionairos
         self.botao_BFuncionario = ctk.CTkButton(
             self.frame_linha0,
             text="ABRIR FUNCIONARIO", 
             width=200, 
             command=self.abrir_gerenciador_funcionario
         )
-        self.botao_BFuncionario.place(x = 370, y = 50)
+        self.botao_BFuncionario.place(x = 850, y = 50)
+
+
+        #descrição para funcionarios
+        self.label_Bfuncionario = ctk.CTkLabel(
+            self.frame_linha0, 
+            text="Tela de funcionários\nVocê pode cadastrar, listar, excluir\ne pesquisar os funcionários da nossa biblioteca", 
+            font=("Segoe UI", 14, "bold")
+        )
+        self.label_Bfuncionario.place(x = 790, y = 90)
+
+
+        #Botão para fornecedor
+        self.botao_Bfornecedor = ctk.CTkButton(
+            self.frame_linha0,
+            text="ABRIR FORNECEDOR", 
+            width=200, 
+            command=self.abrir_gerenciador_fornecedores
+        )
+        self.botao_Bfornecedor.place(x = 1350, y = 50)
+
+
+        self.label_Bfornecedor = ctk.CTkLabel(
+            self.frame_linha0, 
+            text="Aqui você pode cadastrar,\nlistar, excluir e pesquisar\nos nossos fornecedores", 
+            font=("Segoe UI", 14, "bold")
+        )
+        self.label_Bfornecedor.place(x = 1360, y = 90)
 
    
         
 
 
         # Linha 1 - Cards de resumo
-        self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="black")
-        self.frame_linha1.pack(fill="y", pady=50)
+        self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="Blue")
+        self.frame_linha1.pack(fill="x", pady=300)
 
         # Card 1 - Estoque Total
         self.card_estoque = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
         self.card_estoque.pack_propagate(False)
-        self.card_estoque.pack(side="left", padx=10)
+        self.card_estoque.pack(side="left", padx=100)
         
         self.label_estoque = ctk.CTkLabel(
             self.card_estoque, 
@@ -102,7 +138,7 @@ class DashboardDistribuidora:
         # Card 2 - Valor Total em Livros
         self.card_valor = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
         self.card_valor.pack_propagate(False)
-        self.card_valor.pack(side="left", padx=10)
+        self.card_valor.pack(side="left", padx=100)
         
         self.label_valor = ctk.CTkLabel(
             self.card_valor, 
@@ -167,7 +203,7 @@ class DashboardDistribuidora:
         # Card 4 - Fornecedores
         self.card_fornecedores = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
         self.card_fornecedores.pack_propagate(False)
-        self.card_fornecedores.pack(side="left", padx=10)
+        self.card_fornecedores.pack(side="left", padx=100)
         
         self.label_fornecedores = ctk.CTkLabel(
             self.card_fornecedores, 
@@ -194,12 +230,12 @@ class DashboardDistribuidora:
 
 
         # Linha 2 - Gráficos
-        self.frame_linha2 = ctk.CTkFrame(self.frame_principal, fg_color="Purple")
-        self.frame_linha2.pack(fill="both", expand=True, pady= 30)
+        self.frame_linha2 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
+        self.frame_linha2.pack(fill="both", expand=True, pady= 20)
 
 
         # Frame do gráfico de estoque por gênero
-        self.frame_grafico_genero = ctk.CTkFrame(self.frame_linha2, width=200, height=400)
+        self.frame_grafico_genero = ctk.CTkFrame(self.frame_linha2, width=200, height=500)
         self.frame_grafico_genero.pack_propagate(False)
         self.frame_grafico_genero.pack(side="left", padx=10, pady=10, fill="both", expand=True)
         
