@@ -2,12 +2,15 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import customtkinter as ctk
-from comunicacao import comunicacao  # Certifique-se que 'comunicacao' está configurado corretamente
+from comunicacao import comunicacao  
+from CTkMenuBar import *
 
 
 # Configuração global do CustomTkinter
 ctk.set_appearance_mode("Light")
 ctk.set_default_color_theme("blue")
+
+
 
 
 class TelaProdutos:
@@ -19,6 +22,12 @@ class TelaProdutos:
         self.root.resizable(width=False, height=False)
 
         root.iconbitmap(default="icons/klipartz.com.ico")  # Define o ícone da janela
+
+        BarraNavegabilidade = CTkMenuBar(root)
+        botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
+        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores)
+        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios)
+
 
         # Label do título
         Titulolabel = Label(root, text="GERENCIADOR DE PRODUTOS", font=("Times New Roman", 18))
@@ -42,7 +51,13 @@ class TelaProdutos:
 
         # Switch para alternar entre Light/Dark Mode
         self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=660, y=20)
+        self.theme_switch.place(x=660, y=30)
+
+    # Função para alternar modo escuro/claro
+    def alternar_tema(self):
+        modo = "Dark" if self.theme_switch.get() == 1 else "Light"
+        ctk.set_appearance_mode(modo)
+
 
     def GoToproduto(self):
         from produto import TelaProdutos
@@ -51,10 +66,20 @@ class TelaProdutos:
         nova_janela.focus_force()    
         TelaProdutos(nova_janela)
 
-    # Função para alternar modo escuro/claro
-    def alternar_tema(self):
-        modo = "Dark" if self.theme_switch.get() == 1 else "Light"
-        ctk.set_appearance_mode(modo)
+    def TelaFornecedores(self):
+        from fornecedor import FornecedorApp
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()
+        nova_janela.focus_force()
+        FornecedorApp(nova_janela)
+
+    def TelaFuncionarios(self):
+        from funcionarios import GerenciadorFuncionarios
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        GerenciadorFuncionarios(nova_janela)
+
 
     # Métodos GoTo...
     def GoToAdicionar(self):
