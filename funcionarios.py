@@ -2,46 +2,71 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import customtkinter as ctk
 import mysql.connector
-from comunicacao import comunicacao  # Certifique-se de que esse módulo existe
+from comunicacao import comunicacao  
+from CTkMenuBar import *
 
 
 class GerenciadorFuncionarios:
     def __init__(self, root):
         self.root = root
         self.root.title("Gerenciador de Funcionários")
-        self.root.geometry("500x600")
+        self.root.geometry("800x600")
         self.root.resizable(False, False)
-        self.root.configure(bg="#f6f6f6")  # Fundo escuro moderno
+        self.root.configure(bg="#f6f6f6")  
 
 
         # Configuração do tema
         ctk.set_appearance_mode("Light")
         ctk.set_default_color_theme("blue")
 
+        BarraNavegabilidade = CTkMenuBar(root)
+        botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
+        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores)
+        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios)
+
      # Título
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FUNCIONÁRIOS",
-        font=("Segoe UI", 22, "bold"))
+        font=("Times New roman", 22, "bold"))
         Titulolabel.pack(pady=70)
 
         # Botões principais
         self.cadButton = ctk.CTkButton(self.root, text="Cadastrar Funcionario", width=300, command=self.cadastro_func)
-        self.cadButton.pack(pady=10)
+        self.cadButton.place(x=250, y=200)
 
         self.excnButton = ctk.CTkButton(self.root, text="Excluir Funcionario", width=300, command=self.excluir_func)
-        self.excnButton.pack(pady=10)
+        self.excnButton.place(x=250, y=300)
 
         self.listButton = ctk.CTkButton(self.root, text="Listar Funcionario", width=300, command=self.listar_func)
-        self.listButton.pack(pady=10)
+        self.listButton.place(x=250, y=500)
 
         self.atuButton = ctk.CTkButton(self.root, text="Atualizar Funcionario", width=300, command=self.atuu_func)
-        self.atuButton.pack(pady=10)
-
-        self.voltButton = ctk.CTkButton(self.root, text="Fechar", width=100, fg_color="gray", command=self.sair)
-        self.voltButton.pack(pady=20)
+        self.atuButton.place(x=250, y=400)
 
         # Switch para alternância de tema
         self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=10, y=10)
+        self.theme_switch.place(x=660, y=30)
+
+    def GoToproduto(self):
+        from produto import TelaProdutos
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        TelaProdutos(nova_janela)
+
+    def TelaFornecedores(self):
+        from fornecedor import FornecedorApp
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()
+        nova_janela.focus_force()
+        FornecedorApp(nova_janela)
+
+    def TelaFuncionarios(self):
+        from funcionarios import GerenciadorFuncionarios
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        GerenciadorFuncionarios(nova_janela)
+
 
     def alternar_tema(self):
             modo = "Dark" if self.theme_switch.get() == 1 else "Light"
