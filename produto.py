@@ -24,27 +24,10 @@ class TelaProdutos:
         root.iconbitmap(default="icons/klipartz.com.ico")  # Define o ícone da janela
 
         BarraNavegabilidade = CTkMenuBar(root)
-        botao_1 = BarraNavegabilidade.add_cascade("Produtos")
-        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores")
-        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios")
+        botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
+        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores)
+        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios)
 
-        submenu1 = CustomDropdownMenu(widget = botao_1)
-        submenu1.add_option(option = "Adicionar Produtos", command = self.TelaFornecedores)
-        submenu1.add_option(option = "Excluir Produtos")
-        submenu1.add_option(option = "Atualizar Produtos")
-        submenu1.add_option(option = "Listar Produtos")
-
-        submenu2 = CustomDropdownMenu(widget=botao_2)
-        submenu2.add_option(option="Adicionar Fornecedores")
-        submenu2.add_option(option="Excluir Fornecedores")
-        submenu2.add_option(option="Atualizar Fornecedores")
-        submenu2.add_option(option="Listar Fornecedores")
-
-        submenu3 = CustomDropdownMenu(widget=botao_3)
-        submenu3.add_option(option="Adicionar Funcionarios")
-        submenu3.add_option(option="Excluir Funcionarios")
-        submenu3.add_option(option="Atualizar Funcionarios")
-        submenu3.add_option(option="Listar Funcionarios")
 
         # Label do título
         Titulolabel = Label(root, text="GERENCIADOR DE PRODUTOS", font=("Times New Roman", 18))
@@ -70,14 +53,10 @@ class TelaProdutos:
         self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
         self.theme_switch.place(x=660, y=30)
 
-
-
-    def TelaFornecedores(self):
-        from fornecedor import FornecedorApp
-        nova_janela = ctk.CTkToplevel(self.root)
-        nova_janela.grab_set()
-        nova_janela.focus_force()
-        FornecedorApp(nova_janela)
+    # Função para alternar modo escuro/claro
+    def alternar_tema(self):
+        modo = "Dark" if self.theme_switch.get() == 1 else "Light"
+        ctk.set_appearance_mode(modo)
 
     def GoToproduto(self):
         from produto import TelaProdutos
@@ -86,10 +65,19 @@ class TelaProdutos:
         nova_janela.focus_force()    
         TelaProdutos(nova_janela)
 
-    # Função para alternar modo escuro/claro
-    def alternar_tema(self):
-        modo = "Dark" if self.theme_switch.get() == 1 else "Light"
-        ctk.set_appearance_mode(modo)
+    def TelaFornecedores(self):
+        from fornecedor import FornecedorApp
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()
+        nova_janela.focus_force()
+        FornecedorApp(nova_janela)
+
+    def TelaFuncionarios(self):
+        from funcionarios import GerenciadorFuncionarios
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        GerenciadorFuncionarios(nova_janela)
 
     # Métodos GoTo...
     def GoToAdicionar(self):
