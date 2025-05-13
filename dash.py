@@ -40,9 +40,37 @@ class DashboardDistribuidora:
         self.frame_principal = ctk.CTkFrame(self.root, fg_color="transparent")
         self.frame_principal.pack(pady=10, padx=20, fill="both", expand=True)
 
+        # Linha 0 - Botões para navegação de telas
+
+        self.frame_linha0 = ctk.CTkFrame(self.frame_principal, fg_color="white")
+        self.frame_linha0.pack(fill="x", pady=0)
+
+        
+        #Botão de abrir estoque
+        self.botao_Bestoque = ctk.CTkButton(
+            self.frame_linha0,
+            text="ABRIR PRODUTOS", 
+            width=200, 
+            command=self.abrir_gerenciador_estoque
+        )
+        self.botao_Bestoque.place(x = 70, y = 50)
+
+
+        self.botao_BFuncionario = ctk.CTkButton(
+            self.frame_linha0,
+            text="ABRIR FUNCIONARIO", 
+            width=200, 
+            command=self.abrir_gerenciador_funcionario
+        )
+        self.botao_BFuncionario.place(x = 370, y = 50)
+
+   
+        
+
+
         # Linha 1 - Cards de resumo
-        self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
-        self.frame_linha1.pack(fill="x", pady=10)
+        self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="black")
+        self.frame_linha1.pack(fill="y", pady=50)
 
         # Card 1 - Estoque Total
         self.card_estoque = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
@@ -98,6 +126,8 @@ class DashboardDistribuidora:
         )
         self.botao_valor.pack(pady=10)
 
+        '''
+
         # Card 3 - Clientes Ativos
         self.card_clientes = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
         self.card_clientes.pack_propagate(False)
@@ -109,6 +139,10 @@ class DashboardDistribuidora:
             font=("Segoe UI", 14, "bold")
         )
         self.label_clientes.pack(pady=(15, 5))
+
+        '''
+
+        '''
         
         self.valor_clientes = ctk.CTkLabel(
             self.card_clientes, 
@@ -117,7 +151,18 @@ class DashboardDistribuidora:
         )
         self.valor_clientes.pack(pady=5)
         
+        '''
 
+        '''
+        self.botao_clientes = ctk.CTkButton(
+            self.card_clientes, 
+            text="Gerenciar", 
+            width=100, 
+            command=self.abrir_gerenciador_clientes
+        )
+        self.botao_clientes.pack(pady=10)
+
+        '''
 
         # Card 4 - Fornecedores
         self.card_fornecedores = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
@@ -146,12 +191,15 @@ class DashboardDistribuidora:
         )
         self.botao_fornecedores.pack(pady=10)
 
+
+
         # Linha 2 - Gráficos
-        self.frame_linha2 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
-        self.frame_linha2.pack(fill="both", expand=True, pady=10)
+        self.frame_linha2 = ctk.CTkFrame(self.frame_principal, fg_color="Purple")
+        self.frame_linha2.pack(fill="both", expand=True, pady= 30)
+
 
         # Frame do gráfico de estoque por gênero
-        self.frame_grafico_genero = ctk.CTkFrame(self.frame_linha2, width=600, height=300)
+        self.frame_grafico_genero = ctk.CTkFrame(self.frame_linha2, width=200, height=400)
         self.frame_grafico_genero.pack_propagate(False)
         self.frame_grafico_genero.pack(side="left", padx=10, pady=10, fill="both", expand=True)
         
@@ -168,7 +216,7 @@ class DashboardDistribuidora:
         self.canvas_genero.get_tk_widget().pack(fill="both", expand=True, padx=10, pady=10)
 
         # Frame do gráfico de top produtos
-        self.frame_grafico_produtos = ctk.CTkFrame(self.frame_linha2, width=500, height=300)
+        self.frame_grafico_produtos = ctk.CTkFrame(self.frame_linha2, width=200, height=400)
         self.frame_grafico_produtos.pack_propagate(False)
         self.frame_grafico_produtos.pack(side="right", padx=10, pady=10, fill="both", expand=True)
         
@@ -188,13 +236,6 @@ class DashboardDistribuidora:
         self.frame_linha3 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
         self.frame_linha3.pack(fill="both", expand=True, pady=10)
         
-        self.label_tabela = ctk.CTkLabel(
-            self.frame_linha3, 
-            text="Produtos com Baixo Estoque", 
-            font=("Segoe UI", 14, "bold")
-        )
-        self.label_tabela.pack(pady=5)
-        
         # Tabela de produtos
         self.colunas_produtos = ("ID", "Nome", "Gênero", "Quantidade", "Preço")
         self.tree_produtos = ttk.Treeview(
@@ -203,22 +244,6 @@ class DashboardDistribuidora:
             show="headings",
             selectmode="browse"
         )
-        
-        for col in self.colunas_produtos:
-            self.tree_produtos.heading(col, text=col)
-            self.tree_produtos.column(col, width=120, anchor="center")
-        
-        self.tree_produtos.column("ID", width=50)
-        self.tree_produtos.column("Nome", width=200)
-        self.tree_produtos.column("Gênero", width=100)
-        self.tree_produtos.column("Quantidade", width=100)
-        self.tree_produtos.column("Preço", width=100)
-        
-        self.scrollbar_produtos = ttk.Scrollbar(self.frame_linha3, orient="vertical", command=self.tree_produtos.yview)
-        self.tree_produtos.configure(yscrollcommand=self.scrollbar_produtos.set)
-        
-        self.tree_produtos.pack(side="left", fill="both", expand=True)
-        self.scrollbar_produtos.pack(side="right", fill="y")
 
         # Botão de atualização
         self.botao_atualizar = ctk.CTkButton(
@@ -277,11 +302,15 @@ class DashboardDistribuidora:
         """)
         total_valor = db.cursor.fetchone()[0] or 0
         self.valor_total.configure(text=f"R$ {total_valor:,.2f}")
+
+        '''
         
         # Clientes ativos
         db.cursor.execute("SELECT COUNT(*) FROM cliente")
         total_clientes = db.cursor.fetchone()[0] or 0
         self.valor_clientes.configure(text=str(total_clientes))
+
+        '''
         
         # Fornecedores
         db.cursor.execute("SELECT COUNT(*) FROM fornecedor")
@@ -374,6 +403,11 @@ class DashboardDistribuidora:
         from produto import TelaProdutos
         janela = ctk.CTkToplevel(self.root)
         TelaProdutos(janela)
+
+    def abrir_gerenciador_funcionario(self):
+        from funcionarios import GerenciadorFuncionarios
+        janela = ctk.CTkToplevel(self.root)
+        GerenciadorFuncionarios(janela)
 
     def abrir_gerenciador_fornecedores(self):
         from fornecedor import FornecedorApp
