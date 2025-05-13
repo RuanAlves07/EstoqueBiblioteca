@@ -29,7 +29,7 @@ class TelaProdutos:
         botao_3 = BarraNavegabilidade.add_cascade("Funcionarios")
 
         submenu1 = CustomDropdownMenu(widget = botao_1)
-        submenu1.add_option(option = "Adicionar Produtos")
+        submenu1.add_option(option = "Adicionar Produtos", command = self.TelaFornecedores)
         submenu1.add_option(option = "Excluir Produtos")
         submenu1.add_option(option = "Atualizar Produtos")
         submenu1.add_option(option = "Listar Produtos")
@@ -70,6 +70,14 @@ class TelaProdutos:
         self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
         self.theme_switch.place(x=660, y=30)
 
+
+
+    def TelaFornecedores(self):
+        from fornecedor import FornecedorApp
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()
+        nova_janela.focus_force()
+        FornecedorApp(nova_janela)
 
     def GoToproduto(self):
         from produto import TelaProdutos
