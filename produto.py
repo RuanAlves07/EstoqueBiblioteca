@@ -58,6 +58,7 @@ class TelaProdutos:
         modo = "Dark" if self.theme_switch.get() == 1 else "Light"
         ctk.set_appearance_mode(modo)
 
+
     def GoToproduto(self):
         from produto import TelaProdutos
         nova_janela = ctk.CTkToplevel(self.root)
@@ -78,6 +79,7 @@ class TelaProdutos:
         nova_janela.grab_set()       
         nova_janela.focus_force()    
         GerenciadorFuncionarios(nova_janela)
+
 
     # Métodos GoTo...
     def GoToAdicionar(self):
