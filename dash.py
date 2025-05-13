@@ -14,7 +14,7 @@ class DashboardDistribuidora:
         self.root = root
         self.root.title("Dashboard - Distribuidora de Livros")
         self.root.geometry("1200x700")
-        self.root.resizable(False, False)
+        self.root.resizable(True, True)
         self.root.configure(bg="#f6f6f6")
 
         # Frame superior com título
@@ -117,13 +117,7 @@ class DashboardDistribuidora:
         )
         self.valor_clientes.pack(pady=5)
         
-        self.botao_clientes = ctk.CTkButton(
-            self.card_clientes, 
-            text="Gerenciar", 
-            width=100, 
-            command=self.abrir_gerenciador_clientes
-        )
-        self.botao_clientes.pack(pady=10)
+
 
         # Card 4 - Fornecedores
         self.card_fornecedores = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
