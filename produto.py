@@ -53,6 +53,17 @@ class TelaProdutos:
         ListButton = ctk.CTkButton(root, text="LISTAR PRODUTOS", width=300, command=self.GoToList)
         ListButton.place(x=250, y=500)
 
+        ctk.CTkLabel(self.root, text="Nome do Cliente:").pack( column=0, padx=5, pady=5, sticky="e")
+        self.entry_cliente = ctk.CTkEntry(self.root, width=250, justify="center")
+        self.entry_cliente.pack( column=1, padx=5, pady=5)
+        btn_pesquisar_cliente = ctk.CTkButton(
+            self.root,
+            text="🔍",
+            width=30,
+            
+        )
+        btn_pesquisar_cliente.pack( column=2, padx=5)
+
 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
