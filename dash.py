@@ -128,13 +128,7 @@ class DashboardDistribuidora:
         )
         self.valor_estoque.pack(pady=5)
         
-        self.botao_estoque = ctk.CTkButton(
-            self.card_estoque, 
-            text="Gerenciar", 
-            width=100, 
-            command=self.abrir_gerenciador_estoque
-        )
-        self.botao_estoque.pack(pady=10)
+
 
         # Card 2 - Valor Total em Livros
         self.card_valor = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
@@ -154,16 +148,7 @@ class DashboardDistribuidora:
             font=("Segoe UI", 36, "bold")
         )
         self.valor_total.pack(pady=5)
-        
-        self.botao_valor = ctk.CTkButton(
-            self.card_valor, 
-            text="Ver Produtos", 
-            width=100, 
-            command=self.abrir_gerenciador_produtos
-        )
-        self.botao_valor.pack(pady=10)
-
-        
+              
 
         # Card 3 - Clientes Ativos
         self.card_clientes = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
@@ -186,17 +171,6 @@ class DashboardDistribuidora:
         )
         self.valor_clientes.pack(pady=5)
         
-     
-
-     
-        self.botao_clientes = ctk.CTkButton(
-            self.card_clientes, 
-            text="Gerenciar", 
-            width=100, 
-            #command=self.abrir_gerenciador_clientes
-        )
-        self.botao_clientes.pack(pady=10)
-
 
         # Card 4 - Fornecedores
         self.card_fornecedores = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
@@ -216,15 +190,6 @@ class DashboardDistribuidora:
             font=("Segoe UI", 36, "bold")
         )
         self.valor_fornecedores.pack(pady=5)
-        
-        self.botao_fornecedores = ctk.CTkButton(
-            self.card_fornecedores, 
-            text="Gerenciar", 
-            width=100, 
-            command=self.abrir_gerenciador_fornecedores
-        )
-        self.botao_fornecedores.pack(pady=10)
-
 
 
         # Linha 2 - Gráficos
