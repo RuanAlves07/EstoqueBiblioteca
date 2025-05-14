@@ -1,6 +1,8 @@
 import customtkinter as ctk
 from tkinter import ttk, messagebox
 from comunicacao import comunicacao
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 ctk.set_appearance_mode("Light")  
 ctk.set_default_color_theme("blue")  
@@ -12,9 +14,9 @@ class MenuU:
     def Abrir_Menu(self, root):
         self.root = root
         self.root.title("Menu Usuário")
-        self.root.geometry("1000x600")
+        self.root.geometry("1920x1080")
         self.root.configure(bg="#f6f3ec")
-        self.root.resizable(False, False)
+        self.root.resizable(True, True)
 
         # Título centralizado
         self.BV = ctk.CTkLabel(self.root, text="BEM-VINDO", font=("Arial", 24, "bold"))
@@ -64,6 +66,34 @@ class MenuU:
         ctk.CTkLabel(frame_botoes, text=desc_Clie, font=("Arial", 10), wraplength=180).grid(
             row=1, column=2, padx=80, pady=(5, 20)
         )
+
+
+        self.frame_grafico_produtos = ctk.CTkFrame(self.root, width=200, height=400)
+        self.frame_grafico_produtos.pack_propagate(False)
+        self.frame_grafico_produtos.pack(side="right", padx=10, pady=10, fill="both", expand=True)
+        
+        self.label_grafico_produtos = ctk.CTkLabel(
+            self.frame_grafico_produtos, 
+            text="Top 5 Produtos em Estoque", 
+            font=("Segoe UI", 14, "bold")
+        )
+        self.label_grafico_produtos.pack(pady=5)
+        
+        # Criar gráfico de barras para produtos
+        self.fig_produtos, self.ax_produtos = plt.subplots(figsize=(5, 3), dpi=100)
+        self.canvas_produtos = FigureCanvasTkAgg(self.fig_produtos, master=self.frame_grafico_produtos)
+        self.canvas_produtos.get_tk_widget().pack(fill="both", expand=True, padx=10, pady=10)
+
+        # Tabela de produtos
+        self.colunas_produtos = ("ID", "Nome", "Gênero", "Quantidade", "Preço")
+        self.tree_produtos = ttk.Treeview(
+            self.frame_grafico_produtos, 
+            columns=self.colunas_produtos, 
+            show="headings",
+            selectmode="browse"
+        )
+
+       
 
     def PuxarInfo(self, tree):
         for item in tree.get_children():
@@ -146,6 +176,27 @@ class MenuU:
         bt_fechar.pack(pady=10)
 
         self.carregar_fornecedores(tree)
+
+    def carregar_produtos_baixo_estoque(self):
+        # Limpar a tabela
+        for item in self.tree_produtos.get_children():
+            self.tree_produtos.delete(item)
+        
+        # Consultar produtos com baixo estoque (menos de 10 unidades)
+        db = comunicacao()
+        db.cursor.execute("""
+            SELECT idproduto, nome, genero, quantidade, preco
+            FROM produto
+            WHERE quantidade < 10
+            ORDER BY quantidade ASC
+            LIMIT 10
+        """)
+        
+        produtos = db.cursor.fetchall()
+        
+        # Preencher a tabela
+        for produto in produtos:
+            self.tree_produtos.insert("", "end", values=produto)
 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
