@@ -10,7 +10,7 @@ class GerenciadorClientes:
         self.root.title("Gerenciador de Clientes")
         self.root.geometry("400x600")
         self.root.resizable(False, False)
-        self.root.configure(bg="#f6f6f6")  # Fundo escuro moderno, sou gay
+        self.root.configure(bg="#f6f6f6")  # Fundo escuro moderno
 
 
         # Configuração do tema
@@ -90,7 +90,7 @@ class GerenciadorClientes:
         dataemissao = self.dataemissaoEntry.get().strip()
         
 
-        if numeroNF == ""  == "" or qtdecompras == "" or produto == "" or dataemissao :
+        if numeroNF == "" or nome == "" or qtdecompras == "" or produto == "" or dataemissao :
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
