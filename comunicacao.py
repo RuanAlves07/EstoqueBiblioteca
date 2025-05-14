@@ -20,7 +20,7 @@ class comunicacao:
         self.cursor = self.conn.cursor()
 
     def RegistrarCliente(self, numeroNFe,  NomeCliente, QuantidadeVendas, Produto, DataEmissao):
-        self.cursor.execute("INSERT INTO usuario (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao) VALUES (%s, %s, %s, %s, %s)", (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao))
+        self.cursor.execute("INSERT INTO cliente (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao) VALUES (%s, %s, %s, %s, %s)", (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao))
         self.conn.commit() 
 
     def RegistrarProduto(self, nome, descricao, genero, quantidade, preco):
