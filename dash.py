@@ -13,7 +13,7 @@ class DashboardDistribuidora:
     def __init__(self, root):
         self.root = root
         self.root.title("Dashboard - Distribuidora de Livros")
-        self.root.geometry("1200x700")
+        self.root.geometry("1920x1080")
         self.root.resizable(True, True)
         self.root.configure(bg="#f6f6f6")
 
