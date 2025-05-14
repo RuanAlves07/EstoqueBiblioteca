@@ -128,7 +128,7 @@ class GerenciadorClientes:
         db = comunicacao()
         try:
             cursor = db.conn.cursor()
-            cursor.execute("SELECT numeroNFe, NomeCliente, QuantidadeCompras, Produto, DataEmissao FROM cliente")
+            cursor.execute("SELECT numeroNFe, NomeCliente, QuantidadeVendas	, Produto, DataEmissao FROM cliente")
             for row in cursor.fetchall():
                 tree.insert("", "end", values=row)
         except Exception as e:

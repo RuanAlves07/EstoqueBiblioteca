@@ -28,27 +28,10 @@ class TelaProdutos:
         root.iconbitmap(default="icons/klipartz.com.ico")  # Define o ícone da janela
 
         BarraNavegabilidade = CTkMenuBar(root)
-        botao_1 = BarraNavegabilidade.add_cascade("Produtos")
-        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores")
-        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios")
+        botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
+        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores)
+        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios)
 
-        submenu1 = CustomDropdownMenu(widget = botao_1)
-        submenu1.add_option(option = "Adicionar Produtos", command = )
-        submenu1.add_option(option = "Excluir Produtos")
-        submenu1.add_option(option = "Atualizar Produtos")
-        submenu1.add_option(option = "Listar Produtos")
-
-        submenu2 = CustomDropdownMenu(widget=botao_2)
-        submenu2.add_option(option="Adicionar Fornecedores")
-        submenu2.add_option(option="Excluir Fornecedores")
-        submenu2.add_option(option="Atualizar Fornecedores")
-        submenu2.add_option(option="Listar Fornecedores")
-
-        submenu3 = CustomDropdownMenu(widget=botao_3)
-        submenu3.add_option(option="Adicionar Funcionarios")
-        submenu3.add_option(option="Excluir Funcionarios")
-        submenu3.add_option(option="Atualizar Funcionarios")
-        submenu3.add_option(option="Listar Funcionarios")
 
         # Label do título
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE PRODUTOS", font=("Times New roman", 22, "bold"))
@@ -89,6 +72,13 @@ class TelaProdutos:
         nova_janela.grab_set()       
         nova_janela.focus_force()    
         TelaProdutos(nova_janela)
+
+    def TelaFuncionarios(self):
+        from funcionarios import GerenciadorFuncionarios
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        GerenciadorFuncionarios(nova_janela)
 
     # Função para alternar modo escuro/claro
     def alternar_tema(self):

@@ -76,8 +76,9 @@ class TelaLoginCadastro: #Tela de fundo
         VerifyLogin = db.cursor.fetchone()
 
         if VerifyLogin:
+
             messagebox.showinfo("INFO LOGIN", "Acesso Confirmado, Bem Vindo!")
-            self.root.withdraw()
+            self.root.destroy()
 
             userperm = VerifyLogin[4]
 
@@ -97,3 +98,4 @@ class TelaLoginCadastro: #Tela de fundo
 
 if __name__ == "__main__":
     app = TelaLoginCadastro()
+    
