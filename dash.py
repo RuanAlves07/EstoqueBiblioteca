@@ -101,17 +101,20 @@ class DashboardDistribuidora:
         self.label_Bfornecedor.place(x = 1360, y = 90)
 
    
-        
-
 
         # Linha 1 - Cards de resumo
+<<<<<<< HEAD
         self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="Blue")
         self.frame_linha1.pack(fill="x", pady=30)
+=======
+        self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
+        self.frame_linha1.pack(fill="y", pady=30)
+>>>>>>> ec44c83e73af3946e5d85458215aaa8a1659d785
 
         # Card 1 - Estoque Total
         self.card_estoque = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
         self.card_estoque.pack_propagate(False)
-        self.card_estoque.pack(side="left", padx=100)
+        self.card_estoque.pack(side="left", padx=10)
         
         self.label_estoque = ctk.CTkLabel(
             self.card_estoque, 
@@ -138,7 +141,7 @@ class DashboardDistribuidora:
         # Card 2 - Valor Total em Livros
         self.card_valor = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
         self.card_valor.pack_propagate(False)
-        self.card_valor.pack(side="left", padx=100)
+        self.card_valor.pack(side="left", padx=10)
         
         self.label_valor = ctk.CTkLabel(
             self.card_valor, 
@@ -162,7 +165,7 @@ class DashboardDistribuidora:
         )
         self.botao_valor.pack(pady=10)
 
-        '''
+        
 
         # Card 3 - Clientes Ativos
         self.card_clientes = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
@@ -176,9 +179,7 @@ class DashboardDistribuidora:
         )
         self.label_clientes.pack(pady=(15, 5))
 
-        '''
-
-        '''
+        
         
         self.valor_clientes = ctk.CTkLabel(
             self.card_clientes, 
@@ -187,23 +188,22 @@ class DashboardDistribuidora:
         )
         self.valor_clientes.pack(pady=5)
         
-        '''
+     
 
-        '''
+     
         self.botao_clientes = ctk.CTkButton(
             self.card_clientes, 
             text="Gerenciar", 
             width=100, 
-            command=self.abrir_gerenciador_clientes
+            #command=self.abrir_gerenciador_clientes
         )
         self.botao_clientes.pack(pady=10)
 
-        '''
 
         # Card 4 - Fornecedores
         self.card_fornecedores = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
         self.card_fornecedores.pack_propagate(False)
-        self.card_fornecedores.pack(side="left", padx=100)
+        self.card_fornecedores.pack(side="left", padx=10)
         
         self.label_fornecedores = ctk.CTkLabel(
             self.card_fornecedores, 
