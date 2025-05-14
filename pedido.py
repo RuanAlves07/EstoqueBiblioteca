@@ -76,7 +76,7 @@ class AppPedidos:
 
         try:
             query = """
-            SELECT NomeCliente, Produto, QuantidadeCompras, DataEmissao 
+            SELECT NomeCliente, Produto, QuantidadeVendas, DataEmissao 
             FROM cliente 
             WHERE NomeCliente LIKE %s
             """
