@@ -235,8 +235,8 @@ class GerenciadorClientes:
 
 
     def sair(self):
-        from MenuAdm import Menuadm
-        Menuadm(self.root)
+        from dash import DashboardDistribuidora
+        DashboardDistribuidora(self.root)
         self.root.withdraw()
 
 

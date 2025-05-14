@@ -63,11 +63,7 @@ class GerenciadorFuncionarios:
         nova_janela.grab_set()       
         nova_janela.focus_force()    
         GerenciadorFuncionarios(nova_janela)
-
-
-    def alternar_tema(self):
-            modo = "Dark" if self.theme_switch.get() == 1 else "Light"
-            ctk.set_appearance_mode(modo)    
+  
        
         
     def cadastro_func(self):
@@ -254,8 +250,8 @@ class GerenciadorFuncionarios:
 
 
     def sair(self):
-        from MenuAdm import Menuadm
-        Menuadm(self.root)
+        from dash import DashboardDistribuidora
+        DashboardDistribuidora(self.root)
         self.root.withdraw()
 
 
