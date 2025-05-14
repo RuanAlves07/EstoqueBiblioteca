@@ -92,7 +92,7 @@ class GerenciadorClientes:
         if numeroNFe == "" or nomeCliente == "" or QuantidadeVendas == "" or Produto == "" or DataEmissao == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
-            db = comunicacao()
+            db = comunicacao() 
             db.RegistrarCliente(numeroNFe, nomeCliente, QuantidadeVendas, Produto, DataEmissao)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
     
@@ -109,7 +109,7 @@ class GerenciadorClientes:
         jan_lista.geometry("800x400")
         jan_lista.resizable(True, True)
 
-        colunas = ("Número da NF", "Nome", "Quantidade de Compras", "Produto", "Data de Emissão")
+        colunas = ("Número da NF", "Nome", "Quantidade de Compras", "Produto", "Data de Emissão") 
         tree = ttk.Treeview(jan_lista, columns=colunas, show="headings", height=20)
 
         for col in colunas:
@@ -153,7 +153,7 @@ class GerenciadorClientes:
         self.dataemissaoEntry = ctk.CTkEntry(jan_atualizar, width=300)
         
 
-        #Sou bixa
+        
         labels = ["Número da nota fiscal", "Nome", "Quantidade de Compras", "Produto", "Data de Emissão"]
         entries = [self.numeroNFEntry, self.clienomeEntry, self.qtdecomprasEntry, self.produtoEntry, self.dataemissaoEntry]
         for i, label in enumerate(labels):
@@ -171,7 +171,7 @@ class GerenciadorClientes:
         db = comunicacao()
         cliente = db.buscar_cliente_por_id(numeroNFe)
         if not cliente:
-            messagebox.showerror("Erro", "Funcionário não encontrado.")
+            messagebox.showerror("Erro", "Funcionário não listado.")
             return
 
         self.numeroNFEntry.delete(0, 'end')
@@ -195,12 +195,12 @@ class GerenciadorClientes:
         
 
         if not numeroNF or "" in [nome, qtdecompras, produto, dataemissao]:
-            messagebox.showerror("Erro", "Preencha todos os campos.")
+            messagebox.showerror("Erro", "Preencha todos as campos.")
             return
 
         db = comunicacao()
         db.AtualizarFuncionario(numeroNF, nome, qtdecompras, produto, dataemissao)
-        messagebox.showinfo("Sucesso", "Cliente atualizado com sucesso!")
+        messagebox.showinfo("Sucesso", "Cliente atualizado com sucesso! ")
 
     def excluir_clien(self):
         jan_excluir = ctk.CTkToplevel(self.root)
@@ -210,7 +210,7 @@ class GerenciadorClientes:
 
         colunas = ("Número da nota fiscal", "Nome", "Quantidade de Compras", "Produto", "Data de Emissão")
         tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=8)
-        for col in colunas:
+        for col in colunas: 
             tree.heading(col, text=col)
             tree.column(col, width=120 if col in ["Nome", "Data de Emissão"] else 100)
         tree.pack(padx=10, pady=10, fill="both", expand=True)
@@ -236,7 +236,7 @@ class GerenciadorClientes:
     def sair(self):
         from dash import DashboardDistribuidora
         DashboardDistribuidora(self.root)
-        self.root.withdraw()
+        self.root.withdraw() 
 
 
 # Inicializa a aplicação
