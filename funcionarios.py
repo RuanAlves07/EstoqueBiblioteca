@@ -42,9 +42,6 @@ class GerenciadorFuncionarios:
         self.atuButton = ctk.CTkButton(self.root, text="Atualizar Funcionario", width=300, command=self.atuu_func)
         self.atuButton.place(x=250, y=400)
 
-        # Switch para alternância de tema
-        self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=660, y=30)
 
     def GoToproduto(self):
         from produto import TelaProdutos

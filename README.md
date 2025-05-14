@@ -29,9 +29,7 @@
 - Cliente (Tela inteira) 🟥
 - fazer o slide 🟥
 - fazer o video 🟥
-- Atalhos de navegação 🟥
 - Comunicação entre produto e fornecedor 🟨
-- DASHBOARD 🟨
 - colocar a logo da empresa 🟩
 
 🟥 = Urgente
