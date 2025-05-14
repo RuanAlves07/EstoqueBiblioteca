@@ -88,26 +88,47 @@ class TelaProdutos:
         produto_add.configure(fg_color="#f6f3ec")
         produto_add.resizable(width=False, height=False)
 
-        frame = ctk.CTkFrame(produto_add, corner_radius=10)
-        frame.pack(padx=60, pady=50, fill="both", expand=True)
+        frame_add = ctk.CTkFrame(produto_add, corner_radius=10)
+        frame_add.pack(padx=60, pady=50, fill="both", expand=True)
 
-        titulo = ctk.CTkLabel(frame, text="CADASTRO DE PRODUTO", font=("Segoe UI", 18, "bold"))
+        titulo = ctk.CTkLabel(frame_add, text="CADASTRO DE PRODUTO", font=("Segoe UI", 18, "bold"))
         titulo.pack(pady=20)
 
-        self.NomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome do produto", width=300, height=40)
+        self.NomeEntry = ctk.CTkEntry(frame_add, placeholder_text="Nome do produto", width=300, height=40)
         self.NomeEntry.pack(pady=10)
 
-        self.DescEntry = ctk.CTkEntry(frame, placeholder_text="Descrição do produto", width=300, height=40)
+        self.DescEntry = ctk.CTkEntry(frame_add, placeholder_text="Descrição do produto", width=300, height=40)
         self.DescEntry.pack(pady=10)
 
-        self.GeneroEntry = ctk.CTkEntry(frame, placeholder_text="Categoria do produto", width=300, height=40)
+        self.GeneroEntry = ctk.CTkEntry(frame_add, placeholder_text="Categoria do produto", width=300, height=40)
         self.GeneroEntry.pack(pady=10)
 
-        self.QuantidadeEntry = ctk.CTkEntry(frame, placeholder_text="Quantidade do produto", width=300, height=40)
+        self.QuantidadeEntry = ctk.CTkEntry(frame_add, placeholder_text="Quantidade do produto", width=300, height=40)
         self.QuantidadeEntry.pack(pady=10)
 
-        self.PrecoEntry = ctk.CTkEntry(frame, placeholder_text="Preço do produto", width=300, height=40)
+        self.PrecoEntry = ctk.CTkEntry(frame_add, placeholder_text="Preço do produto", width=300, height=40)
         self.PrecoEntry.pack(pady=10)
+
+        self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40)
+        self.botao_linkar_fornecedor.place(x = 500, y = 82, command = Tela_FornProduto)
+
+
+        def Tela_FornProduto(self):
+
+            Frame_FornProduto = ctk.CTkToplevel(self.frame_FornProduto)
+            Frame_FornProduto.title("Pesquisar Cliente")
+            Frame_FornProduto.geometry("600x300")
+            
+
+            entry_pesquisa = ctk.CTkEntry(Frame_FornProduto, placeholder_text="Nome do fornecedor...")
+            entry_pesquisa.pack(pady=10, padx=20, fill="x")
+
+            frame_resultados = ctk.CTkFrame(Frame_FornProduto)
+            frame_resultados.pack(pady=10, padx=20, fill="both", expand=True)
+
+
+
+
 
         def RegistrarProduto():
             nome = self.NomeEntry.get()
