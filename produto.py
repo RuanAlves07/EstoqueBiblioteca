@@ -53,11 +53,6 @@ class TelaProdutos:
         ListButton = ctk.CTkButton(root, text="LISTAR PRODUTOS", width=300, command=self.GoToList)
         ListButton.place(x=250, y=500)
 
-        # Switch para alternar entre Light/Dark Mode
-        self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=660, y=30)
-
-
 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
