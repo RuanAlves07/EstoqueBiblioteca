@@ -27,14 +27,7 @@ class DashboardDistribuidora:
             font=("Segoe UI", 24, "bold")
         )
         self.titulo.pack(side="left", padx=10)
-        
-        # Switch para alternância de tema
-        self.theme_switch = ctk.CTkSwitch(
-            self.frame_titulo, 
-            text="Modo Escuro", 
-            command=self.alternar_tema
-        )
-        self.theme_switch.pack(side="right", padx=10)
+    
 
         # Frame principal com os cards
         self.frame_principal = ctk.CTkFrame(self.root, fg_color="transparent")
@@ -53,7 +46,7 @@ class DashboardDistribuidora:
             width=200, 
             command=self.abrir_gerenciador_estoque
         )
-        self.botao_Bestoque.place(x = 400, y = 50)
+        self.botao_Bestoque.grid(row=0, column=0, padx=120)
 
         #Descrição de produtos
         self.label_Bestoque = ctk.CTkLabel(
@@ -61,7 +54,7 @@ class DashboardDistribuidora:
             text="Na tela de produtos você pode\ncadastrar, listar, excluir\ne pesquisar os produtos", 
             font=("Segoe UI", 14, "bold")
         )
-        self.label_Bestoque.place(x = 395, y = 90)
+        self.label_Bestoque.grid(row=1, column=0, padx=120)
 
 
         #Botão para funcionairos
@@ -71,7 +64,7 @@ class DashboardDistribuidora:
             width=200, 
             command=self.abrir_gerenciador_funcionario
         )
-        self.botao_BFuncionario.place(x = 850, y = 50)
+        self.botao_BFuncionario.grid(row=0, column=1, padx=120)
 
 
         #descrição para funcionarios
@@ -80,7 +73,7 @@ class DashboardDistribuidora:
             text="Tela de funcionários\nVocê pode cadastrar, listar, excluir\ne pesquisar os funcionários da nossa biblioteca", 
             font=("Segoe UI", 14, "bold")
         )
-        self.label_Bfuncionario.place(x = 790, y = 90)
+        self.label_Bfuncionario.grid(row=1, column=1, padx=120)
 
 
         #Botão para fornecedor
@@ -90,7 +83,7 @@ class DashboardDistribuidora:
             width=200, 
             command=self.abrir_gerenciador_fornecedores
         )
-        self.botao_Bfornecedor.place(x = 1350, y = 50)
+        self.botao_Bfornecedor.grid(row=0, column=2, padx=120)
 
 
         self.label_Bfornecedor = ctk.CTkLabel(
@@ -98,7 +91,25 @@ class DashboardDistribuidora:
             text="Aqui você pode cadastrar,\nlistar, excluir e pesquisar\nos nossos fornecedores", 
             font=("Segoe UI", 14, "bold")
         )
-        self.label_Bfornecedor.place(x = 1360, y = 90)
+        self.label_Bfornecedor.grid(row=1, column=2, padx=120)
+
+
+        #Botão para cadastrar usuario
+        self.botao_Busuario = ctk.CTkButton(
+            self.frame_linha0,
+            text="CRIAR USUARIO", 
+            width=200, 
+            command=self.CriarUsuario
+        )
+        self.botao_Busuario.grid(row=0, column=3, padx=120)
+
+
+        self.label_Busuario = ctk.CTkLabel(
+            self.frame_linha0, 
+            text="Aqui você pode cadastrar,\nlistar, excluir e pesquisar\nos nossos fornecedores", 
+            font=("Segoe UI", 14, "bold")
+        )
+        self.label_Busuario.grid(row=1, column=3, padx=120)
 
    
 
@@ -299,14 +310,14 @@ class DashboardDistribuidora:
         total_valor = db.cursor.fetchone()[0] or 0
         self.valor_total.configure(text=f"R$ {total_valor:,.2f}")
 
-        '''
+       
         
         # Clientes ativos
         db.cursor.execute("SELECT COUNT(*) FROM cliente")
         total_clientes = db.cursor.fetchone()[0] or 0
         self.valor_clientes.configure(text=str(total_clientes))
 
-        '''
+        
         
         # Fornecedores
         db.cursor.execute("SELECT COUNT(*) FROM fornecedor")
@@ -388,16 +399,16 @@ class DashboardDistribuidora:
         
         # Preencher a tabela
         for produto in produtos:
-            self.tree_produtos.insert("", "end", values=produto)
+            self.insert("", "end", values=produto)
 
 
     def CriarUsuario(self):
         jan = ctk.CTkToplevel(self.root)
         jan.title("Cadastro de Usuário")
-        jan.geometry("650x300")
+        jan.geometry("450x300")
         jan.configure(bg="#f6f3ec")
         jan.resizable(False, False)
-        self.center_window(jan, 400, 300)
+        
         jan.grab_set()
         jan.focus_force()
 
