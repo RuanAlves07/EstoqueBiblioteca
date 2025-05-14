@@ -75,10 +75,6 @@ class TelaProdutos:
         nova_janela.focus_force()    
         GerenciadorFuncionarios(nova_janela)
 
-    # Função para alternar modo escuro/claro
-    def alternar_tema(self):
-        modo = "Dark" if self.theme_switch.get() == 1 else "Light"
-        ctk.set_appearance_mode(modo)
 
     # Métodos GoTo...
     def GoToAdicionar(self):
@@ -109,11 +105,11 @@ class TelaProdutos:
         self.PrecoEntry = ctk.CTkEntry(frame_add, placeholder_text="Preço do produto", width=300, height=40)
         self.PrecoEntry.pack(pady=10)
 
-        self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40)
-        self.botao_linkar_fornecedor.place(x = 500, y = 82, command = Tela_FornProduto)
+        self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=self.Tela_FornProduto)
+        self.botao_linkar_fornecedor.place(x = 500, y = 82)
 
 
-        def Tela_FornProduto(self):
+        def Tela_FornProduto():
 
             Frame_FornProduto = ctk.CTkToplevel(self.frame_FornProduto)
             Frame_FornProduto.title("Pesquisar Cliente")
@@ -125,9 +121,6 @@ class TelaProdutos:
 
             frame_resultados = ctk.CTkFrame(Frame_FornProduto)
             frame_resultados.pack(pady=10, padx=20, fill="both", expand=True)
-
-
-
 
 
         def RegistrarProduto():
