@@ -54,3 +54,6 @@ create table cliente(
     primary key(NumeroNFe)
 
 );
+
+
+alter table produto
