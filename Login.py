@@ -85,14 +85,12 @@ class TelaLoginCadastro: #Tela de fundo
                 from dash import DashboardDistribuidora
                 root_menu = ctk.CTk()
                 DashboardDistribuidora(root_menu)
-                root_menu.mainloop().w
-                
+                root_menu.mainloop()
             else:
                 from MenuUsuario import MenuU
                 root_menu = ctk.CTk()
                 MenuU(root_menu)
                 root_menu.mainloop()
-
         else:
             messagebox.showerror("INFO LOGIN", "Acesso Negado. Verifique se está cadastrado no sistema!")
 
