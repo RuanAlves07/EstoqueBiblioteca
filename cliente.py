@@ -90,11 +90,11 @@ class GerenciadorClientes:
         dataemissao = self.dataemissaoEntry.get().strip()
         
 
-        if numeroNF == "" or nome == "" or qtdecompras == "" or produto == "" or dataemissao :
+        if nome == "" or qtdecompras == "" or produto == "" :
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.RegistrarCliente(numeroNF, nome, qtdecompras, produto, dataemissao)
+            db.RegistrarCliente(nome, qtdecompras)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
     
     def limpar_campos(self, jan_clientecad=None):
