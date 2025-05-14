@@ -198,9 +198,9 @@ class DashboardDistribuidora:
 
 
         # Frame do gráfico de estoque por gênero
-        self.frame_grafico_genero = ctk.CTkFrame(self.frame_linha2, width=200, height=500)
+        self.frame_grafico_genero = ctk.CTkFrame(self.frame_linha2, width=400, height=500)
         self.frame_grafico_genero.pack_propagate(False)
-        self.frame_grafico_genero.pack(side="left", padx=10, pady=10, fill="both", expand=True)
+        self.frame_grafico_genero.pack(side="left", padx=10, pady=10, fill="both", expand=False)
         
         self.label_grafico_genero = ctk.CTkLabel(
             self.frame_grafico_genero, 
@@ -392,6 +392,76 @@ class DashboardDistribuidora:
         # Preencher a tabela
         for produto in produtos:
             self.tree_produtos.insert("", "end", values=produto)
+
+
+    def CriarUsuario(self):
+        jan = ctk.CTkToplevel(self.root)
+        jan.title("Cadastro de Usuário")
+        jan.geometry("650x300")
+        jan.configure(bg="#f6f3ec")
+        jan.resizable(False, False)
+        self.center_window(jan, 400, 300)
+        jan.grab_set()
+        jan.focus_force()
+
+        # Frame centralizado
+        form_frame = ctk.CTkFrame(jan, fg_color="transparent")
+        form_frame.pack(expand=True, fill="both", padx=20, pady=20)
+
+        # Campos do formulário
+        campos = [("Usuário:", "UserNomeEntry"), ("Senha:", "SenhaEntry", True), ("Nome Completo:", "UserNomeCEntry"), ("E-mail:", "EmailEntry"),]
+
+        for i, (label_text, entry_var, *is_password) in enumerate(campos):
+            ctk.CTkLabel(form_frame, text=label_text, font=("Arial", 15)).grid(
+                row=i, column=0, sticky="w", padx=10, pady=5)
+            entry = ctk.CTkEntry(
+                form_frame,
+                width=200,
+                show="•" if is_password and is_password[0] else ""
+            )
+            setattr(self, entry_var, entry)
+            entry.grid(row=i, column=1, padx=10, pady=5)
+
+        # Campo de tipo de usuário
+        TipoLabel = ctk.CTkLabel(form_frame, text="É Administrador?", font=("Arial", 15))
+        TipoLabel.grid(row=4, column=0, sticky="w", padx=10, pady=5)
+
+        self.TipoEntry = ctk.CTkComboBox(
+            form_frame,
+            values=["Sim", "Não"],
+            width=120,
+            state="readonly"
+        )
+
+        self.TipoEntry.set("Não")
+        self.TipoEntry.grid(row=4, column=1, padx=10, pady=5)
+
+        AddButton = ctk.CTkButton(
+            form_frame, text="REGISTRAR USUÁRIO", width=200, command=self.RegistrarUsuarios
+        )
+        AddButton.grid(row=5, column=0, columnspan=2, pady=20)
+
+    def RegistrarUsuarios(self):
+        nome = self.UserNomeEntry.get()
+        senha = self.SenhaEntry.get()
+        usuario = self.UserNomeCEntry.get()
+        email = self.EmailEntry.get()
+        tipo = self.TipoEntry.get()
+
+        if not nome or not senha or not usuario or not email:
+            messagebox.showerror("Erro no Registro", "PREENCHA TODOS OS CAMPOS")
+        else:
+            db = comunicacao()
+            db.RegistrarCliente(nome, senha, usuario, email, tipo) 
+            messagebox.showinfo("Sucesso", "Usuário criado com sucesso!")
+            self.limpar_campos()
+
+    def limpar_campos(self):
+        self.UserNomeEntry.delete(0, 'end')
+        self.SenhaEntry.delete(0, 'end')
+        self.UserNomeCEntry.delete(0, 'end')
+        self.EmailEntry.delete(0, 'end')
+        self.TipoEntry.set("Não")
 
     def abrir_gerenciador_estoque(self):
         from produto import TelaProdutos
