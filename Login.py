@@ -37,7 +37,7 @@ class TelaLoginCadastro: #Tela de fundo
         imagem_original = Image.open("icons/TelaDeFundo.png")
 
         # Aplicar blur
-        imagem_borrada = imagem_original.filter(ImageFilter.GaussianBlur(radius = 4))
+        imagem_borrada = imagem_original.filter(ImageFilter.GaussianBlur(radius = 3))
 
         # Criar o CTkImage
         imagem_fundo = CTkImage(light_image=imagem_borrada, size=(1920, 1080))
@@ -82,10 +82,11 @@ class TelaLoginCadastro: #Tela de fundo
             userperm = VerifyLogin[4]
 
             if userperm == "sim":
-                from MenuAdm import Menuadm
+                from dash import DashboardDistribuidora
                 root_menu = ctk.CTk()
-                Menuadm(root_menu)
-                root_menu.mainloop()
+                DashboardDistribuidora(root_menu)
+                root_menu.mainloop().w
+                
             else:
                 from MenuUsuario import MenuU
                 root_menu = ctk.CTk()
