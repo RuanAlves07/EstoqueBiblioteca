@@ -19,8 +19,8 @@ class comunicacao:
         )
         self.cursor = self.conn.cursor()
 
-    def RegistrarCliente(self, nome, usuario, senha, email, userperm):
-        self.cursor.execute("INSERT INTO usuario (nome, usuario, senha, email, userperm) VALUES (%s, %s, %s, %s, %s)", (nome, usuario, senha, email, userperm))
+    def RegistrarCliente(self, numeroNFe,  NomeCliente, QuantidadeVendas, Produto, DataEmissao):
+        self.cursor.execute("INSERT INTO usuario (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao) VALUES (%s, %s, %s, %s, %s)", (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao))
         self.conn.commit() 
 
     def RegistrarProduto(self, nome, descricao, genero, quantidade, preco):
