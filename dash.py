@@ -103,8 +103,8 @@ class DashboardDistribuidora:
    
 
         # Linha 1 - Cards de resumo
-        self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="Blue")
-        self.frame_linha1.pack(fill="x", pady=30)
+        self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
+        self.frame_linha1.pack(fill="y", pady=30)
 
         # Card 1 - Estoque Total
         self.card_estoque = ctk.CTkFrame(self.frame_linha1, width=250, height=150, corner_radius=10)
