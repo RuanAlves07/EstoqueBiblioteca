@@ -32,7 +32,6 @@
 - Atalhos de navegação 🟥
 - Comunicação entre produto e fornecedor 🟨
 - DASHBOARD 🟨
-- Terceira permissão de acesso, sendo: Admin (pode fazer tudo), Avançado (Só não pode realizar a exclusão) e Padrão (Apenas consulta) 🟩
 - colocar a logo da empresa 🟩
 
 🟥 = Urgente
