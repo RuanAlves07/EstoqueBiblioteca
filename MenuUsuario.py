@@ -31,8 +31,8 @@ class MenuU:
         self.FornecedoresButton.grid(row=0, column=0, padx=80)
 
         desc_forn = (
-            "Aqui você pode cadastrar,\nlistar, excluir "
-            "e pesquisar\nos nossos fornecedores"
+            "Aqui você pode listar e pesquisar\n"
+            "os nossos fornecedores"
         )
         ctk.CTkLabel(frame_botoes, text=desc_forn, font=("Arial", 10), wraplength=180).grid(
             row=1, column=0, padx=80, pady=(5, 20)
@@ -46,11 +46,23 @@ class MenuU:
 
         desc_prod = (
             "Na tela de produtos você pode\n"
-            "cadastrar, listar, excluir\n"
-            "e pesquisar os produtos"
+            "listar e pesquisar os produtos"
         )
         ctk.CTkLabel(frame_botoes, text=desc_prod, font=("Arial", 10), wraplength=180).grid(
             row=1, column=1, padx=80, pady=(5, 20)
+        )
+
+
+        self.ClientesButton = ctk.CTkButton(
+            frame_botoes, text="Clientes", width=180, command=self.GoToList
+        )
+        self.ClientesButton.grid(row=0, column=2, padx=80)
+
+        desc_Clie = (
+            "Nesta tela você lista e pesquisa os clientes"
+        )
+        ctk.CTkLabel(frame_botoes, text=desc_Clie, font=("Arial", 10), wraplength=180).grid(
+            row=1, column=2, padx=80, pady=(5, 20)
         )
 
     def PuxarInfo(self, tree):
