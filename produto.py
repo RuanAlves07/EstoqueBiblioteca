@@ -73,6 +73,13 @@ class TelaProdutos:
         nova_janela.focus_force()    
         TelaProdutos(nova_janela)
 
+    def TelaFuncionarios(self):
+        from funcionarios import GerenciadorFuncionarios
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        GerenciadorFuncionarios(nova_janela)
+
     # Função para alternar modo escuro/claro
     def alternar_tema(self):
         modo = "Dark" if self.theme_switch.get() == 1 else "Light"
