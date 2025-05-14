@@ -431,21 +431,29 @@ class DashboardDistribuidora:
     def abrir_gerenciador_estoque(self):
         from produto import TelaProdutos
         janela = ctk.CTkToplevel(self.root)
+        janela.grab_set()       
+        janela.focus_force()    
         TelaProdutos(janela)
 
     def abrir_gerenciador_produtos(self):
         from produto import TelaProdutos
         janela = ctk.CTkToplevel(self.root)
+        janela.grab_set()       
+        janela.focus_force()   
         TelaProdutos(janela)
 
     def abrir_gerenciador_funcionario(self):
         from funcionarios import GerenciadorFuncionarios
         janela = ctk.CTkToplevel(self.root)
+        janela.grab_set()       
+        janela.focus_force()   
         GerenciadorFuncionarios(janela)
 
     def abrir_gerenciador_fornecedores(self):
         from fornecedor import FornecedorApp
         janela = ctk.CTkToplevel(self.root)
+        janela.grab_set()       
+        janela.focus_force()   
         FornecedorApp(janela)
 
 if __name__ == "__main__":
