@@ -44,10 +44,6 @@ class FornecedorApp:
         ListButton = ctk.CTkButton(root, text="LISTAR FORNECEDORES", width=300, command=self.listar_forn)
         ListButton.place(x=250, y=500)
 
-        # Switch para alternar entre Light/Dark Mode
-        self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=600, y=30)
-
     def GoToproduto(self):
         from produto import TelaProdutos
         nova_janela = ctk.CTkToplevel(self.root)
@@ -290,8 +286,8 @@ class FornecedorApp:
         messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
 
     def sair(self):
-        from MenuAdm import Menuadm
-        Menuadm(self.root)
+        from dash import DashboardDistribuidora
+        DashboardDistribuidora(self.root)
         self.root.withdraw()
 
 
