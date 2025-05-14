@@ -2,6 +2,7 @@ import customtkinter as ctk
 from tkinter import messagebox
 from comunicacao import comunicacao
 from tkinter import ttk
+from CTkMenuBar import *
 
 # Configuração inicial do tema
 ctk.set_appearance_mode("Light")  # Pode ser "Dark" ou "System"
@@ -16,9 +17,15 @@ class FornecedorApp:
         self.root.geometry("800x600")
         self.root.resizable(False, False)
         self.root.configure(bg="#f6f6f6")
+
+        BarraNavegabilidade = CTkMenuBar(root)
+        botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
+        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores)
+        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios)
+
      # Título  
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FORNECEDORES",
-        font=("Segoe UI", 22, "bold"))
+        font=("Times New Roman", 22, "bold"))
         Titulolabel.place(x=220 , y = 75)
 
         # Botão para ir no menu de registro dos produto
@@ -40,6 +47,27 @@ class FornecedorApp:
         # Switch para alternar entre Light/Dark Mode
         self.theme_switch = ctk.CTkSwitch(root, text="Modo Escuro", command=self.alternar_tema)
         self.theme_switch.place(x=600, y=30)
+
+    def GoToproduto(self):
+        from produto import TelaProdutos
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        TelaProdutos(nova_janela)
+
+    def TelaFornecedores(self):
+        from fornecedor import FornecedorApp
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()
+        nova_janela.focus_force()
+        FornecedorApp(nova_janela)
+
+    def TelaFuncionarios(self):
+        from funcionarios import GerenciadorFuncionarios
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        GerenciadorFuncionarios(nova_janela)
 
 
     def alternar_tema(self):
