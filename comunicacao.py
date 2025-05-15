@@ -23,6 +23,10 @@ class comunicacao:
         self.cursor.execute("INSERT INTO cliente (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao) VALUES (%s, %s, %s, %s, %s)", (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao))
         self.conn.commit() 
 
+    def RegistrarUsuario(self, nome, usuario, senha, userperm):
+        self.cursor.execute("INSERT INTO usuarios ( nome, usuario, senha, userperm) VALUES (%s, %s, %s, %s)", ( nome, usuario, senha, userperm))
+        self.conn.commit() 
+
     def RegistrarProduto(self, nome, descricao, genero, quantidade, preco):
         self.cursor.execute("INSERT INTO produto (nome, descricao, genero, quantidade, preco) VALUES (%s, %s, %s, %s, %s)", (nome, descricao, genero, quantidade, preco))
         self.conn.commit() 
@@ -87,7 +91,6 @@ class comunicacao:
     def carregar_funcionario(self):
         self.cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
         self.conn.commit()
-
 
     def AtualizarFuncionario(self, idfuncionario, nome, telefone, enderecofunc, email, datanascimento):
         self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)) 

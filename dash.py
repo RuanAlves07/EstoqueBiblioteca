@@ -476,7 +476,7 @@ class DashboardDistribuidora:
             messagebox.showerror("Erro no Registro", "PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.RegistrarCliente(nome, senha, usuario, email, tipo) 
+            db.RegistrarUsuario(nome, senha, usuario, email, tipo) 
             messagebox.showinfo("Sucesso", "Usuário criado com sucesso!")
             self.limpar_campos()
 

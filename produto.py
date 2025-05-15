@@ -108,7 +108,6 @@ class TelaProdutos:
         self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=Tela_FornProduto)
         self.botao_linkar_fornecedor.place(x = 500, y = 82)
 
-
         def Tela_FornProduto(self):
 
             Frame_FornProduto = ctk.CTkToplevel(self.root)
@@ -121,8 +120,7 @@ class TelaProdutos:
 
             frame_resultados = ctk.CTkFrame(Frame_FornProduto)
             frame_resultados.pack(pady=10, padx=20, fill="both", expand=True)
-
-
+            
         def RegistrarProduto():
             nome = self.NomeEntry.get()
             descricao = self.DescEntry.get()
