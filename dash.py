@@ -483,7 +483,7 @@ class DashboardDistribuidora:
             messagebox.showerror("Erro no Registro", "PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.RegistrarUsuario(nome, senha, usuario, email, tipo) 
+            db.RegistrarCliente(nome, senha, usuario, email, tipo) 
             messagebox.showinfo("Sucesso", "Usuário criado com sucesso!")
             self.limpar_campos()
 
@@ -495,16 +495,18 @@ class DashboardDistribuidora:
         self.TipoEntry.set("Não")
 
     def logout(self):
-        # Exibir mensagem de logout
-        messagebox.showinfo("Logout", "Você foi desconectado com sucesso.")
+        resposta = messagebox.askyesno("Logout", "Você tem certeza que deseja sair?")
+        if resposta:
+            self.root.withdraw()  # Esconde a janela atual
 
-        # Fechar a janela atual (dashboard)
-        self.root.withdraw()
-
-    def reiniciar_login():
-            from Login import TelaLoginCadastro  
+        def reiniciar_login():
+            from Login import TelaLoginCadastro
             root_login = ctk.CTk()
             TelaLoginCadastro(root_login)
+            self.root.destroy()  # Fecha completamente a janela do dashboard
+            root_login.mainloop()
+
+        self.root.after(100, reiniciar_login)
 
 
     def abrir_gerenciador_estoque(self):

@@ -83,12 +83,10 @@ class TelaLoginCadastro: #Tela de fundo
             userperm = VerifyLogin[4]
 
             if userperm == "sim":
-                messagebox.showinfo("Sucesso", "Login realizado!")
-                self.root.destroy()
                 from dash import DashboardDistribuidora
-                dashboard_root = ctk.CTk()
-                DashboardDistribuidora(dashboard_root)
-                dashboard_root.mainloop()
+                root_menu = ctk.CTk()
+                DashboardDistribuidora(root_menu)
+                root_menu.mainloop()
             else:
                 from MenuUsuario import MenuU
                 root_menu = ctk.CTk()
