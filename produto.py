@@ -34,7 +34,7 @@ class TelaProdutos:
 
 
         # Label do título
-        Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE PRODUTOS", font=("Times New roman", 22, "bold"))
+        Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE PRODUTOS", font=("Poppins", 22, "bold"))
         Titulolabel.place(x=240 , y = 75)
 
         # Botão para ir no menu de registro dos produtos
