@@ -3,7 +3,7 @@
 # python -m pip install -U pip - Comunicação com a Dasboard e BD
 # python -m pip install -U matplotlib - Geração dos graficos
 # pip install pillow - Biblioteca para imagens (Obrigatorio para tela de login)
-# pip install CTkMenuBar
+# pip install CTkMenuBar - Funcionalidade da barra de navegação
 
 
 import mysql.connector
