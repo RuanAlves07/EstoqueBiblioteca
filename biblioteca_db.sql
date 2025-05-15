@@ -49,12 +49,11 @@ create table funcionario(
 
 create table cliente(
 
-    numeroNFe int not null auto_increment,
-    NomeCliente text,
-    QuantidadeVendas text,
-    Produto text,
-    DataEmissao date,
-    primary key(NumeroNFe)
+ idcliente int not null auto_increment,
+ NomeCliente text,
+ CNPJ varchar(20)
+ endereco text,
+ primary key (idcliente)
 
 );
 
