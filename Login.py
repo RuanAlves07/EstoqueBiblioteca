@@ -78,7 +78,7 @@ class TelaLoginCadastro: #Tela de fundo
         if VerifyLogin:
 
             messagebox.showinfo("INFO LOGIN", "Acesso Confirmado, Bem Vindo!")
-            self.root.destroy()
+            self.root.withdraw()
 
             userperm = VerifyLogin[4]
 

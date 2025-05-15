@@ -34,7 +34,7 @@ class TelaProdutos:
 
 
         # Label do título
-        Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE PRODUTOS", font=("Times New roman", 22, "bold"))
+        Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE PRODUTOS", font=("Poppins", 22, "bold"))
         Titulolabel.place(x=240 , y = 75)
 
         # Botão para ir no menu de registro dos produtos
@@ -105,24 +105,10 @@ class TelaProdutos:
         self.PrecoEntry = ctk.CTkEntry(frame_add, placeholder_text="Preço do produto", width=300, height=40)
         self.PrecoEntry.pack(pady=10)
 
-        self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=Tela_FornProduto)
-        self.botao_linkar_fornecedor.place(x = 500, y = 82)
 
-
-        def Tela_FornProduto(self):
-
-            Frame_FornProduto = ctk.CTkToplevel(self.root)
-            Frame_FornProduto.title("Pesquisar Cliente")
-            Frame_FornProduto.geometry("600x300")
-            
-
-            entry_pesquisa = ctk.CTkEntry(Frame_FornProduto, placeholder_text="Nome do fornecedor...")
-            entry_pesquisa.pack(pady=10, padx=20, fill="x")
-
-            frame_resultados = ctk.CTkFrame(Frame_FornProduto)
-            frame_resultados.pack(pady=10, padx=20, fill="both", expand=True)
-
-
+        self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=self.Tela_FornProduto)
+        self.botao_linkar_fornecedor.place(x = 500, y = 82)   
+                 
         def RegistrarProduto():
             nome = self.NomeEntry.get()
             descricao = self.DescEntry.get()
@@ -327,6 +313,70 @@ class TelaProdutos:
 
         self.PrecoEntry.delete(0, END)
         self.PrecoEntry.insert(0, produto[5])
+
+    def Tela_FornProduto(self):
+        # Cria uma nova janela para pesquisar fornecedores
+        janela_pesquisa = ctk.CTkToplevel(self.root)
+        janela_pesquisa.title("Pesquisar Fornecedor")
+        janela_pesquisa.geometry("600x400")
+        janela_pesquisa.resizable(False, False)
+        janela_pesquisa.grab_set()  # Garante foco na nova janela
+
+        # Campo de pesquisa
+        entry_pesquisa = ctk.CTkEntry(janela_pesquisa, placeholder_text="Nome do fornecedor...")
+        entry_pesquisa.pack(pady=10, padx=20, fill="x")
+
+        # Frame para mostrar resultados da pesquisa
+        frame_resultados = ctk.CTkFrame(janela_pesquisa)
+        frame_resultados.pack(pady=10, padx=20, fill="both", expand=True)
+
+        # Função de atualização da lista de fornecedores
+        def atualizar(event=None):
+            termo = entry_pesquisa.get()
+            pesquisar_fornecedores(termo, frame_resultados)
+
+        # Vincula a função 'atualizar' ao evento de digitação
+        entry_pesquisa.bind("<KeyRelease>", atualizar)
+
+        # Chama uma vez para carregar todos os fornecedores inicialmente
+        pesquisar_fornecedores("", frame_resultados)
+
+        def pesquisar_fornecedores(self, termo, frame_resultados):
+            # Limpa resultados anteriores
+            for widget in frame_resultados.winfo_children():
+                widget.destroy()
+
+            db = comunicacao()
+            try:
+                if termo.strip() == "":
+                    db.cursor.execute("SELECT idfornecedor, nome FROM fornecedor")
+                else:
+                    db.cursor.execute("SELECT idfornecedor, nome FROM fornecedor WHERE nome LIKE %s", (f"%{termo}%",))
+                
+                fornecedores = db.cursor.fetchall()
+
+                if not fornecedores:
+                    label_vazio = ctk.CTkLabel(frame_resultados, text="Nenhum fornecedor encontrado.")
+                    label_vazio.pack(pady=10)
+                    return
+
+                # Exibe os fornecedores como botões clicáveis
+                for idx, (idfornecedor, nome) in enumerate(fornecedores):
+                    def on_select(idforn=idfornecedor, nomeforn=nome):
+                        self.NomeEntry.delete(0, "end")
+                        self.NomeEntry.insert(0, nomeforn)
+                        janela_pesquisa.destroy()
+
+                    btn = ctk.CTkButton(
+                        frame_resultados,
+                        text=f"{nome} (ID: {idfornecedor})",
+                        anchor="w",
+                        command=on_select
+                    )
+                    btn.pack(pady=5, fill="x")
+            
+            except Exception as e:
+                messagebox.showerror("Erro", f"Erro ao pesquisar fornecedores: {e}")
 
 
 # Inicialização da aplicação

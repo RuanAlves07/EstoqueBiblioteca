@@ -3,7 +3,7 @@
 # python -m pip install -U pip - Comunicação com a Dasboard e BD
 # python -m pip install -U matplotlib - Geração dos graficos
 # pip install pillow - Biblioteca para imagens (Obrigatorio para tela de login)
-# pip install CTkMenuBar
+# pip install CTkMenuBar - Funcionalidade da barra de navegação
 
 
 import mysql.connector
@@ -21,6 +21,10 @@ class comunicacao:
 
     def RegistrarCliente(self, numeroNFe,  NomeCliente, QuantidadeVendas, Produto, DataEmissao):
         self.cursor.execute("INSERT INTO cliente (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao) VALUES (%s, %s, %s, %s, %s)", (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao))
+        self.conn.commit() 
+
+    def RegistrarUsuario(self, nome, usuario, senha, email, userperm):
+        self.cursor.execute("INSERT INTO usuarios ( nome, usuario, senha, email, userperm) VALUES (%s, %s, %s, %s, %s)", ( nome, usuario, senha, email, userperm))
         self.conn.commit() 
 
     def RegistrarProduto(self, nome, descricao, genero, quantidade, preco):
@@ -87,7 +91,6 @@ class comunicacao:
     def carregar_funcionario(self):
         self.cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
         self.conn.commit()
-
 
     def AtualizarFuncionario(self, idfuncionario, nome, telefone, enderecofunc, email, datanascimento):
         self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)) 
