@@ -12,12 +12,14 @@ create table usuarios(
 create table produto(
 
     idproduto int not null auto_increment,
+    idfornecedor int,
     nome varchar(40),
     descricao varchar(256),
     genero varchar(1),
     quantidade int,
     preco text,
-    primary key (idproduto)
+    primary key (idproduto),
+    FOREIGN KEY (idfornecedor) REFERENCES fornecedor(idfornecedor)
 
 );
 
@@ -56,4 +58,4 @@ create table cliente(
 );
 
 
-alter table produto
+ALTER TABLE produto ADD FOREIGN KEY (idfornecedor) REFERENCES fornecedor(idfornecedor);
