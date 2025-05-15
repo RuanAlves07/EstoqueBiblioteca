@@ -12,7 +12,7 @@ class TelaLoginCadastro: #Tela de fundo
         self.root = ctk.CTk() #Chamando o customtkinter
         self.root.title("Sistema de Login") #Titulo da Tela de fundo
         self.root.state("zoomed") #Codigo para ela ficar em tela cheia
-        self.root.configure(bg="#f6f3ec") #Cor da tela
+        self.root.configure(bg="Blue") #Cor da tela
         self.root.resizable(False, False) #Codigo para não poder alterar a altura nem largura
         self.JanelaPequena() #Chamando a tela principal de login pequena
         self.root.mainloop() #Executando as telas
@@ -32,19 +32,6 @@ class TelaLoginCadastro: #Tela de fundo
 
         # Centralizar a nova janela
         self.CentralizarJanela(JanelaMeio, 400, 300)
-
-        # Carregar a imagem original
-        imagem_original = Image.open("icons/TelaDeFundo.png")
-
-        # Aplicar blur
-        imagem_borrada = imagem_original.filter(ImageFilter.GaussianBlur(radius = 3))
-
-        # Criar o CTkImage
-        imagem_fundo = CTkImage(light_image=imagem_borrada, size=(1920, 1080))
-
-        # Criar o label com a imagem borrada
-        bg_label = CTkLabel(self.root, image=imagem_fundo, bg_color="white", text="")
-        bg_label.pack(pady=20)
 
         # Ficar sempre em cima e focado
         JanelaMeio.grab_set()
@@ -78,11 +65,10 @@ class TelaLoginCadastro: #Tela de fundo
         if VerifyLogin:
 
             messagebox.showinfo("INFO LOGIN", "Acesso Confirmado, Bem Vindo!")
-            self.root.withdraw()
+            self.root.destroy()
+            userperm = VerifyLogin[5]
 
-            userperm = VerifyLogin[4]
-
-            if userperm == "sim":
+            if userperm == "Sim":
                 from dash import DashboardDistribuidora
                 root_menu = ctk.CTk()
                 DashboardDistribuidora(root_menu)
