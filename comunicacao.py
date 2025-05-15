@@ -23,8 +23,8 @@ class comunicacao:
         self.cursor.execute("INSERT INTO cliente (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao) VALUES (%s, %s, %s, %s, %s)", (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao))
         self.conn.commit() 
 
-    def RegistrarUsuario(self, nome, usuario, senha, userperm):
-        self.cursor.execute("INSERT INTO usuarios ( nome, usuario, senha, userperm) VALUES (%s, %s, %s, %s)", ( nome, usuario, senha, userperm))
+    def RegistrarUsuario(self, nome, usuario, senha, email, userperm):
+        self.cursor.execute("INSERT INTO usuarios ( nome, usuario, senha, email, userperm) VALUES (%s, %s, %s, %s, %s)", ( nome, usuario, senha, email, userperm))
         self.conn.commit() 
 
     def RegistrarProduto(self, nome, descricao, genero, quantidade, preco):
