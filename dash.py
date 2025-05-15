@@ -46,7 +46,7 @@ class DashboardDistribuidora:
             width=200, 
             command=self.abrir_gerenciador_estoque
         )
-        self.botao_Bestoque.grid(row=0, column=0, padx=120)
+        self.botao_Bestoque.grid(row=0, column=0, padx=70)
 
         #Descrição de produtos
         self.label_Bestoque = ctk.CTkLabel(
@@ -54,7 +54,7 @@ class DashboardDistribuidora:
             text="Na tela de produtos você pode\ncadastrar, listar, excluir\ne pesquisar os produtos", 
             font=("Segoe UI", 14, "bold")
         )
-        self.label_Bestoque.grid(row=1, column=0, padx=120)
+        self.label_Bestoque.grid(row=1, column=0, padx=70)
 
 
         #Botão para funcionairos
@@ -64,7 +64,7 @@ class DashboardDistribuidora:
             width=200, 
             command=self.abrir_gerenciador_funcionario
         )
-        self.botao_BFuncionario.grid(row=0, column=1, padx=120)
+        self.botao_BFuncionario.grid(row=0, column=1, padx=70)
 
 
         #descrição para funcionarios
@@ -73,7 +73,7 @@ class DashboardDistribuidora:
             text="Tela de funcionários\nVocê pode cadastrar, listar, excluir\ne pesquisar os funcionários da nossa biblioteca", 
             font=("Segoe UI", 14, "bold")
         )
-        self.label_Bfuncionario.grid(row=1, column=1, padx=120)
+        self.label_Bfuncionario.grid(row=1, column=1, padx=70)
 
 
         #Botão para fornecedor
@@ -83,7 +83,7 @@ class DashboardDistribuidora:
             width=200, 
             command=self.abrir_gerenciador_fornecedores
         )
-        self.botao_Bfornecedor.grid(row=0, column=2, padx=120)
+        self.botao_Bfornecedor.grid(row=0, column=2, padx=70)
 
 
         self.label_Bfornecedor = ctk.CTkLabel(
@@ -91,7 +91,7 @@ class DashboardDistribuidora:
             text="Aqui você pode cadastrar,\nlistar, excluir e pesquisar\nos nossos fornecedores", 
             font=("Segoe UI", 14, "bold")
         )
-        self.label_Bfornecedor.grid(row=1, column=2, padx=120)
+        self.label_Bfornecedor.grid(row=1, column=2, padx=70)
 
 
         #Botão para cadastrar usuario
@@ -101,16 +101,32 @@ class DashboardDistribuidora:
             width=200, 
             command=self.CriarUsuario
         )
-        self.botao_Busuario.grid(row=0, column=3, padx=120)
+        self.botao_Busuario.grid(row=0, column=3, padx=70)
 
 
         self.label_Busuario = ctk.CTkLabel(
             self.frame_linha0, 
-            text="Aqui você pode cadastrar,\nlistar, excluir e pesquisar\nos nossos fornecedores", 
+            text="Nessa tela \n você pode cadastrar usuarios", 
             font=("Segoe UI", 14, "bold")
         )
-        self.label_Busuario.grid(row=1, column=3, padx=120)
+        self.label_Busuario.grid(row=1, column=3, padx=70)
 
+
+        self.botao_Bcliente = ctk.CTkButton(
+            self.frame_linha0,
+            text="CRIAR USUARIO", 
+            width=200, 
+            command=self.CriarUsuario
+        )
+        self.botao_Bcliente.grid(row=0, column=4, padx=70)
+
+
+        self.label_Bcliente = ctk.CTkLabel(
+            self.frame_linha0, 
+            text="Aqui você pode cadastrar,\nlistar, excluir e pesquisar\nos nossos clientes", 
+            font=("Segoe UI", 14, "bold")
+        )
+        self.label_Bcliente.grid(row=1, column=4, padx=70)
    
 
         # Linha 1 - Cards de resumo
@@ -254,12 +270,12 @@ class DashboardDistribuidora:
 
         # Botão de atualização
         self.botao_atualizar = ctk.CTkButton(
-            self.root, 
+            self.frame_principal, 
             text="Atualizar Dashboard", 
             width=200, 
             command=self.atualizar_dashboard
         )
-        self.botao_atualizar.pack(pady=20)
+        self.botao_atualizar.place(x = 100, y = 890)
 
         # Carregar dados iniciais
         self.atualizar_dashboard()

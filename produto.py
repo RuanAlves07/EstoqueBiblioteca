@@ -109,9 +109,9 @@ class TelaProdutos:
         self.botao_linkar_fornecedor.place(x = 500, y = 82)
 
 
-        def Tela_FornProduto():
+        def Tela_FornProduto(self):
 
-            Frame_FornProduto = ctk.CTkToplevel(self.frame_FornProduto)
+            Frame_FornProduto = ctk.CTkToplevel(self.root)
             Frame_FornProduto.title("Pesquisar Cliente")
             Frame_FornProduto.geometry("600x300")
             
