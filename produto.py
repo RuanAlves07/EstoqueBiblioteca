@@ -105,7 +105,7 @@ class TelaProdutos:
         self.PrecoEntry = ctk.CTkEntry(frame_add, placeholder_text="Preço do produto", width=300, height=40)
         self.PrecoEntry.pack(pady=10)
 
-        self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=self.Tela_FornProduto)
+        self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=Tela_FornProduto)
         self.botao_linkar_fornecedor.place(x = 500, y = 82)
 
 
