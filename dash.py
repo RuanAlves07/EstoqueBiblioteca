@@ -362,12 +362,18 @@ class DashboardDistribuidora:
     def logout(self):
         resposta = messagebox.askyesno("Logout", "Você tem certeza que deseja sair?")
         if resposta:
-            self.root.withdraw()
+            self.root.withdraw()  # Esconde a dashboard
+
             def reiniciar_login():
                 from Login import TelaLoginCadastro
-                root_login = ctk.CTk()
-                TelaLoginCadastro(root_login)  # Instancia a classe corretamente
-                root_login.mainloop()
+                login_window = ctk.CTk()  # Nova janela limpa para login
+                TelaLoginCadastro(login_window)
+                login_window.title("Login")
+                login_window.geometry("400x300")
+                login_window.mainloop()
+
+            # Agende a abertura da tela de login após 100ms
+            self.root.after(100, reiniciar_login)
 
     def abrir_gerenciador_estoque(self):
         from produto import TelaProdutos
