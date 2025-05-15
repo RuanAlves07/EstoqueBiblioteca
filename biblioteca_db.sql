@@ -4,6 +4,7 @@ create table usuarios(
 	nome varchar(40),
     usuario varchar(40),
     senha varchar(40),
+    email varchar(60),
     userperm varchar(3),
     primary key (idusuario)
 
