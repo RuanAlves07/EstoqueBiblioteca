@@ -105,22 +105,10 @@ class TelaProdutos:
         self.PrecoEntry = ctk.CTkEntry(frame_add, placeholder_text="Preço do produto", width=300, height=40)
         self.PrecoEntry.pack(pady=10)
 
-        self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=Tela_FornProduto)
-        self.botao_linkar_fornecedor.place(x = 500, y = 82)
 
-        def Tela_FornProduto(self):
-
-            Frame_FornProduto = ctk.CTkToplevel(self.root)
-            Frame_FornProduto.title("Pesquisar Cliente")
-            Frame_FornProduto.geometry("600x300")
-            
-
-            entry_pesquisa = ctk.CTkEntry(Frame_FornProduto, placeholder_text="Nome do fornecedor...")
-            entry_pesquisa.pack(pady=10, padx=20, fill="x")
-
-            frame_resultados = ctk.CTkFrame(Frame_FornProduto)
-            frame_resultados.pack(pady=10, padx=20, fill="both", expand=True)
-            
+        self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=self.Tela_FornProduto)
+        self.botao_linkar_fornecedor.place(x = 500, y = 82)   
+                 
         def RegistrarProduto():
             nome = self.NomeEntry.get()
             descricao = self.DescEntry.get()
@@ -325,6 +313,19 @@ class TelaProdutos:
 
         self.PrecoEntry.delete(0, END)
         self.PrecoEntry.insert(0, produto[5])
+
+    def Tela_FornProduto(self):
+
+            Frame_FornProduto = ctk.CTkToplevel(self.root)
+            Frame_FornProduto.title("Pesquisar Cliente")
+            Frame_FornProduto.geometry("600x300")
+            
+
+            entry_pesquisa = ctk.CTkEntry(Frame_FornProduto, placeholder_text="Nome do fornecedor...")
+            entry_pesquisa.pack(pady=10, padx=20, fill="x")
+
+            frame_resultados = ctk.CTkFrame(Frame_FornProduto)
+            frame_resultados.pack(pady=10, padx=20, fill="both", expand=True)
 
 
 # Inicialização da aplicação
