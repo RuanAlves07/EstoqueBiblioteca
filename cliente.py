@@ -195,7 +195,7 @@ class GerenciadorClientes:
         
 
         if not numeroNF or "" in [nome, qtdecompras, produto, dataemissao]:
-            messagebox.showerror("Erro", "Preencha todos as campos.")
+            messagebox.showerror("Erro", "Preencha todos os campos.")
             return
 
         db = comunicacao()
