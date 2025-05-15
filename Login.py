@@ -78,15 +78,17 @@ class TelaLoginCadastro: #Tela de fundo
         if VerifyLogin:
 
             messagebox.showinfo("INFO LOGIN", "Acesso Confirmado, Bem Vindo!")
-            self.root.destroy()
+            self.root.withdraw()
 
             userperm = VerifyLogin[4]
 
             if userperm == "sim":
+                messagebox.showinfo("Sucesso", "Login realizado!")
+                self.root.destroy()
                 from dash import DashboardDistribuidora
-                root_menu = ctk.CTk()
-                DashboardDistribuidora(root_menu)
-                root_menu.mainloop()
+                dashboard_root = ctk.CTk()
+                DashboardDistribuidora(dashboard_root)
+                dashboard_root.mainloop()
             else:
                 from MenuUsuario import MenuU
                 root_menu = ctk.CTk()

@@ -127,7 +127,14 @@ class DashboardDistribuidora:
             font=("Segoe UI", 14, "bold")
         )
         self.label_Bcliente.grid(row=1, column=4, padx=70)
-   
+
+        self.botao_logout = ctk.CTkButton(
+            self.frame_titulo, 
+            text="LOGOUT", 
+            width=100, 
+            command=self.logout
+        )
+        self.botao_logout.place(x = 1780)
 
         # Linha 1 - Cards de resumo
         self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
@@ -332,7 +339,7 @@ class DashboardDistribuidora:
         db.cursor.execute("SELECT COUNT(*) FROM cliente")
         total_clientes = db.cursor.fetchone()[0] or 0
         self.valor_clientes.configure(text=str(total_clientes))
-
+        
         
         
         # Fornecedores
@@ -486,6 +493,19 @@ class DashboardDistribuidora:
         self.UserNomeCEntry.delete(0, 'end')
         self.EmailEntry.delete(0, 'end')
         self.TipoEntry.set("Não")
+
+    def logout(self):
+        # Exibir mensagem de logout
+        messagebox.showinfo("Logout", "Você foi desconectado com sucesso.")
+
+        # Fechar a janela atual (dashboard)
+        self.root.withdraw()
+
+    def reiniciar_login():
+            from Login import TelaLoginCadastro  
+            root_login = ctk.CTk()
+            TelaLoginCadastro(root_login)
+
 
     def abrir_gerenciador_estoque(self):
         from produto import TelaProdutos
