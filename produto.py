@@ -25,7 +25,7 @@ class TelaProdutos:
         
 
         
-        root.iconbitmap(default="icons/klipartz.com.ico")  # Define o ícone da janela
+        root.iconbitmap(default="icons/livro.ico")  # Define o ícone da janela
 
         BarraNavegabilidade = CTkMenuBar(root)
         botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
