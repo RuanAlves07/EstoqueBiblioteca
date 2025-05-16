@@ -1,8 +1,6 @@
 import customtkinter as ctk
 from tkinter import ttk, messagebox
 from comunicacao import comunicacao
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 ctk.set_appearance_mode("Light")  
 ctk.set_default_color_theme("blue")  
@@ -67,7 +65,7 @@ class MenuU:
 
 
         self.ClientesButton = ctk.CTkButton(
-            frame_botoes, text="Clientes", width=180, command=self.GoToList
+            frame_botoes, text="Clientes", width=180, command=self.listar_cliente
         )
         self.ClientesButton.grid(row=0, column=2, padx=80)
 
@@ -186,6 +184,41 @@ class MenuU:
         login_window = ctk.CTk()
         TelaLoginCadastro()
         login_window.mainloop()
+
+    def listar_cliente(self):
+        jan_lista = ctk.CTkToplevel(self.root)
+        jan_lista.title("Listar Clientes")
+        jan_lista.geometry("800x400")
+        jan_lista.resizable(True, True)
+
+        colunas = ( "ID" , "Nome", "Cnpj", "Endereço") 
+        tree = ttk.Treeview(jan_lista, columns=colunas, show="headings", height=20)
+
+        for col in colunas:
+            tree.heading(col, text=col)
+            tree.column(col, width=150 if col == "Nome" or col == "ID" else 100)
+
+        tree.pack(padx=10, pady=10, fill="both", expand=True)
+
+        self.carregar_clientes(tree)
+
+        jan_lista.grab_set()
+        jan_lista.focus_force()
+    def carregar_clientes(self, tree):
+        for item in tree.get_children():
+            tree.delete(item)
+
+        db = comunicacao()
+        try:
+            cursor = db.conn.cursor()
+            cursor.execute("SELECT idcliente, NomeCliente, CNPJ	, endereco FROM cliente")
+            for row in cursor.fetchall():
+                tree.insert("", "end", values=row)
+        except Exception as e:
+            messagebox.showerror("Erro", f"Falha ao carregar clientes: {e}")
+
+
+
         
      
 
@@ -198,6 +231,11 @@ class MenuU:
         from produto import TelaProdutos
         nova_janela = ctk.CTkToplevel(self.root)
         TelaProdutos(nova_janela)
+
+    def TelaClientes(self):
+        from cliente import GerenciadorClientes
+        nova_janela = ctk.CTkToplevel(self.root)
+        GerenciadorClientes(nova_janela)
 
 
 if __name__ == "__main__":
