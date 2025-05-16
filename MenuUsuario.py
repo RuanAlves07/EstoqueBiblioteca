@@ -26,6 +26,17 @@ class MenuU:
         frame_botoes = ctk.CTkFrame(self.root, fg_color="transparent")
         frame_botoes.pack(pady=80)
 
+
+        self.botao_logout = ctk.CTkButton(
+            self.root,
+            text="LOGOUT",
+            width=100,
+            command=self.logout,
+            fg_color="red",
+            hover_color="#a52a2a"
+        )
+        self.botao_logout.place(x=875, y=350)
+
         # Botão Fornecedores
         self.FornecedoresButton = ctk.CTkButton(
             frame_botoes, text="Fornecedores", width=180, command=self.listar_forn
@@ -167,6 +178,14 @@ class MenuU:
         """)
         
         produtos = db.cursor.fetchall()
+
+    def logout(self):
+        """Fecha o dashboard e retorna à tela de login."""
+        self.root.destroy()  # Destrói completamente a janela antiga
+        from Login import TelaLoginCadastro
+        login_window = ctk.CTk()
+        TelaLoginCadastro()
+        login_window.mainloop()
         
      
 

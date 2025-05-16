@@ -25,7 +25,7 @@ class FornecedorApp:
 
      # Título  
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FORNECEDORES",
-        font=("Times New Roman", 22, "bold"))
+        font=("Poppins", 22, "bold"))
         Titulolabel.place(x=220 , y = 75)
 
         # Botão para ir no menu de registro dos produto

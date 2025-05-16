@@ -140,7 +140,7 @@ class DashboardDistribuidora:
             fg_color="red",
             hover_color="#a52a2a"
         )
-        self.botao_logout.place(x=1700, y=890)
+        self.botao_logout.place(x=1700, y=893)
 
         # Linha 1 - Cards de resumo
         self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
@@ -161,7 +161,7 @@ class DashboardDistribuidora:
         self.card_valor.pack_propagate(False)
         self.card_valor.pack(side="left", padx=10)
         self.label_valor = ctk.CTkLabel(
-            self.card_valor, text="Valor Total em Livros", font=("Segoe UI", 14, "bold"))
+        self.card_valor, text="Valor Total em Livros", font=("Segoe UI", 14, "bold"))
         self.label_valor.pack(pady=(15, 5))
         self.valor_total = ctk.CTkLabel(self.card_valor, text="R$ 0,00", font=("Segoe UI", 36, "bold"))
         self.valor_total.pack(pady=5)
@@ -171,7 +171,7 @@ class DashboardDistribuidora:
         self.card_clientes.pack_propagate(False)
         self.card_clientes.pack(side="left", padx=10)
         self.label_clientes = ctk.CTkLabel(
-            self.card_clientes, text="Clientes Ativos", font=("Segoe UI", 14, "bold"))
+        self.card_clientes, text="Clientes Ativos", font=("Segoe UI", 14, "bold"))
         self.label_clientes.pack(pady=(15, 5))
         self.valor_clientes = ctk.CTkLabel(self.card_clientes, text="0", font=("Segoe UI", 36, "bold"))
         self.valor_clientes.pack(pady=5)
@@ -181,10 +181,10 @@ class DashboardDistribuidora:
         self.card_fornecedores.pack_propagate(False)
         self.card_fornecedores.pack(side="left", padx=10)
         self.label_fornecedores = ctk.CTkLabel(
-            self.card_fornecedores, text="Fornecedores", font=("Segoe UI", 14, "bold"))
+        self.card_fornecedores, text="Fornecedores", font=("Segoe UI", 14, "bold"))
         self.label_fornecedores.pack(pady=(15, 5))
         self.valor_fornecedores = ctk.CTkLabel(
-            self.card_fornecedores, text="0", font=("Segoe UI", 36, "bold"))
+        self.card_fornecedores, text="0", font=("Segoe UI", 36, "bold"))
         self.valor_fornecedores.pack(pady=5)
 
         # Gráficos
@@ -341,9 +341,9 @@ class DashboardDistribuidora:
         AddButton.grid(row=5, column=0, columnspan=2, pady=20)
 
     def RegistrarUsuarios(self):
-        nome = self.UserNomeEntry.get()
+        usuario = self.UserNomeEntry.get()
         senha = self.SenhaEntry.get()
-        usuario = self.UserNomeCEntry.get()
+        nome = self.UserNomeCEntry.get()
         email = self.EmailEntry.get()
         tipo = self.TipoEntry.get()
 
@@ -394,11 +394,11 @@ class DashboardDistribuidora:
         FornecedorApp(janela)
 
     def abrir_gerenciador_clientes(self):
-        from cliente import ClienteApp
+        from cliente import GerenciadorClientes
         janela = ctk.CTkToplevel(self.root)
         janela.grab_set()
         janela.focus_force()
-        ClienteApp(janela)
+        GerenciadorClientes(janela)
 
 
 if __name__ == "__main__":
