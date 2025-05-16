@@ -33,14 +33,6 @@ class DashboardDistribuidora:
         )
         self.titulo.pack(side="left", padx=10)
 
-        # Botão Logout
-        self.botao_logout = ctk.CTkButton(
-            self.frame_titulo,
-            text="LOGOUT",
-            width=100,
-            command=self.logout
-        )
-        self.botao_logout.place(x=1080)
 
         # Frame principal com os cards
         self.frame_principal = ctk.CTkFrame(self.root, fg_color="transparent")
@@ -139,6 +131,17 @@ class DashboardDistribuidora:
         )
         self.label_Bcliente.grid(row=1, column=4, padx=70)
 
+        # Botão Logout
+        self.botao_logout = ctk.CTkButton(
+            self.frame_principal,
+            text="LOGOUT",
+            width=100,
+            command=self.logout,
+            fg_color="red",
+            hover_color="#a52a2a"
+        )
+        self.botao_logout.place(x=1700, y=890)
+
         # Linha 1 - Cards de resumo
         self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
         self.frame_linha1.pack(fill="y", pady=30)
@@ -192,7 +195,7 @@ class DashboardDistribuidora:
         self.frame_grafico_genero.pack_propagate(False)
         self.frame_grafico_genero.pack(side="left", padx=10, pady=10, fill="both", expand=False)
         self.label_grafico_genero = ctk.CTkLabel(
-            self.frame_grafico_genero, text="Estoque por Gênero", font=("Segoe UI", 14, "bold"))
+        self.frame_grafico_genero, text="Estoque por Gênero", font=("Segoe UI", 14, "bold"))
         self.label_grafico_genero.pack(pady=5)
 
         self.fig_genero, self.ax_genero = plt.subplots(figsize=(5, 3), dpi=100)
@@ -203,7 +206,7 @@ class DashboardDistribuidora:
         self.frame_grafico_produtos.pack_propagate(False)
         self.frame_grafico_produtos.pack(side="right", padx=10, pady=10, fill="both", expand=True)
         self.label_grafico_produtos = ctk.CTkLabel(
-            self.frame_grafico_produtos, text="Top 5 Produtos em Estoque", font=("Segoe UI", 14, "bold"))
+        self.frame_grafico_produtos, text="Top 5 Produtos em Estoque", font=("Segoe UI", 14, "bold"))
         self.label_grafico_produtos.pack(pady=5)
 
         self.fig_produtos, self.ax_produtos = plt.subplots(figsize=(5, 3), dpi=100)
@@ -352,6 +355,15 @@ class DashboardDistribuidora:
             messagebox.showinfo("Sucesso", "Usuário criado com sucesso!")
             self.limpar_campos()
 
+    def logout(self):
+        """Fecha o dashboard e retorna à tela de login."""
+        self.root.destroy()  # Destrói completamente a janela antiga
+        from Login import TelaLoginCadastro
+        login_window = ctk.CTk()
+        TelaLoginCadastro()
+        login_window.mainloop()
+        
+
     def limpar_campos(self):
         self.UserNomeEntry.delete(0, 'end')
         self.SenhaEntry.delete(0, 'end')
@@ -359,22 +371,7 @@ class DashboardDistribuidora:
         self.EmailEntry.delete(0, 'end')
         self.TipoEntry.set("Não")
 
-    def logout(self):
-        resposta = messagebox.askyesno("Logout", "Você tem certeza que deseja sair?")
-        if resposta:
-            self.root.withdraw()  # Esconde a dashboard
-
-            def reiniciar_login():
-                from Login import TelaLoginCadastro
-                login_window = ctk.CTk()  # Nova janela limpa para login
-                TelaLoginCadastro(login_window)
-                login_window.title("Login")
-                login_window.geometry("400x300")
-                login_window.mainloop()
-
-            # Agende a abertura da tela de login após 100ms
-            self.root.after(100, reiniciar_login)
-
+   
     def abrir_gerenciador_estoque(self):
         from produto import TelaProdutos
         janela = ctk.CTkToplevel(self.root)

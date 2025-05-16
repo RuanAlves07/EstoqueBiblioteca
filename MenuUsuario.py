@@ -14,7 +14,7 @@ class MenuU:
     def Abrir_Menu(self, root):
         self.root = root
         self.root.title("Menu Usuário")
-        self.root.geometry("1920x1080")
+        self.root.geometry("1000x400")
         self.root.configure(bg="#f6f3ec")
         self.root.resizable(True, True)
 
@@ -68,32 +68,6 @@ class MenuU:
         )
 
 
-        self.frame_grafico_produtos = ctk.CTkFrame(self.root, width=200, height=400)
-        self.frame_grafico_produtos.pack_propagate(False)
-        self.frame_grafico_produtos.pack(side="right", padx=10, pady=10, fill="both", expand=True)
-        
-        self.label_grafico_produtos = ctk.CTkLabel(
-            self.frame_grafico_produtos, 
-            text="Top 5 Produtos em Estoque", 
-            font=("Segoe UI", 14, "bold")
-        )
-        self.label_grafico_produtos.pack(pady=5)
-        
-        # Criar gráfico de barras para produtos
-        self.fig_produtos, self.ax_produtos = plt.subplots(figsize=(5, 3), dpi=100)
-        self.canvas_produtos = FigureCanvasTkAgg(self.fig_produtos, master=self.frame_grafico_produtos)
-        self.canvas_produtos.get_tk_widget().pack(fill="both", expand=True, padx=10, pady=10)
-
-        # Tabela de produtos
-        self.colunas_produtos = ("ID", "Nome", "Gênero", "Quantidade", "Preço")
-        self.tree_produtos = ttk.Treeview(
-            self.frame_grafico_produtos, 
-            columns=self.colunas_produtos, 
-            show="headings",
-            selectmode="browse"
-        )
-
-       
 
     def PuxarInfo(self, tree):
         for item in tree.get_children():
@@ -194,9 +168,7 @@ class MenuU:
         
         produtos = db.cursor.fetchall()
         
-        # Preencher a tabela
-        for produto in produtos:
-            self.tree_produtos.insert("", "end", values=produto)
+     
 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
