@@ -36,7 +36,8 @@ class GerenciadorClientes:
         self.atuButton.pack(pady=10)
 
         
-    
+        
+        
 
         
     def cadastro_clien(self):
@@ -60,7 +61,8 @@ class GerenciadorClientes:
         self.enderecoEntry = ctk.CTkEntry(frame, placeholder_text="Endereço: ", width=300, height=40)
         self.enderecoEntry.pack(pady=10)
 
-        
+        jan_clientecad.grab_set()
+        jan_clientecad.focus_force()  
 
 
         AddButton = ctk.CTkButton(jan_clientecad, text="REGISTRAR CLIENTE", width=200, command=self.RegistrarCliente)
@@ -105,6 +107,8 @@ class GerenciadorClientes:
 
         self.carregar_clientes(tree)
 
+        jan_lista.grab_set()
+        jan_lista.focus_force()
     def carregar_clientes(self, tree):
         for item in tree.get_children():
             tree.delete(item)
@@ -147,6 +151,8 @@ class GerenciadorClientes:
 
         ctk.CTkButton(jan_atualizar, text="Salvar Alterações", command=self.salvar_alteracoes).place(x=330, y=420)
 
+        jan_atualizar.grab_set()
+        jan_atualizar.focus_force()
     def buscar_cliente(self):
         idcliente = self.idcliente.get()
         if not idcliente:
@@ -201,6 +207,8 @@ class GerenciadorClientes:
 
         self.carregar_clientes(tree)
 
+        jan_excluir.grab_set()
+        jan_excluir.focus_force()
         def excluir_selecionado():
             selecionado = tree.selection()
             if not selecionado:
