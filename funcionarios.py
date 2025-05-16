@@ -75,7 +75,7 @@ class GerenciadorFuncionarios:
         frame = ctk.CTkFrame(jan_cadastro, corner_radius=10)
         frame.pack(padx=60, pady=50, fill="both", expand=True)
 
-        title = ctk.CTkLabel(frame, text="CADASTRO DE FUNCIONARIOS", font=("Segoe UI", 18, "bold"))
+        title = ctk.CTkLabel(frame, text="CADASTRO DE FUNCIONARIOS", font=("Poppins", 22, "bold"))
         title.pack(pady=20)
 
         self.funcnomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome: ", width=300, height=40)

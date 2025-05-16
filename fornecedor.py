@@ -25,7 +25,7 @@ class FornecedorApp:
 
      # Título  
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FORNECEDORES",
-        font=("Times New Roman", 22, "bold"))
+        font=("Poppins", 22, "bold"))
         Titulolabel.place(x=220 , y = 75)
 
         # Botão para ir no menu de registro dos produto
@@ -99,7 +99,8 @@ class FornecedorApp:
 
         voltButton = ctk.CTkButton(jan, text="Fechar", width=100, fg_color="gray", command=jan.destroy)
         voltButton.pack(pady=10)
-
+        jan.grab_set()
+        jan.focus_force()
     def RegistrarNoBanco(self):
         nome = self.fornomeEntry.get()
         nomefantasia = self.ficticioEntry.get()
@@ -162,7 +163,8 @@ class FornecedorApp:
 
         bt_fechar = ctk.CTkButton(janela, text="Fechar", width=100, fg_color="gray", command=janela.destroy)
         bt_fechar.pack(pady=5)
-
+        janela.grab_set()
+        janela.focus_force()
         self.carregar_fornecedores(tree)
 
     def carregar_fornecedores(self, tree):
@@ -205,6 +207,8 @@ class FornecedorApp:
         self.carregar_fornecedores(tree)
 
         self.carregar_fornecedores(tree)
+        janela.grab_set()
+        janela.focus_force()
 
     def atuu_funci(self):
         jan = ctk.CTkToplevel(self.root)
@@ -238,6 +242,8 @@ class FornecedorApp:
 
         salvar_button = ctk.CTkButton(frame, text="Salvar Alterações", width=150, command=self.salvar_alteracoes)
         salvar_button.pack(pady=20)
+        jan.grab_set()
+        jan.focus_force()
 
     def buscar_fornecedor(self):
         idfornecedor = self.idEntry.get()

@@ -51,7 +51,7 @@ create table cliente(
 
  idcliente int not null auto_increment,
  NomeCliente text,
- CNPJ varchar(20)
+ CNPJ varchar(20),
  endereco text,
  primary key (idcliente)
 
