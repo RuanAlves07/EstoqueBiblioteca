@@ -111,3 +111,7 @@ class comunicacao:
     def buscar_cliente_por_id(self, idcliente):
         self.cursor.execute("SELECT * FROM cliente WHERE idcliente = %s", (idcliente,))
         return self.cursor.fetchone()  
+    
+    def AtualizarCliente(self, idcliente, NomeCliente, CNPJ, endereço,):
+        self.cursor.execute("UPDATE cliente SET idcliente = %s, NomeCliente = %s, CNPJ = %s, quantidade = %s, endereço = %s WHERE idproduto = %s ",(idcliente, NomeCliente, CNPJ, endereço)) 
+        self.conn.commit() 

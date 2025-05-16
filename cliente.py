@@ -35,9 +35,7 @@ class GerenciadorClientes:
         self.atuButton = ctk.CTkButton(self.root, text="Atualizar Cliente", width=300, command=self.atuu_clien)
         self.atuButton.pack(pady=10)
 
-        self.voltButton = ctk.CTkButton(self.root, text="Fechar", width=100, fg_color="gray", command=self.sair)
-        self.voltButton.pack(pady=20)
-
+        
     
 
         
