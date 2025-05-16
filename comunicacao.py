@@ -19,8 +19,8 @@ class comunicacao:
         )
         self.cursor = self.conn.cursor()
 
-    def RegistrarCliente(self, numeroNFe,  NomeCliente, QuantidadeVendas, Produto, DataEmissao):
-        self.cursor.execute("INSERT INTO cliente (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao) VALUES (%s, %s, %s, %s, %s)", (numeroNFe, NomeCliente, QuantidadeVendas, Produto, DataEmissao))
+    def RegistrarCliente(self,  NomeCliente, cnpj, endereco):
+        self.cursor.execute("INSERT INTO cliente ( NomeCliente, CNPJ, endereco) VALUES (%s, %s, %s)", ( NomeCliente, cnpj, endereco))
         self.conn.commit() 
 
     def RegistrarUsuario(self, nome, usuario, senha, email, userperm):
@@ -108,4 +108,6 @@ class comunicacao:
         self.cursor.execute("SELECT nome FROM fornecedor")
         self.conn.commit() 
 
-
+    def buscar_cliente_por_id(self, idcliente):
+        self.cursor.execute("SELECT * FROM cliente WHERE idcliente = %s", (idcliente,))
+        return self.cursor.fetchone()  
