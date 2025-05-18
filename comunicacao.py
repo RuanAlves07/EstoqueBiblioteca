@@ -14,7 +14,7 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "",
+            password = "root",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
@@ -27,9 +27,12 @@ class comunicacao:
         self.cursor.execute("INSERT INTO usuarios ( nome, usuario, senha, email, userperm) VALUES (%s, %s, %s, %s, %s)", ( nome, usuario, senha, email, userperm))
         self.conn.commit() 
 
-    def RegistrarProduto(self, nome, descricao, genero, quantidade, preco):
-        self.cursor.execute("INSERT INTO produto (nome, descricao, genero, quantidade, preco) VALUES (%s, %s, %s, %s, %s)", (nome, descricao, genero, quantidade, preco))
-        self.conn.commit() 
+    def RegistrarProduto(self, idfornecedor, nome, descricao, genero, quantidade, preco):
+        self.cursor.execute("""
+            INSERT INTO produto (idfornecedor, nome, descricao, genero, quantidade, preco)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (idfornecedor, nome, descricao, genero, quantidade, preco))
+        self.conn.commit()
 
     def ExcluirProduto(self, idproduto):
         self.cursor.execute("DELETE FROM produto WHERE idproduto = %s", (idproduto,)) 
