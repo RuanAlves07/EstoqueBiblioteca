@@ -35,6 +35,9 @@ class GerenciadorClientes:
         self.atuButton = ctk.CTkButton(self.root, text="Atualizar Cliente", width=300, command=self.atuu_clien)
         self.atuButton.pack(pady=10)
 
+        self.PedidoButton = ctk.CTkButton(self.root, text="Pedidos", width=300, command=self.TelaPedidos)
+        self.PedidoButton.pack(pady=10)
+
         
         
         
@@ -68,6 +71,12 @@ class GerenciadorClientes:
         AddButton = ctk.CTkButton(jan_clientecad, text="REGISTRAR CLIENTE", width=200, command=self.RegistrarCliente)
         AddButton.pack(pady=10)
 
+    def TelaPedidos(self):
+        from pedido import AppPedidos
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()
+        nova_janela.focus_force()
+        AppPedidos(nova_janela)
 
 
     def RegistrarCliente(self):

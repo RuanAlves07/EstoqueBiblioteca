@@ -14,7 +14,7 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "root",
+            password = "",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
