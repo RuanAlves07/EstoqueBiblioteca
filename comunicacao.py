@@ -28,10 +28,7 @@ class comunicacao:
         self.conn.commit() 
 
     def RegistrarProduto(self, idfornecedor, nome, descricao, genero, quantidade, preco):
-        self.cursor.execute("""
-            INSERT INTO produto (idfornecedor, nome, descricao, genero, quantidade, preco)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """, (idfornecedor, nome, descricao, genero, quantidade, preco))
+        self.cursor.execute("""INSERT INTO produto (idfornecedor, nome, descricao, genero, quantidade, preco)VALUES (%s, %s, %s, %s, %s, %s) """, (idfornecedor, nome, descricao, genero, quantidade, preco))
         self.conn.commit()
 
     def ExcluirProduto(self, idproduto):
