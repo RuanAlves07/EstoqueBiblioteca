@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import customtkinter as ctk
 import mysql.connector
-from comunicacao import comunicacao  # Certifique-se de que esse módulo existe
+from comunicacao import comunicacao  
 
 class GerenciadorClientes:
     def __init__(self, root):
