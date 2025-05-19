@@ -213,8 +213,8 @@ class TelaProdutos:
         titulo = ctk.CTkLabel(frame, text="ATUALIZAR PRODUTO", font=("Segoe UI", 18, "bold"))
         titulo.pack(pady=20)
 
-        self.IDBox = ctk.CTkEntry(frame, placeholder_text="ID do Produto", width=300, height=40)
-        self.IDBox.pack(pady=10)        
+        self.IDEntry = ctk.CTkEntry(frame, placeholder_text="ID do Produto", width=300, height=40)
+        self.IDEntry.pack(pady=10)        
 
         BuscarButton = ctk.CTkButton(produto_Update, text="BUSCAR", width=80, command=self.BuscarProduto)
         BuscarButton.place(x=570, y=130)
@@ -329,19 +329,19 @@ class TelaProdutos:
             return
 
         self.NomeEntry.delete(0, END)
-        self.NomeEntry.insert(0, produto[1])
+        self.NomeEntry.insert(0, produto[2])
 
         self.DescEntry.delete(0, END)
-        self.DescEntry.insert(0, produto[2])
+        self.DescEntry.insert(0, produto[3])
 
         self.GeneroEntry.delete(0, END)
-        self.GeneroEntry.insert(0, produto[3])
+        self.GeneroEntry.insert(0, produto[4])
 
         self.QuantidadeEntry.delete(0, END)
-        self.QuantidadeEntry.insert(0, produto[4])
+        self.QuantidadeEntry.insert(0, produto[5])
 
         self.PrecoEntry.delete(0, END)
-        self.PrecoEntry.insert(0, produto[5])
+        self.PrecoEntry.insert(0, produto[6])
 
     def Tela_FornProduto(self):
         # Cria uma nova janela para pesquisar fornecedores
