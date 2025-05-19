@@ -188,7 +188,7 @@ class GerenciadorFuncionarios:
         salvar_button.pack(pady=10)
 
         labels = ["Nome", "Telefone", "Endereço", "Email", "Data de Nascimento"]
-        entries = [self.UsuarioEntry, self.telefoneEntry, self.EnderecoEntry, self.EmailEntry, self.NascEntry]
+        entries = [self.UsuarioEntry, self.TelefoneEntry, self.EnderecoEntry, self.EmailEntry, self.NascEntry]
 
         for i, label in enumerate(labels):
             ctk.CTkLabel(jan_atualizar, text=label + ":", font=("Arial", 16)).place(x=115, y=150 + i * 50)
