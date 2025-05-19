@@ -3,7 +3,6 @@ from tkinter import messagebox
 from comunicacao import comunicacao
 from tkinter import ttk
 from CTkMenuBar import *
-from cliente import GerenciadorClientes
 
 # Configuração inicial do tema
 ctk.set_appearance_mode("Light")  # Pode ser "Dark" ou "System"
@@ -65,6 +64,12 @@ class FornecedorApp:
         nova_janela.grab_set()       
         nova_janela.focus_force()    
         GerenciadorFuncionarios(nova_janela)
+    def TelaClientes(self):
+        from cliente import GerenciadorClientes
+        janela = ctk.CTkToplevel(self.root)
+        janela.grab_set()
+        janela.focus_force()
+        GerenciadorClientes(janela)
 
 
     def alternar_tema(self):
