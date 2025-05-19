@@ -17,12 +17,7 @@ class TelaLoginCadastro: #Tela de fundo
         self.JanelaPequena() #Chamando a tela principal de login pequena
         self.root.mainloop() #Executando as telas
 
-    def CentralizarJanela(self, tela, width, height): 
-        tela_width = tela.winfo_screenwidth() #Obtem o tamanho da largura do monitor
-        tela_height = tela.winfo_screenheight() #Obtem o tamanho da altura do monitor
-        x = (tela_width // 2) - (width // 2) #Calcula a posição x para centralizar a janela
-        y = (tela_height // 2) - (height // 2) #Calcula a posição y para centralizar a janela
-        tela.geometry(f"{width}x{height}+{x}+{y}") #Define o tamanho e a posição da janela na tela
+    
 
     def JanelaPequena(self):
         JanelaMeio = ctk.CTkToplevel(self.root) #JanelaMeio virando ctk
@@ -30,7 +25,7 @@ class TelaLoginCadastro: #Tela de fundo
         JanelaMeio.configure(bg="#f6f3ec") #Cor da JanelaMeio
         JanelaMeio.resizable(False, False) #Codigo para não poder alterar a altura nem largura
 
-        self.CentralizarJanela(JanelaMeio, 400, 300) # Centralizar a nova janela
+        
 
         JanelaMeio.grab_set() # Ficar sempre em cima da tela
         JanelaMeio.focus_force() # Ficar sempre focado
