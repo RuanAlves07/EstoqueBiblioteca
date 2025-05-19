@@ -22,7 +22,7 @@ class FornecedorApp:
         botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
         botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores)
         botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios)
-
+        botao_4 = BarraNavegabilidade.add_cascade("Clientes", command = self.TelaClientes)
      # Título  
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FORNECEDORES",
         font=("Poppins", 22, "bold"))
@@ -64,6 +64,12 @@ class FornecedorApp:
         nova_janela.grab_set()       
         nova_janela.focus_force()    
         GerenciadorFuncionarios(nova_janela)
+    def TelaClientes(self):
+        from cliente import GerenciadorClientes
+        janela = ctk.CTkToplevel(self.root)
+        janela.grab_set()
+        janela.focus_force()
+        GerenciadorClientes(janela)
 
 
     def alternar_tema(self):
