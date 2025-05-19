@@ -14,7 +14,7 @@ class DashboardDistribuidora:
     def __init__(self, root):
         self.root = root
         self.root.title("Dashboard - Distribuidora de Livros")
-        self.root.geometry("1920x1080")
+        self.root.state("zoomed")
         self.root.resizable(True, True)
         self.root.configure(bg="#f6f6f6")
 
@@ -133,14 +133,14 @@ class DashboardDistribuidora:
 
         # Botão Logout
         self.botao_logout = ctk.CTkButton(
-            self.frame_principal,
+            self.frame_titulo,
             text="LOGOUT",
             width=100,
             command=self.logout,
             fg_color="red",
             hover_color="#a52a2a"
         )
-        self.botao_logout.place(x=1700, y=893)
+        self.botao_logout.place(x=1700)
 
         # Linha 1 - Cards de resumo
         self.frame_linha1 = ctk.CTkFrame(self.frame_principal, fg_color="transparent")
