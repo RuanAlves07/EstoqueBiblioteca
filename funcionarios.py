@@ -26,7 +26,7 @@ class GerenciadorFuncionarios:
 
      # Título
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE FUNCIONÁRIOS",
-        font=("Times New roman", 22, "bold"))
+        font=("Poppins", 22, "bold"))
         Titulolabel.pack(pady=70)
 
         # Botões principais
