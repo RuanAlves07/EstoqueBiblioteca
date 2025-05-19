@@ -6,15 +6,9 @@ from comunicacao import comunicacao
 from CTkMenuBar import *
 from fornecedor import FornecedorApp 
 
-
-# Dropdown para "File"
-
 # Configuração global do CustomTkinter
 ctk.set_appearance_mode("Light")
 ctk.set_default_color_theme("blue")
-
-
-
 
 class TelaProdutos:
     def __init__(self, root):
@@ -28,11 +22,13 @@ class TelaProdutos:
         
         root.iconbitmap(default="icons/livro.ico")  # Define o ícone da janela
 
+
+        # Barra do atalho de navegação para ir de tela em tela
         BarraNavegabilidade = CTkMenuBar(root)
         botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
         botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores)
         botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios)
-
+        botao_4 = BarraNavegabilidade.add_cascade("Clientes", command = self.TelaClientes)
 
         # Label do título
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE PRODUTOS", font=("Poppins", 22, "bold"))
@@ -54,6 +50,12 @@ class TelaProdutos:
         ListButton = ctk.CTkButton(root, text="LISTAR PRODUTOS", width=300, command=self.GoToList)
         ListButton.place(x=250, y=500)
 
+    def TelaClientes(self):
+        from cliente import GerenciadorClientes
+        janela = ctk.CTkToplevel(self.root)
+        janela.grab_set()
+        janela.focus_force()
+        GerenciadorClientes(janela)
 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
