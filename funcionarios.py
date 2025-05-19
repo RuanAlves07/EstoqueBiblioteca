@@ -184,7 +184,7 @@ class GerenciadorFuncionarios:
         self.NascEntry = ctk.CTkEntry(frame, placeholder_text="Data de nascimento", width=300, height=40)
         self.NascEntry.pack(pady=10)
 
-        salvar_button = ctk.CTkButton(frame, text="Salvar Alterações", width=120, command=self.salvar_alteracoes)
+        salvar_button = ctk.CTkButton(frame, text="Salvar Alterações", width=150, command=self.salvar_alteracoes)
         salvar_button.pack(pady=10)
 
         labels = ["Nome", "Telefone", "Endereço", "Email", "Data de Nascimento"]
@@ -194,7 +194,6 @@ class GerenciadorFuncionarios:
             ctk.CTkLabel(jan_atualizar, text=label + ":", font=("Arial", 16)).place(x=115, y=150 + i * 50)
             entries[i].place(x=330, y=155 + i * 50)
 
-        ctk.CTkButton(jan_atualizar, text="Salvar Alterações", command=self.salvar_alteracoes).place(x=330, y=420)
 
     def buscar_funcionario(self):
         idfuncionario = self.idEntry.get()
