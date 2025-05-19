@@ -157,21 +157,38 @@ class GerenciadorFuncionarios:
         jan_atualizar.geometry("800x600")
         jan_atualizar.resizable(False, False)
 
-        ctk.CTkLabel(jan_atualizar, text="ID do Funcionário:", font=("Arial", 16)).place(x=115, y=50)
-        self.idEntry = ctk.CTkEntry(jan_atualizar, width=200)
-        self.idEntry.place(x=330, y=55)
+        frame = ctk.CTkFrame(jan_atualizar, corner_radius=10)
+        frame.pack(padx=60, pady=50, fill="both", expand=True)
 
-        ctk.CTkButton(jan_atualizar, text="Buscar Funcionário", command=self.buscar_funcionario).place(x=330, y=90)
+        title = ctk.CTkLabel(frame, text="ATUALIZAR FUNCIONARIO", font=("Segoe UI", 18, "bold"))
+        title.pack(pady=10)
 
-        # Campos atualizáveis
-        self.funnomeEntry = ctk.CTkEntry(jan_atualizar, width=300)
-        self.telefoneEntry = ctk.CTkEntry(jan_atualizar, width=300)
-        self.enderecEntry = ctk.CTkEntry(jan_atualizar, width=300)
-        self.emailEntry = ctk.CTkEntry(jan_atualizar, width=300)
-        self.nasciEntry = ctk.CTkEntry(jan_atualizar, width=300)
+        self.idEntry = ctk.CTkEntry(frame, placeholder_text="Digite o ID do Funcionario", width=300, height=40)
+        self.idEntry.pack(pady=10)
+
+        buscar_botao = ctk.CTkButton(frame, text="Buscar Funcionario", width=150, command=self.buscar_funcionario)
+        buscar_botao.pack(pady=10)
+
+        self.UsuarioEntry = ctk.CTkEntry(frame, placeholder_text="Nome do usuario", width=300, height=40)
+        self.UsuarioEntry.pack(pady=10)
+
+        self.TelefoneEntry = ctk.CTkEntry(frame, placeholder_text="Telefone", width=300, height=40)
+        self.TelefoneEntry.pack(pady=10)
+
+        self.EnderecoEntry = ctk.CTkEntry(frame, placeholder_text="Endereço", width=300, height=40)
+        self.EnderecoEntry.pack(pady=10)
+
+        self.EmailEntry = ctk.CTkEntry(frame, placeholder_text="Email", width=300, height=40)
+        self.EmailEntry.pack(pady=10)
+
+        self.NascEntry = ctk.CTkEntry(frame, placeholder_text="Data de nascimento", width=300, height=40)
+        self.NascEntry.pack(pady=10)
+
+        salvar_button = ctk.CTkButton(frame, text="Salvar Alterações", width=120, command=self.salvar_alteracoes)
+        salvar_button.pack(pady=10)
 
         labels = ["Nome", "Telefone", "Endereço", "Email", "Data de Nascimento"]
-        entries = [self.funnomeEntry, self.telefoneEntry, self.enderecEntry, self.emailEntry, self.nasciEntry]
+        entries = [self.UsuarioEntry, self.telefoneEntry, self.EnderecoEntry, self.EmailEntry, self.NascEntry]
 
         for i, label in enumerate(labels):
             ctk.CTkLabel(jan_atualizar, text=label + ":", font=("Arial", 16)).place(x=115, y=150 + i * 50)
@@ -183,32 +200,32 @@ class GerenciadorFuncionarios:
         idfuncionario = self.idEntry.get()
         if not idfuncionario:
             messagebox.showwarning("Atenção", "Por favor, insira o ID.")
-            return
+            
 
         db = comunicacao()
         funcionario = db.buscar_funcionario_por_id(idfuncionario)
         if not funcionario:
             messagebox.showerror("Erro", "Funcionário não encontrado.")
-            return
+            
 
-        self.funnomeEntry.delete(0, 'end')
-        self.funnomeEntry.insert(0, funcionario[1])
-        self.telefoneEntry.delete(0, 'end')
+        self.UsuarioEntry.delete(0, )
+        self.UsuarioEntry.insert(0, funcionario[1])
+        self.telefoneEntry.delete(0, )
         self.telefoneEntry.insert(0, funcionario[2])
-        self.enderecEntry.delete(0, 'end')
-        self.enderecEntry.insert(0, funcionario[3])
-        self.emailEntry.delete(0, 'end')
-        self.emailEntry.insert(0, funcionario[4])
-        self.nasciEntry.delete(0, 'end')
-        self.nasciEntry.insert(0, funcionario[5])
+        self.EnderecoEntry.delete(0, )
+        self.EnderecoEntry.insert(0, funcionario[3])
+        self.EmailEntry.delete(0, )
+        self.EmailEntry.insert(0, funcionario[4])
+        self.NascEntry.delete(0, )
+        self.NascEntry.insert(0, funcionario[5])
 
     def salvar_alteracoes(self):
         idfuncionario = self.idEntry.get()
-        nome = self.funnomeEntry.get()
+        nome = self.UsuarioEntry.get()
         telefone = self.telefoneEntry.get()
-        endereco = self.enderecEntry.get()
-        email = self.emailEntry.get()
-        nascimento = self.nasciEntry.get()
+        endereco = self.EnderecoEntry.get()
+        email = self.EmailEntry.get()
+        nascimento = self.NascEntry.get()
 
         if not idfuncionario or "" in [nome, telefone, endereco, email, nascimento]:
             messagebox.showerror("Erro", "Preencha todos os campos.")
