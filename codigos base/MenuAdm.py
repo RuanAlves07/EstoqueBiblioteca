@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from customtkinter import * #importação de todo o tkinter
 from tkinter import messagebox
-from comunicacao import comunicacao
 from tkinter import *
 from tkinter import ttk
 import matplotlib.pyplot as plt

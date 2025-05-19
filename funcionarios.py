@@ -42,9 +42,6 @@ class GerenciadorFuncionarios:
         self.atuButton = ctk.CTkButton(self.root, text="Atualizar Funcionario", width=300, command=self.atuu_func)
         self.atuButton.place(x=250, y=400)
 
-        # Switch para alternância de tema
-        self.theme_switch = ctk.CTkSwitch(self.root, text="Modo Escuro", command=self.alternar_tema)
-        self.theme_switch.place(x=660, y=30)
 
     def GoToproduto(self):
         from produto import TelaProdutos
@@ -66,11 +63,7 @@ class GerenciadorFuncionarios:
         nova_janela.grab_set()       
         nova_janela.focus_force()    
         GerenciadorFuncionarios(nova_janela)
-
-
-    def alternar_tema(self):
-            modo = "Dark" if self.theme_switch.get() == 1 else "Light"
-            ctk.set_appearance_mode(modo)    
+  
        
         
     def cadastro_func(self):
@@ -82,7 +75,7 @@ class GerenciadorFuncionarios:
         frame = ctk.CTkFrame(jan_cadastro, corner_radius=10)
         frame.pack(padx=60, pady=50, fill="both", expand=True)
 
-        title = ctk.CTkLabel(frame, text="CADASTRO DE FUNCIONARIOS", font=("Segoe UI", 18, "bold"))
+        title = ctk.CTkLabel(frame, text="CADASTRO DE FUNCIONARIOS", font=("Poppins", 22, "bold"))
         title.pack(pady=20)
 
         self.funcnomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome: ", width=300, height=40)
@@ -257,8 +250,8 @@ class GerenciadorFuncionarios:
 
 
     def sair(self):
-        from MenuAdm import Menuadm
-        Menuadm(self.root)
+        from dash import DashboardDistribuidora
+        DashboardDistribuidora(self.root)
         self.root.withdraw()
 
 

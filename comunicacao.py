@@ -3,7 +3,7 @@
 # python -m pip install -U pip - Comunicação com a Dasboard e BD
 # python -m pip install -U matplotlib - Geração dos graficos
 # pip install pillow - Biblioteca para imagens (Obrigatorio para tela de login)
-# pip install CTkMenuBar
+# pip install CTkMenuBar - Funcionalidade da barra de navegação
 
 
 import mysql.connector
@@ -19,13 +19,17 @@ class comunicacao:
         )
         self.cursor = self.conn.cursor()
 
-    def RegistrarCliente(self, nome, usuario, senha, email, userperm):
-        self.cursor.execute("INSERT INTO usuario (nome, usuario, senha, email, userperm) VALUES (%s, %s, %s, %s, %s)", (nome, usuario, senha, email, userperm))
+    def RegistrarCliente(self,  NomeCliente, cnpj, endereco):
+        self.cursor.execute("INSERT INTO cliente ( NomeCliente, CNPJ, endereco) VALUES (%s, %s, %s)", ( NomeCliente, cnpj, endereco))
         self.conn.commit() 
 
-    def RegistrarProduto(self, nome, descricao, genero, quantidade, preco):
-        self.cursor.execute("INSERT INTO produto (nome, descricao, genero, quantidade, preco) VALUES (%s, %s, %s, %s, %s)", (nome, descricao, genero, quantidade, preco))
+    def RegistrarUsuario(self, nome, usuario, senha, email, userperm):
+        self.cursor.execute("INSERT INTO usuarios ( nome, usuario, senha, email, userperm) VALUES (%s, %s, %s, %s, %s)", ( nome, usuario, senha, email, userperm))
         self.conn.commit() 
+
+    def RegistrarProduto(self, idfornecedor, nome, descricao, genero, quantidade, preco):
+        self.cursor.execute("""INSERT INTO produto (idfornecedor, nome, descricao, genero, quantidade, preco)VALUES (%s, %s, %s, %s, %s, %s) """, (idfornecedor, nome, descricao, genero, quantidade, preco))
+        self.conn.commit()
 
     def ExcluirProduto(self, idproduto):
         self.cursor.execute("DELETE FROM produto WHERE idproduto = %s", (idproduto,)) 
@@ -88,7 +92,6 @@ class comunicacao:
         self.cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
         self.conn.commit()
 
-
     def AtualizarFuncionario(self, idfuncionario, nome, telefone, enderecofunc, email, datanascimento):
         self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)) 
         self.conn.commit() 
@@ -105,4 +108,10 @@ class comunicacao:
         self.cursor.execute("SELECT nome FROM fornecedor")
         self.conn.commit() 
 
-
+    def buscar_cliente_por_id(self, idcliente):
+        self.cursor.execute("SELECT * FROM cliente WHERE idcliente = %s", (idcliente,))
+        return self.cursor.fetchone()  
+    
+    def AtualizarCliente(self, idcliente, NomeCliente, CNPJ, endereço,):
+        self.cursor.execute("UPDATE cliente SET idcliente = %s, NomeCliente = %s, CNPJ = %s, quantidade = %s, endereço = %s WHERE idproduto = %s ",(idcliente, NomeCliente, CNPJ, endereço)) 
+        self.conn.commit() 
