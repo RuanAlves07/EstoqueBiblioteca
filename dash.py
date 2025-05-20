@@ -19,6 +19,8 @@ class DashboardDistribuidora:
         self.root.resizable(False, False)
         self.root.configure(bg="#f6f6f6")
 
+        root.iconbitmap(default="icons/livro.ico")
+        
         # Importações no topo para evitar erro
         from Login import TelaLoginCadastro
         self.TelaLoginCadastro = TelaLoginCadastro
