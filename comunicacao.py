@@ -134,3 +134,14 @@ class comunicacao:
     def LinkEndereco(self, rua, bairro, cidade, estado):
         self.cursor.execute("""INSERT INTO endereco (rua, bairro, cidade, estado) VALUES (%s, %s, %s, %s)""", (rua, bairro, cidade, estado))
         self.conn.commit()
+
+    def AtualizarEnderecoFunc(self, rua, bairro, cidade, estado, idfuncionario):
+        self.cursor.execute("""
+            UPDATE endereco 
+            SET rua = %s, bairro = %s, cidade = %s, estado = %s 
+            WHERE idendereco = (
+                SELECT idendereco FROM funcionario 
+                WHERE idfuncionario = %s
+            )
+        """, (rua, bairro, cidade, estado, idfuncionario))  # Ordem correta dos parâmetros
+        self.conn.commit()

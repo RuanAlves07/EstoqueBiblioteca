@@ -117,6 +117,7 @@ class GerenciadorFuncionarios:
         jan_cadastro.focus_force()
 
     def RegistrarFuncionario(self):
+        idfuncionario = self.idEntry.get()
         nome = self.funcnomeEntry.get()
         telefone = self.telefoneEntry.get()
         email = self.gmailEntry.get()
@@ -130,7 +131,7 @@ class GerenciadorFuncionarios:
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.LinkEndereco(rua, bairro, cidade, estado)
+            db.AtualizarEnderecoFunc(rua, bairro, cidade, estado, idfuncionario)
             idendereco = db.cursor.lastrowid
 
             db.RegistrarFuncionario(nome,telefone, email, datanascimento, idendereco)
