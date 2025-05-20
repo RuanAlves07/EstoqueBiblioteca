@@ -122,20 +122,7 @@ class comunicacao:
     def LinkEndereco(self, rua, bairro, cidade, estado):
         self.cursor.execute("""INSERT INTO endereco (rua, bairro, cidade, estado) VALUES (%s, %s, %s, %s)""", (rua, bairro, cidade, estado))
         self.conn.commit()
-
-    def RegistrarVenda(self, idcliente, idproduto, quantidade, idusuario):
-        self.cursor.execute("SELECT preco FROM produto WHERE idproduto = %s", (idproduto,))
-        resultado = self.cursor.fetchone()
-        
-        preco = float(resultado[0])
-        valor_total = preco * quantidade
-        
-        self.cursor.execute("""INSERT INTO venda (idcliente, idproduto, data_venda, quantidade, valor_total, idusuario) VALUES (%s, %s, CURDATE(), %s, %s, %s)""", (idcliente, idproduto, quantidade, valor_total, idusuario))
-        self.conn.commit()
-
-    def carregar_vendas(self):
-        self.cursor.execute("""SELECT v.idvenda, c.NomeCliente, p.nome, v.data_venda, v.quantidade, v.valor_total, u.usuario FROM venda v INNER JOIN cliente c ON v.idcliente = c.idcliente INNER JOIN produto p ON v.idproduto = p.idproduto INNER JOIN usuarios u ON v.idusuario = u.idusuario""")
-        return self.cursor.fetchall()
+    
     def AtualizarEnderecoFunc(self, rua, bairro, cidade, estado, idfuncionario):
         self.cursor.execute("""
             UPDATE endereco 
