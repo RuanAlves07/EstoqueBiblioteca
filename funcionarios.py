@@ -90,9 +90,6 @@ class GerenciadorFuncionarios:
         self.telefoneEntry = ctk.CTkEntry(frame, placeholder_text= "Telefone: ", width=300, height=40)
         self.telefoneEntry.pack(pady=10)
 
-        self.enderecoEntry = ctk.CTkEntry(frame, placeholder_text="Endereço: ", width=300, height=40)
-        self.enderecoEntry.pack(pady=10)
-
         self.gmailEntry = ctk.CTkEntry(frame, placeholder_text="Email: ", width=300, height=40)
         self.gmailEntry.pack(pady=10)
 
@@ -122,25 +119,26 @@ class GerenciadorFuncionarios:
     def RegistrarFuncionario(self):
         nome = self.funcnomeEntry.get().strip()
         telefone = self.telefoneEntry.get().strip()
-        enderecofunc = self.enderecoEntry.get().strip()
         email = self.gmailEntry.get().strip()
         datanascimento = self.datanascEntry.get().strip()
-        ruafunc = self.ruafuncEntry.get().strip()
-        bairrofunc = self.bairrofuncEntry.get().strip()
-        cidadefunc = self.cidadefuncEntry.get().strip()
-        estadofunc = self.estadofuncEntry.get().strip()
+        rua = self.ruafuncEntry.get().strip()
+        bairro = self.bairrofuncEntry.get().strip()
+        cidade = self.cidadefuncEntry.get().strip()
+        estado = self.estadofuncEntry.get().strip()
 
-        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or datanascimento == "" or ruafunc == "" or bairrofunc == "" or cidadefunc == "" or estadofunc == "":
+        if nome == "" or telefone == "" or email == "" or datanascimento == "" or rua == "" or bairro == "" or cidade == "" or estado == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.RegistrarFuncionario(nome, telefone, enderecofunc, email, datanascimento, ruafunc, bairrofunc, cidadefunc, estadofunc)
-            messagebox.showinfo("Success", "Usuario criado com sucesso!")
+            db.LinkEndereco(rua, bairro, cidade, estado)
+            idendereco = db.cursor.lastrowid
+
+            db.RegistrarFuncionario(nome,telefone, email,datanascimento, idendereco)
+            db.conn.commit()
     
     def limpar_campos(self, janela=None):
         self.funcnomeEntry.delete(0, 'end')
         self.telefoneEntry.delete(0, 'end')
-        self.EnderecoEntry.delete(0, 'end')
         self.EmailEntry.delete(0, 'end')
         self.NascEntry.delete(0, 'end')
         self.ruafuncEntry.delete(0, 'end')
@@ -154,7 +152,7 @@ class GerenciadorFuncionarios:
         jan_lista.geometry("800x400")
         jan_lista.resizable(True, True)
 
-        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento", "Rua", "Bairro", "Cidade", "Estado")
+        colunas = ("ID", "Nome", "Telefone", "Email", "Data de Nascimento", "Rua", "Bairro", "Cidade", "Estado")
         tree = ttk.Treeview(jan_lista, columns=colunas, show="headings", height=20)
 
         for col in colunas:
@@ -174,7 +172,7 @@ class GerenciadorFuncionarios:
         db = comunicacao()
         try:
             cursor = db.conn.cursor()
-            cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, datanascimento FROM funcionario")
+            cursor.execute("SELECT idfuncionario, nome, telefone, email, datanascimento FROM funcionario")
             for row in cursor.fetchall():
                 tree.insert("", "end", values=row)
         except Exception as e:
@@ -183,7 +181,7 @@ class GerenciadorFuncionarios:
     def atuu_func(self):
         jan_atualizar = ctk.CTkToplevel(self.root)
         jan_atualizar.title("Atualizar Funcionário")
-        jan_atualizar.geometry("900x870")
+        jan_atualizar.geometry("900x830")
         jan_atualizar.resizable(False, False)
         frame = ctk.CTkFrame(jan_atualizar, corner_radius=10)
         frame.pack(padx=80, pady=50, fill="both", expand=True)
@@ -202,9 +200,6 @@ class GerenciadorFuncionarios:
 
         self.telefoneEntry = ctk.CTkEntry(frame, placeholder_text="Telefone", width=300, height=40)
         self.telefoneEntry.pack(pady=10)
-
-        self.EnderecoEntry = ctk.CTkEntry(frame, placeholder_text="Endereço", width=300, height=40)
-        self.EnderecoEntry.pack(pady=10)
 
         self.EmailEntry = ctk.CTkEntry(frame, placeholder_text="Email", width=300, height=40)
         self.EmailEntry.pack(pady=10)
@@ -252,33 +247,29 @@ class GerenciadorFuncionarios:
         self.telefoneEntry.delete(0, tk.END)
         self.telefoneEntry.insert(0, funcionario[2])
 
-        self.EnderecoEntry.delete(0, tk.END)
-        self.EnderecoEntry.insert(0, funcionario[3])
-
         self.EmailEntry.delete(0, tk.END)
-        self.EmailEntry.insert(0, funcionario[4])
+        self.EmailEntry.insert(0, funcionario[3])
 
         self.NascEntry.delete(0, tk.END)
-        self.NascEntry.insert(0, funcionario[5])
+        self.NascEntry.insert(0, funcionario[4])
 
         self.ruafuncEntry.delete(0, tk.END)
-        self.ruafuncEntry.insert(0, funcionario[6])
+        self.ruafuncEntry.insert(0, funcionario[5])
 
         self.bairrofuncEntry.delete(0, tk.END)
-        self.bairrofuncEntry.insert(0, funcionario[7])
+        self.bairrofuncEntry.insert(0, funcionario[6])
 
         self.cidadefuncEntry.delete(0, tk.END)
-        self.cidadefuncEntry.insert(0, funcionario[8])
+        self.cidadefuncEntry.insert(0, funcionario[7])
 
         self.estadofuncEntry.delete(0, tk.END)
-        self.estadofuncEntry.insert(0, funcionario[9])
+        self.estadofuncEntry.insert(0, funcionario[8])
 
 
     def salvar_alteracoes(self):
         idfuncionario = self.idEntry.get()
         nome = self.UsuarioEntry.get()
         telefone = self.telefoneEntry.get()
-        endereco = self.EnderecoEntry.get()
         email = self.EmailEntry.get()
         nascimento = self.NascEntry.get()
         ruafunc = self.ruafuncEntry.get()
@@ -286,7 +277,7 @@ class GerenciadorFuncionarios:
         cidadefunc = self.cidadefuncEntry.get()
         estadofunc = self.estadofuncEntry.get()
 
-        if not idfuncionario or "" in [nome, telefone, endereco, email, nascimento, ruafunc,bairrofunc,  cidadefunc, estadofunc]:
+        if not idfuncionario or "" in [nome, telefone, email, nascimento, ruafunc ,bairrofunc,  cidadefunc, estadofunc]:
             messagebox.showerror("Erro", "Preencha todos os campos.")
             return
 
@@ -294,7 +285,7 @@ class GerenciadorFuncionarios:
         db.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM funcionario WHERE idfuncionario = %s)""", (ruafunc, bairrofunc, cidadefunc, estadofunc, idfuncionario))
 
         # Atualiza o funcionario
-        db.cursor.execute("""UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s WHERE idfornecedor = %s""", (nome, telefone, estadofunc, email, nascimento,  idfuncionario))
+        db.cursor.execute("""UPDATE funcionario SET nome = %s, telefone = %s, email = %s , datanascimento = %s WHERE idfuncionario = %s""", (nome, telefone, estadofunc, email, nascimento,  idfuncionario))
         db.conn.commit()
         messagebox.showinfo("Sucesso", "Funcionário atualizado com sucesso!")
 
@@ -304,7 +295,7 @@ class GerenciadorFuncionarios:
         jan_excluir.geometry("800x400")
         jan_excluir.resizable(True, True)
 
-        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento", "Rua", "Bairro", "Cidade", "Estado")
+        colunas = ("ID", "Nome", "Telefone", "Email", "Data de Nascimento", "Rua", "Bairro", "Cidade", "Estado")
         tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=8)
         for col in colunas:
             tree.heading(col, text=col)
