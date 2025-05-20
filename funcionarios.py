@@ -75,7 +75,7 @@ class GerenciadorFuncionarios:
     def cadastro_func(self):
         jan_cadastro = ctk.CTkToplevel(self.root)
         jan_cadastro.title("Cadastro de Funcionário")
-        jan_cadastro.geometry("900x800")
+        jan_cadastro.geometry("900x700")
         jan_cadastro.resizable(False, False)
 
         frame = ctk.CTkFrame(jan_cadastro, corner_radius=10)
