@@ -15,15 +15,15 @@ class GerenciadorClientes:
 
 
         # Configuração do tema
-        ctk.set_appearance_mode("Light")
+        ctk.set_appearance_mode("Light") 
         ctk.set_default_color_theme("blue")
 
         BarraNavegabilidade = CTkMenuBar(root)
-        botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
-        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores)
-        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios)
-        botao_4 = BarraNavegabilidade.add_cascade("Clientes", command = self.TelaClientes)
-
+        botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto) # Aba do menu que direciona o usuário à tela produto 
+        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores) # Aba do menu que direciona o usuário à tela fornecedores 
+        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios) # Aba do menu que direciona o usuário à tela funcionarios 
+        botao_4 = BarraNavegabilidade.add_cascade("Clientes", command = self.TelaClientes) # Aba do menu que direciona o usuário à tela clientes 
+ 
      # Título
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE CLIENTES",
         font=("Segoe UI", 22, "bold"))
@@ -83,12 +83,14 @@ class GerenciadorClientes:
         jan_clientecad.geometry("800x600")
         jan_clientecad.resizable(False, False)
 
-        frame = ctk.CTkFrame(jan_clientecad, corner_radius=10)
+        frame = ctk.CTkFrame(jan_clientecad, corner_radius=10) 
         frame.pack(padx=60, pady=50, fill="both", expand=True)
-
-        title = ctk.CTkLabel(frame, text="CADASTRO DE CLIENTES", font=("Segoe UI", 18, "bold"))
+        
+        # Título
+        title = ctk.CTkLabel(frame, text="CADASTRO DE CLIENTES", font=("Segoe UI", 18, "bold")) 
         title.pack(pady=20)
 
+        # Botões principais
         self.clienomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome: ", width=300, height=40)
         self.clienomeEntry.pack(pady=10)
 
@@ -114,7 +116,8 @@ class GerenciadorClientes:
 
 
     def RegistrarCliente(self):
-
+        
+        # Recebe as informações do usúario e guarda em cada variavel dedicada 
         nomeCliente = self.clienomeEntry.get().strip()
         cnpj = self.cnpjEntry.get().strip()
         endereco = self.enderecoEntry.get().strip()
@@ -220,6 +223,8 @@ class GerenciadorClientes:
         
 
     def salvar_alteracoes(self):
+
+        # Recebe as informações do usúario e guarda em cada variavel dedicada 
         idcliente = self.idcliente.get()
         nome = self.clienomeEntry.get()
         cnpj = self.cnpjEntry.get()
