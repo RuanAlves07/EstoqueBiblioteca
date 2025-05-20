@@ -22,7 +22,7 @@ class AppPedidos:
             return mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="",
+                password="root",
                 database="biblioteca_db"
             )
         except mysql.connector.Error as err:
