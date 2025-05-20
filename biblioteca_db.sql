@@ -10,6 +10,17 @@ create table usuarios(
 
 );
 
+create table fornecedor(
+
+    idfornecedor int not null auto_increment,
+    nome varchar(40),
+    nomefantasia varchar(60),
+    CNPJ varchar(20),
+    endereco varchar(40),
+    primary key (idfornecedor)
+
+);
+
 create table produto(
 
     idproduto int not null auto_increment,
@@ -21,17 +32,6 @@ create table produto(
     preco text,
     primary key (idproduto),
     FOREIGN KEY (idfornecedor) REFERENCES fornecedor(idfornecedor)
-
-);
-
-create table fornecedor(
-
-    idfornecedor int not null auto_increment,
-    nome varchar(40),
-    nomefantasia varchar(60),
-    CNPJ varchar(20),
-    endereco varchar(40),
-    primary key (idfornecedor)
 
 );
 
