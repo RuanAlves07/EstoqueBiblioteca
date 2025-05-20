@@ -61,10 +61,15 @@ class comunicacao:
         self.cursor.execute(query, (idfornecedor,))  
         self.conn.commit()
 
-    def carregar_fornecedores(self):
-        self.cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
-        fornecedores = self.cursor.fetchall()
-        return fornecedores
+    def carregar_fornecedores_com_endereco(self):
+        query = """
+            SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ,
+                e.rua, e.bairro, e.cidade, e.estado
+            FROM fornecedor f
+            LEFT JOIN endereco e ON f.idendereco = e.idendereco
+        """
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
     
     def buscar_fornecedor_por_id(self, idfornecedor):
         self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor,))
