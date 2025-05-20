@@ -46,27 +46,27 @@ class FornecedorApp:
 
     def GoToproduto(self):
         from produto import TelaProdutos
-        nova_janela = ctk.CTkToplevel(self.root)
-        nova_janela.grab_set()       
+        nova_janela = ctk.CTkToplevel(self.root)#imports do menu de navegabilidade
+        nova_janela.grab_set()                           
         nova_janela.focus_force()    
         TelaProdutos(nova_janela)
 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
-        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela = ctk.CTkToplevel(self.root)#imports do menu de navegabilidade
         nova_janela.grab_set()
         nova_janela.focus_force()
         FornecedorApp(nova_janela)
 
     def TelaFuncionarios(self):
         from funcionarios import GerenciadorFuncionarios
-        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela = ctk.CTkToplevel(self.root)#imports do menu de navegabilidade
         nova_janela.grab_set()       
         nova_janela.focus_force()    
         GerenciadorFuncionarios(nova_janela)
     def TelaClientes(self):
         from cliente import GerenciadorClientes
-        janela = ctk.CTkToplevel(self.root)
+        janela = ctk.CTkToplevel(self.root)#imports do menu de navegabilidade
         janela.grab_set()
         janela.focus_force()
         GerenciadorClientes(janela)
@@ -74,12 +74,12 @@ class FornecedorApp:
 
     def alternar_tema(self):
         modo = "Dark" if self.theme_switch.get() == 1 else "Light"
-        ctk.set_appearance_mode(modo)
+        ctk.set_appearance_mode(modo)#teste de alterador de tela
 
     def cadastro_forn(self):
         jan = ctk.CTkToplevel(self.root)
         jan.title("Cadastro de Fornecedores")
-        jan.geometry("900x700")
+        jan.geometry("900x700")#criação de tela
         jan.resizable(False, False)
 
         frame = ctk.CTkFrame(jan, corner_radius=10)
@@ -88,36 +88,36 @@ class FornecedorApp:
         title = ctk.CTkLabel(frame, text="CADASTRO DE FORNECEDOR", font=("Segoe UI", 18, "bold"))
         title.pack(pady=20)
 
-        self.fornomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome Empresarial", width=300, height=40)
+        self.fornomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome Empresarial", width=300, height=40)#caixa de texto
         self.fornomeEntry.pack(pady=10)
 
-        self.ficticioEntry = ctk.CTkEntry(frame, placeholder_text="Nome de Fantasia", width=300, height=40)
+        self.ficticioEntry = ctk.CTkEntry(frame, placeholder_text="Nome de Fantasia", width=300, height=40)#caixa de texto
         self.ficticioEntry.pack(pady=10)
 
-        self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text="CNPJ da Empresa", width=300, height=40)
+        self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text="CNPJ da Empresa", width=300, height=40)#caixa de texto
         self.cnpjEntry.pack(pady=10)
 
-        self.ruaEntry = ctk.CTkEntry(frame, placeholder_text="Rua", width=300, height=40)
+        self.ruaEntry = ctk.CTkEntry(frame, placeholder_text="Rua", width=300, height=40)#caixa de texto
         self.ruaEntry.pack(pady=10)
 
-        self.bairroEntry = ctk.CTkEntry(frame, placeholder_text="Bairro", width=300, height=40)
+        self.bairroEntry = ctk.CTkEntry(frame, placeholder_text="Bairro", width=300, height=40)#caixa de texto
         self.bairroEntry.pack(pady=10)
 
-        self.cidadeEntry = ctk.CTkEntry(frame, placeholder_text="Cidade", width=300, height=40)
+        self.cidadeEntry = ctk.CTkEntry(frame, placeholder_text="Cidade", width=300, height=40)#caixa de texto
         self.cidadeEntry.pack(pady=10)
 
-        self.estadoEntry = ctk.CTkEntry(frame, placeholder_text="Estado (UF)", width=300, height=40)
+        self.estadoEntry = ctk.CTkEntry(frame, placeholder_text="Estado (UF)", width=300, height=40)#caixa de texto
         self.estadoEntry.pack(pady=10)
 
-        AddButton = ctk.CTkButton(jan, text="REGISTRAR FORNECEDOR", width=200, command=self.RegistrarNoBanco)
+        AddButton = ctk.CTkButton(jan, text="REGISTRAR FORNECEDOR", width=200, command=self.RegistrarNoBanco)#botão de registro
         AddButton.place(x = 350, y = 590)
 
-        voltButton = ctk.CTkButton(jan, text="Fechar", width=100, fg_color="gray", command=jan.destroy)
+        voltButton = ctk.CTkButton(jan, text="Fechar", width=100, fg_color="gray", command=jan.destroy)#botão fechar
         voltButton.place(x = 400, y = 660)
         jan.grab_set()
         jan.focus_force()
 
-    def RegistrarNoBanco(self):
+    def RegistrarNoBanco(self):#comunicação com o arquivo de comunicação
         nome = self.fornomeEntry.get()
         nomefantasia = self.ficticioEntry.get()
         CNPJ = self.cnpjEntry.get()
@@ -130,7 +130,7 @@ class FornecedorApp:
             messagebox.showerror("Erro", "Preencha todos os campos!")
             return
 
-        db = comunicacao()
+        db = comunicacao()#conexão
         db.LinkEndereco(rua, bairro, cidade, estado)
         idendereco = db.cursor.lastrowid
 
@@ -140,7 +140,8 @@ class FornecedorApp:
         messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
         self.limpar_campos()
 
-    def limpar_campos(self):
+    def limpar_campos(self):#comandos de limpar campos
+
         self.fornomeEntry.delete(0, 'end')
         self.ficticioEntry.delete(0, 'end')
         self.cnpjEntry.delete(0, 'end')
@@ -152,7 +153,7 @@ class FornecedorApp:
     def excluir_forn(self):
         def excluir_selecionado():
             item_selecionado = tree.selection()
-            if not item_selecionado:
+            if not item_selecionado:#validação se esta selecionado
                 messagebox.showwarning("Atenção", "Selecione um fornecedor.")
                 return
             fornecedor_id = tree.item(item_selecionado)["values"][0]
@@ -168,7 +169,7 @@ class FornecedorApp:
 
         colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
     
-        # Use ttk.Treeview em vez de ctk.Treeview
+        # Usar ttk.Treeview em vez de ctk.Treeview
         tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
     
         tree.heading("ID", text="ID")
@@ -198,7 +199,7 @@ class FornecedorApp:
         for item in tree.get_children():
             tree.delete(item)
 
-        db = comunicacao()
+        db = comunicacao()#consulta join entre as tabelas fornecedor e endereco
         query = """SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM fornecedor f LEFT JOIN endereco e ON f.idendereco = e.idendereco"""
         try:
             db.cursor.execute(query)
@@ -232,7 +233,7 @@ class FornecedorApp:
         tree.column("ID", width=50, anchor="center")
         tree.column("Nome", width=150)
         tree.column("Nome Fantasia", width=150)
-        tree.column("CNPJ", width=120, anchor="center")
+        tree.column("CNPJ", width=120, anchor="center") #colunas da tabela do listar 
         tree.column("Rua", width=50)
         tree.column("Bairro", width=50)
         tree.column("Cidade", width=100)
@@ -241,7 +242,7 @@ class FornecedorApp:
         tree.pack(fill="both", expand=True, padx=10, pady=10)
 
         bt_fechar = ctk.CTkButton(janela, text="Fechar", width=100, fg_color="gray", command=janela.destroy)
-        bt_fechar.pack(pady=5)
+        bt_fechar.pack(pady=5)#botão de fechar
 
         self.carregar_fornecedores_com_endereco(tree)
         janela.grab_set()
@@ -262,7 +263,7 @@ class FornecedorApp:
         self.idEntry = ctk.CTkEntry(frame, placeholder_text="Digite o ID do Fornecedor", width=300, height=40)
         self.idEntry.pack(pady=10)
 
-        buscar_button = ctk.CTkButton(frame, text="Buscar Fornecedor", width=150, command=self.buscar_fornecedor)
+        buscar_button = ctk.CTkButton(frame, text="Buscar Fornecedor", width=150, command=self.buscar_fornecedor)#botão de busca do fornecedor 
         buscar_button.place(x = 550, y = 60)
 
         self.fornomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome Empresarial", width=300, height=40)

@@ -120,7 +120,13 @@ class TelaProdutos:
         self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=self.Tela_FornProduto)
         self.botao_linkar_fornecedor.place(x = 500, y = 385)   
 
+<<<<<<< HEAD
         # Def para registrar o produto e se comunicar com o banco de dados para registrar o mesmo no banco.         
+=======
+        frame_add.grab_set()       
+        frame_add.focus_force()
+                 
+>>>>>>> 862605a15f528021d60617824bd94d84b0c78e15
         def RegistrarProduto():
             nome = self.NomeEntry.get()
             descricao = self.DescEntry.get()
@@ -179,7 +185,13 @@ class TelaProdutos:
         tree.column("Preço", width=70,anchor="center")
         tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
 
+<<<<<<< HEAD
         # Def para realizar a exclusão do produto e informar o banco de dados sobre a exclusão do mesmo
+=======
+        produto_remove.grab_set()       
+        produto_remove.focus_force()
+
+>>>>>>> 862605a15f528021d60617824bd94d84b0c78e15
         def ExclusaoProd():
             item_selecionado = tree.selection()
             if not item_selecionado:
@@ -249,7 +261,8 @@ class TelaProdutos:
         VoltarButton = ctk.CTkButton(produto_Update, text="Voltar", width=80, fg_color="gray", command=produto_Update.destroy)
         VoltarButton.place(x=10, y=560)
 
-
+        produto_Update.grab_set()       
+        produto_Update.focus_force()
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
@@ -278,6 +291,9 @@ class TelaProdutos:
         tree.column("Fornecedor", width=150)
 
         tree.pack(pady=10, padx=10, fill=BOTH, expand=False)
+
+        produto_list.grab_set()       
+        produto_list.focus_force()
 
         def carregar_produtos():
             for item in tree.get_children():
@@ -394,7 +410,7 @@ class TelaProdutos:
                         self.FornecedorEntry.delete(0, "end")  # Atualiza o campo de fornecedor
                         self.FornecedorEntry.insert(0, nomeforn)
                         self.idfornecedor_selecionado = idforn  # Salva o ID do fornecedor
-                  
+                        janela_pesquisa.destroy()
 
                     btn = ctk.CTkButton(
                         frame_resultados,
@@ -416,6 +432,42 @@ class TelaProdutos:
         # Chama uma vez para carregar todos os fornecedores inicialmente
         pesquisar_fornecedores("", frame_resultados)
 
+    def pesquisar_fornecedores(self, termo, frame_resultados):
+        # Limpa resultados anteriores
+        for widget in frame_resultados.winfo_children():
+            widget.destroy()
+
+        db = comunicacao()
+        try:
+            if termo.strip() == "":
+                db.cursor.execute("SELECT idfornecedor, nome FROM fornecedor")
+            else:
+                db.cursor.execute("SELECT idfornecedor, nome FROM fornecedor WHERE nome LIKE %s", (f"%{termo}%",))
+                
+            fornecedores = db.cursor.fetchall()
+
+            if not fornecedores:
+                label_vazio = ctk.CTkLabel(frame_resultados, text="Nenhum fornecedor encontrado.")
+                label_vazio.pack(pady=10)
+                return
+
+            # Exibe os fornecedores como botões clicáveis
+            for idx, (idfornecedor, nome) in enumerate(fornecedores):
+                def on_select(idforn=idfornecedor, nomeforn=nome):
+                    self.NomeEntry.delete(0, "end")
+                    self.NomeEntry.insert(0, nomeforn)
+                    
+
+                btn = ctk.CTkButton(
+                    frame_resultados,
+                    text=f"{nome} (ID: {idfornecedor})",
+                    anchor="w",
+                    command=on_select
+                )
+                btn.pack(pady=5, fill="x")
+            
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao pesquisar fornecedores: {e}")
 
 
 # Inicialização da aplicação
