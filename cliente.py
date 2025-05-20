@@ -45,6 +45,8 @@ class GerenciadorClientes:
         self.PedidoButton = ctk.CTkButton(self.root, text="Pedidos", width=300, command=self.TelaPedidos)
         self.PedidoButton.pack(pady=10)
 
+       
+
         
     def GoToproduto(self):
         from produto import TelaProdutos
@@ -97,8 +99,17 @@ class GerenciadorClientes:
         self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text= "Cnpj: ", width=300, height=40)
         self.cnpjEntry.pack(pady=10)
 
-        self.enderecoEntry = ctk.CTkEntry(frame, placeholder_text="Endereço: ", width=300, height=40)
-        self.enderecoEntry.pack(pady=10)
+        self.ruaEntry = ctk.CTkEntry(self.root, placeholder_text="Rua", width=300, height=40)
+        self.ruaEntry.pack(pady=10)
+
+        self.bairroEntry = ctk.CTkEntry(self.root, placeholder_text="Bairro", width=300, height=40)
+        self.bairroEntry.pack(pady=10)
+
+        self.cidadeEntry = ctk.CTkEntry(self.root, placeholder_text="Cidade", width=300, height=40)
+        self.cidadeEntry.pack(pady=10)
+
+        self.estadoEntry = ctk.CTkEntry(self.root, placeholder_text="Estado (UF)", width=300, height=40)
+        self.estadoEntry.pack(pady=10)
 
         jan_clientecad.grab_set()
         jan_clientecad.focus_force()  
@@ -120,20 +131,26 @@ class GerenciadorClientes:
         # Recebe as informações do usúario e guarda em cada variavel dedicada 
         nomeCliente = self.clienomeEntry.get().strip()
         cnpj = self.cnpjEntry.get().strip()
-        endereco = self.enderecoEntry.get().strip()
+        rua = self.ruaEntry.get().strip()
+        bairro = self.bairroEntry.get().strip()
+        cidade = self.cidadeEntry.get().strip()
+        estado = self.estadoEntry.get().strip()
         
         
-        if nomeCliente == "" or cnpj == "" or endereco == "" :
+        if nomeCliente == "" or cnpj == "" or rua == "" or bairro == '' or cidade == '' or estado == '' :
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao() 
-            db.RegistrarCliente(nomeCliente, cnpj, endereco)
+            db.RegistrarCliente(nomeCliente, cnpj, rua, bairro, cidade, estado)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
     
     def limpar_campos(self, jan_clientecad=None):
         self.clienomeEntry.delete(0, 'end')
         self.cnpjEntry.delete(0, 'end')
-        self.enderecoEntry.delete(0, 'end')
+        self.ruaEntry.delete(0, 'end')
+        self.bairroEntry.delete(0, 'end')
+        self.cidadeEntry.delete(0, 'end')
+        self.estadoEntry.delete(0, 'end')
         
         
     def listar_cliente(self):
@@ -142,7 +159,7 @@ class GerenciadorClientes:
         jan_lista.geometry("800x400")
         jan_lista.resizable(True, True)
 
-        colunas = ( "ID" , "Nome", "Cnpj", "Endereço") 
+        colunas = ( "ID" , "Nome", "Cnpj", "Rua", "Bairro", "Cidade", "Estado") 
         tree = ttk.Treeview(jan_lista, columns=colunas, show="headings", height=20)
 
         for col in colunas:
@@ -228,17 +245,23 @@ class GerenciadorClientes:
         idcliente = self.idcliente.get()
         nome = self.clienomeEntry.get()
         cnpj = self.cnpjEntry.get()
-        endereco = self.enderecoEntry.get()
+        
+
+        
       
         
 
-        if not idcliente or "" in [nome, cnpj, endereco]:
+        if not idcliente or "" in [nome, cnpj, idcliente, nome, cnpj, endereco]:
             messagebox.showerror("Erro", "Preencha todos os campos.")
             return
 
         db = comunicacao()
         db.AtualizarCliente(idcliente, nome, cnpj, endereco)
         messagebox.showinfo("Sucesso", "Cliente atualizado com sucesso! ")
+
+        db = comunicacao()
+        db.LinkEndereco(rua, bairro, cidade, estado)
+        idendereco = db.cursor.lastrowid
 
     def excluir_clien(self):
         jan_excluir = ctk.CTkToplevel(self.root)
