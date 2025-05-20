@@ -75,7 +75,7 @@ class GerenciadorFuncionarios:
     def cadastro_func(self):
         jan_cadastro = ctk.CTkToplevel(self.root)
         jan_cadastro.title("Cadastro de Funcionário")
-        jan_cadastro.geometry("900x700")
+        jan_cadastro.geometry("900x800")
         jan_cadastro.resizable(False, False)
 
         frame = ctk.CTkFrame(jan_cadastro, corner_radius=10)
@@ -125,12 +125,16 @@ class GerenciadorFuncionarios:
         enderecofunc = self.enderecoEntry.get().strip()
         email = self.gmailEntry.get().strip()
         datanascimento = self.datanascEntry.get().strip()
+        ruafunc = self.ruafuncEntry.get().strip()
+        bairrofunc = self.bairrofuncEntry.get().strip()
+        cidadefunc = self.cidadefuncEntry.get().strip()
+        estadofunc = self.estadofuncEntry.get().strip()
 
-        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or datanascimento == "":
+        if nome == "" or telefone == "" or enderecofunc == "" or email == "" or datanascimento == "" or ruafunc == "" or bairrofunc == "" or cidadefunc == "" or estadofunc == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.RegistrarFuncionario(nome, telefone, enderecofunc, email, datanascimento)
+            db.RegistrarFuncionario(nome, telefone, enderecofunc, email, datanascimento, ruafunc, bairrofunc, cidadefunc, estadofunc)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
     
     def limpar_campos(self, janela=None):
@@ -139,6 +143,10 @@ class GerenciadorFuncionarios:
         self.EnderecoEntry.delete(0, 'end')
         self.EmailEntry.delete(0, 'end')
         self.NascEntry.delete(0, 'end')
+        self.ruafuncEntry.delete(0, 'end')
+        self.bairrofuncEntry.delete(0, 'end')
+        self.cidadefuncEntry.delete(0, 'end')
+        self.estadofuncEntry.delete(0, 'end')
 
     def listar_func(self):
         jan_lista = ctk.CTkToplevel(self.root)
@@ -146,7 +154,7 @@ class GerenciadorFuncionarios:
         jan_lista.geometry("800x400")
         jan_lista.resizable(True, True)
 
-        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
+        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento", "Rua", "Bairro", "Cidade", "Estado")
         tree = ttk.Treeview(jan_lista, columns=colunas, show="headings", height=20)
 
         for col in colunas:
@@ -175,7 +183,7 @@ class GerenciadorFuncionarios:
     def atuu_func(self):
         jan_atualizar = ctk.CTkToplevel(self.root)
         jan_atualizar.title("Atualizar Funcionário")
-        jan_atualizar.geometry("800x600")
+        jan_atualizar.geometry("900x870")
         jan_atualizar.resizable(False, False)
         frame = ctk.CTkFrame(jan_atualizar, corner_radius=10)
         frame.pack(padx=80, pady=50, fill="both", expand=True)
@@ -204,8 +212,20 @@ class GerenciadorFuncionarios:
         self.NascEntry = ctk.CTkEntry(frame, placeholder_text="Data de Nascimento", width=300, height=40)
         self.NascEntry.pack(pady=10)
 
+        self.ruafuncEntry = ctk.CTkEntry(frame, placeholder_text="Rua: ", width=300, height=40)
+        self.ruafuncEntry.pack(pady=10)
+
+        self.bairrofuncEntry = ctk.CTkEntry(frame, placeholder_text="Bairro: ", width=300, height=40)
+        self.bairrofuncEntry.pack(pady=10)
+
+        self.cidadefuncEntry = ctk.CTkEntry(frame, placeholder_text="Cidade: ", width=300, height=40)
+        self.cidadefuncEntry.pack(pady=10)
+
+        self.estadofuncEntry = ctk.CTkEntry(frame, placeholder_text="Estado (UF): ", width=300, height=40)
+        self.estadofuncEntry.pack(pady=10)
+
         salvar_button = ctk.CTkButton(frame, text="Salvar Alterações", width=150, command=self.salvar_alteracoes)
-        salvar_button.pack(pady=20)
+        salvar_button.pack(pady=10)
 
         voltar_button = ctk.CTkButton(frame, text="Fechar", width=100, fg_color="gray", command=jan_atualizar.destroy)
         voltar_button.pack(pady=10)
@@ -241,6 +261,18 @@ class GerenciadorFuncionarios:
         self.NascEntry.delete(0, tk.END)
         self.NascEntry.insert(0, funcionario[5])
 
+        self.ruafuncEntry.delete(0, tk.END)
+        self.ruafuncEntry.insert(0, funcionario[6])
+
+        self.bairrofuncEntry.delete(0, tk.END)
+        self.bairrofuncEntry.insert(0, funcionario[7])
+
+        self.cidadefuncEntry.delete(0, tk.END)
+        self.cidadefuncEntry.insert(0, funcionario[8])
+
+        self.estadofuncEntry.delete(0, tk.END)
+        self.estadofuncEntry.insert(0, funcionario[9])
+
 
     def salvar_alteracoes(self):
         idfuncionario = self.idEntry.get()
@@ -249,13 +281,21 @@ class GerenciadorFuncionarios:
         endereco = self.EnderecoEntry.get()
         email = self.EmailEntry.get()
         nascimento = self.NascEntry.get()
+        ruafunc = self.ruafuncEntry.get()
+        bairrofunc = self.bairrofuncEntry.get()
+        cidadefunc = self.cidadefuncEntry.get()
+        estadofunc = self.estadofuncEntry.get()
 
-        if not idfuncionario or "" in [nome, telefone, endereco, email, nascimento]:
+        if not idfuncionario or "" in [nome, telefone, endereco, email, nascimento, ruafunc,bairrofunc,  cidadefunc, estadofunc]:
             messagebox.showerror("Erro", "Preencha todos os campos.")
             return
 
         db = comunicacao()
-        db.AtualizarFuncionario(idfuncionario, nome, telefone, endereco, email, nascimento)
+        db.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM funcionario WHERE idfuncionario = %s)""", (ruafunc, bairrofunc, cidadefunc, estadofunc, idfuncionario))
+
+        # Atualiza o funcionario
+        db.cursor.execute("""UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s WHERE idfornecedor = %s""", (nome, telefone, estadofunc, email, nascimento,  idfuncionario))
+        db.conn.commit()
         messagebox.showinfo("Sucesso", "Funcionário atualizado com sucesso!")
 
     def excluir_func(self):
@@ -264,7 +304,7 @@ class GerenciadorFuncionarios:
         jan_excluir.geometry("800x400")
         jan_excluir.resizable(True, True)
 
-        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento")
+        colunas = ("ID", "Nome", "Telefone", "Endereço", "Email", "Data de Nascimento", "Rua", "Bairro", "Cidade", "Estado")
         tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=8)
         for col in colunas:
             tree.heading(col, text=col)
