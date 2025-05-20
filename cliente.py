@@ -3,12 +3,13 @@ from tkinter import ttk, messagebox
 import customtkinter as ctk
 import mysql.connector
 from comunicacao import comunicacao  
+from CTkMenuBar import *
 
 class GerenciadorClientes:
     def __init__(self, root):
         self.root = root
         self.root.title("Gerenciador de Clientes")
-        self.root.geometry("400x600")
+        self.root.geometry("800x600")
         self.root.resizable(False, False)
         self.root.configure(bg="#f6f6f6")  # Fundo escuro moderno
 
@@ -16,6 +17,12 @@ class GerenciadorClientes:
         # Configuração do tema
         ctk.set_appearance_mode("Light")
         ctk.set_default_color_theme("blue")
+
+        BarraNavegabilidade = CTkMenuBar(root)
+        botao_1 = BarraNavegabilidade.add_cascade("Produtos", command = self.GoToproduto)
+        botao_2 = BarraNavegabilidade.add_cascade("Fornecedores", command = self.TelaFornecedores)
+        botao_3 = BarraNavegabilidade.add_cascade("Funcionarios", command = self.TelaFuncionarios)
+        botao_4 = BarraNavegabilidade.add_cascade("Clientes", command = self.TelaClientes)
 
      # Título
         Titulolabel = ctk.CTkLabel(self.root, text="GERENCIADOR DE CLIENTES",
@@ -39,7 +46,34 @@ class GerenciadorClientes:
         self.PedidoButton.pack(pady=10)
 
         
-        
+    def GoToproduto(self):
+        from produto import TelaProdutos
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        TelaProdutos(nova_janela)
+
+    def TelaFornecedores(self):
+        from fornecedor import FornecedorApp
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()
+        nova_janela.focus_force()
+        FornecedorApp(nova_janela)
+
+    def TelaFuncionarios(self):
+        from funcionarios import GerenciadorFuncionarios
+        nova_janela = ctk.CTkToplevel(self.root)
+        nova_janela.grab_set()       
+        nova_janela.focus_force()    
+        GerenciadorFuncionarios(nova_janela)
+    def TelaClientes(self):
+        from cliente import GerenciadorClientes
+        janela = ctk.CTkToplevel(self.root)
+        janela.grab_set()
+        janela.focus_force()
+        GerenciadorClientes(janela)
+
+   
         
 
         
