@@ -53,6 +53,7 @@ class AppPedidos:
             for idx, prod in enumerate(resultados):
                 idprod, nome, desc, qtde, preco = prod
                 texto_prod = f"{nome} - {desc} | R$ {float(preco):.2f} | Estoque: {qtde}"
+                
 
                 btn = ctk.CTkButton(
                     frame_resultados,
@@ -93,6 +94,8 @@ class AppPedidos:
             for cli in resultados:
                 nome_cliente, produto, qtde_venda, data_emissao = cli
                 texto_cli = f"{nome_cliente} - Última compra: {produto}, Qtde: {qtde_venda}, Data: {data_emissao}"
+                
+                
 
                 btn = ctk.CTkButton(
                     frame_resultados,

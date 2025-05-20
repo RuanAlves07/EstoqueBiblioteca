@@ -14,8 +14,9 @@ class DashboardDistribuidora:
     def __init__(self, root):
         self.root = root
         self.root.title("Dashboard - Distribuidora de Livros")
-        self.root.state("zoomed")
-        self.root.resizable(True, True)
+        self.root.state("normal")  # Estado normal, mas com tamanho grande
+        self.root.after(100, lambda: self.root.state("zoomed"))
+        self.root.resizable(False, False)
         self.root.configure(bg="#f6f6f6")
 
         # Importações no topo para evitar erro
