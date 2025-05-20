@@ -50,6 +50,8 @@ class TelaProdutos:
         ListButton = ctk.CTkButton(root, text="LISTAR PRODUTOS", width=300, command=self.GoToList)
         ListButton.place(x=250, y=500)
 
+
+    # Def para funcionalidade do atalho de navegabilidade e ir para a tela de clientes
     def TelaClientes(self):
         from cliente import GerenciadorClientes
         janela = ctk.CTkToplevel(self.root)
@@ -57,6 +59,7 @@ class TelaProdutos:
         janela.focus_force()
         GerenciadorClientes(janela)
 
+    # Def para funcionalidade do atalho de navegabilidade e ir para a tela de fornecedores 
     def TelaFornecedores(self):
         from fornecedor import FornecedorApp
         nova_janela = ctk.CTkToplevel(self.root)
@@ -64,6 +67,7 @@ class TelaProdutos:
         nova_janela.focus_force()
         FornecedorApp(nova_janela)
 
+    # Def para funcionalidade do atalho de navegabilidade e ir para a tela de produto
     def GoToproduto(self):
         from produto import TelaProdutos
         nova_janela = ctk.CTkToplevel(self.root)
@@ -71,6 +75,7 @@ class TelaProdutos:
         nova_janela.focus_force()    
         TelaProdutos(nova_janela)
 
+    # Def para funcionalidade do atalho de navegabilidade e ir para a tela de 
     def TelaFuncionarios(self):
         from funcionarios import GerenciadorFuncionarios
         nova_janela = ctk.CTkToplevel(self.root)
@@ -79,7 +84,7 @@ class TelaProdutos:
         GerenciadorFuncionarios(nova_janela)
 
 
-    # Métodos GoTo...
+    # Métodos para ir para a tela de adicionar
     def GoToAdicionar(self):
         produto_add = ctk.CTkToplevel(self.root)
         produto_add.title("PRODUTOS - REGISTRAR")
@@ -114,7 +119,11 @@ class TelaProdutos:
 
         self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=self.Tela_FornProduto)
         self.botao_linkar_fornecedor.place(x = 500, y = 385)   
-                 
+
+                
+        frame_add.grab_set()       
+        frame_add.focus_force()
+        # Def para registrar o produto e se comunicar com o banco de dados para registrar o mesmo no banco.         
         def RegistrarProduto():
             nome = self.NomeEntry.get()
             descricao = self.DescEntry.get()
@@ -172,6 +181,10 @@ class TelaProdutos:
         tree.column("Quantidade", width=50, anchor="center")
         tree.column("Preço", width=70,anchor="center")
         tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
+
+        # Def para realizar a exclusão do produto e informar o banco de dados sobre a exclusão do mesmo
+        produto_remove.grab_set()       
+        produto_remove.focus_force()
 
         def ExclusaoProd():
             item_selecionado = tree.selection()
@@ -242,7 +255,8 @@ class TelaProdutos:
         VoltarButton = ctk.CTkButton(produto_Update, text="Voltar", width=80, fg_color="gray", command=produto_Update.destroy)
         VoltarButton.place(x=10, y=560)
 
-
+        produto_Update.grab_set()       
+        produto_Update.focus_force()
 
     # Def para ir para a aba de listagem de todos os livros já cadastrados atualmente.
 
@@ -272,6 +286,9 @@ class TelaProdutos:
 
         tree.pack(pady=10, padx=10, fill=BOTH, expand=False)
 
+        produto_list.grab_set()       
+        produto_list.focus_force()
+
         def carregar_produtos():
             for item in tree.get_children():
                 tree.delete(item)
@@ -292,6 +309,7 @@ class TelaProdutos:
         VoltarButton = ctk.CTkButton(produto_list, text="Voltar", width=80, fg_color="gray", command=produto_list.destroy)
         VoltarButton.place(x=10, y=270)
 
+    # Def para realizar a atualização do produto e se comunicar com o banco de dados
     def AtualizarInfos(self):
         idproduto = self.IDEntry.get()
         nome = self.NomeEntry.get()
@@ -317,6 +335,8 @@ class TelaProdutos:
         db = comunicacao()
         db.AtualizarProduto(idproduto, nome, descricao, genero, quantidade, preco)
         messagebox.showinfo("Sucesso", "Produto atualizado com sucesso!")
+
+    # Def para puxar o ID do produto e trazer as informações do produto
 
     def BuscarProduto(self):
         idproduto = self.IDEntry.get()
@@ -345,25 +365,26 @@ class TelaProdutos:
         self.PrecoEntry.delete(0, END)
         self.PrecoEntry.insert(0, produto[6])
 
+    # Def da tela para linkar o fornecedor com o produto via fk
     def Tela_FornProduto(self):
-        # Cria uma nova janela para pesquisar fornecedores
+        
         janela_pesquisa = ctk.CTkToplevel(self.root)
         janela_pesquisa.title("Pesquisar Fornecedor")
         janela_pesquisa.geometry("600x400")
         janela_pesquisa.resizable(False, False)
-        janela_pesquisa.grab_set()  # Garante foco na nova janela
+        janela_pesquisa.grab_set() 
 
-        # Campo de pesquisa
+        
         entry_pesquisa = ctk.CTkEntry(janela_pesquisa, placeholder_text="Nome do fornecedor...")
         entry_pesquisa.pack(pady=10, padx=20, fill="x")
 
-        # Frame para mostrar resultados da pesquisa
+        
         frame_resultados = ctk.CTkFrame(janela_pesquisa)
         frame_resultados.pack(pady=10, padx=20, fill="both", expand=True)
 
         # Função de pesquisa definida antes do uso
         def pesquisar_fornecedores(termo, frame_resultados):
-            # Limpa resultados anteriores
+            #
             for widget in frame_resultados.winfo_children():
                 widget.destroy()
             db = comunicacao()
@@ -383,7 +404,7 @@ class TelaProdutos:
                         self.FornecedorEntry.delete(0, "end")  # Atualiza o campo de fornecedor
                         self.FornecedorEntry.insert(0, nomeforn)
                         self.idfornecedor_selecionado = idforn  # Salva o ID do fornecedor
-                  
+                        janela_pesquisa.destroy()
 
                     btn = ctk.CTkButton(
                         frame_resultados,
@@ -405,6 +426,42 @@ class TelaProdutos:
         # Chama uma vez para carregar todos os fornecedores inicialmente
         pesquisar_fornecedores("", frame_resultados)
 
+    def pesquisar_fornecedores(self, termo, frame_resultados):
+        # Limpa resultados anteriores
+        for widget in frame_resultados.winfo_children():
+            widget.destroy()
+
+        db = comunicacao()
+        try:
+            if termo.strip() == "":
+                db.cursor.execute("SELECT idfornecedor, nome FROM fornecedor")
+            else:
+                db.cursor.execute("SELECT idfornecedor, nome FROM fornecedor WHERE nome LIKE %s", (f"%{termo}%",))
+                
+            fornecedores = db.cursor.fetchall()
+
+            if not fornecedores:
+                label_vazio = ctk.CTkLabel(frame_resultados, text="Nenhum fornecedor encontrado.")
+                label_vazio.pack(pady=10)
+                return
+
+            # Exibe os fornecedores como botões clicáveis
+            for idx, (idfornecedor, nome) in enumerate(fornecedores):
+                def on_select(idforn=idfornecedor, nomeforn=nome):
+                    self.NomeEntry.delete(0, "end")
+                    self.NomeEntry.insert(0, nomeforn)
+                    
+
+                btn = ctk.CTkButton(
+                    frame_resultados,
+                    text=f"{nome} (ID: {idfornecedor})",
+                    anchor="w",
+                    command=on_select
+                )
+                btn.pack(pady=5, fill="x")
+            
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao pesquisar fornecedores: {e}")
 
 
 # Inicialização da aplicação
