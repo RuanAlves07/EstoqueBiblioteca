@@ -159,7 +159,7 @@ class FornecedorApp:
             if messagebox.askyesno("Confirmação", f"Excluir fornecedor ID {fornecedor_id}?"):
                 db = comunicacao()
                 db.ExcluirFornecedor(fornecedor_id)
-                self.carregar_fornecedores(tree)
+                self.carregar_fornecedores_com_endereco(tree)
                 messagebox.showinfo("Sucesso", "Fornecedor excluído!")
 
         janela = ctk.CTkToplevel(self.root)
@@ -192,24 +192,29 @@ class FornecedorApp:
         bt_fechar.pack(pady=5)
         janela.grab_set()
         janela.focus_force()
-        self.carregar_fornecedores(tree)
+        self.carregar_fornecedores_com_endereco(tree)
 
-    def carregar_fornecedores(self, tree):
+    def carregar_fornecedores_com_endereco(self, tree):
         for item in tree.get_children():
             tree.delete(item)
+
         db = comunicacao()
-        cursor = db.conn.cursor()
-        cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
-        fornecedores = cursor.fetchall()
-        for f in fornecedores:
-            tree.insert("", "end", values=f)
+        query = """SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM fornecedor f LEFT JOIN endereco e ON f.idendereco = e.idendereco"""
+        try:
+            db.cursor.execute(query)
+            fornecedores = db.cursor.fetchall()
+
+            for fornecedor in fornecedores:
+                tree.insert("", "end", values=fornecedor)
+        finally:
+            db.conn.close()
 
     def listar_forn(self):
         janela = ctk.CTkToplevel(self.root)
         janela.title("Lista de Fornecedores")
         janela.geometry("800x400")
 
-        colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Rua")
+        colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Rua", "Bairro", "Cidade", "Estado")
     
         # Use ttk.Treeview em vez de ctk.Treeview
         tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
@@ -218,22 +223,27 @@ class FornecedorApp:
         tree.heading("Nome", text="Nome")
         tree.heading("Nome Fantasia", text="Nome Fantasia")
         tree.heading("CNPJ", text="CNPJ")
-        tree.heading("Endereço", text="Endereço")
+        tree.heading("Rua", text="Rua")
+        tree.heading("Bairro", text="Bairro")
+        tree.heading("Cidade", text="Cidade")
+        tree.heading("Estado", text="Estado")
+
     
         tree.column("ID", width=50, anchor="center")
         tree.column("Nome", width=150)
         tree.column("Nome Fantasia", width=150)
         tree.column("CNPJ", width=120, anchor="center")
-        tree.column("Endereço", width=200)
+        tree.column("Rua", width=50)
+        tree.column("Bairro", width=50)
+        tree.column("Cidade", width=100)
+        tree.column("Estado", width=50)
     
         tree.pack(fill="both", expand=True, padx=10, pady=10)
 
         bt_fechar = ctk.CTkButton(janela, text="Fechar", width=100, fg_color="gray", command=janela.destroy)
         bt_fechar.pack(pady=5)
 
-        self.carregar_fornecedores(tree)
-
-        self.carregar_fornecedores(tree)
+        self.carregar_fornecedores_com_endereco(tree)
         janela.grab_set()
         janela.focus_force()
 
