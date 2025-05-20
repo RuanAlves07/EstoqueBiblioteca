@@ -99,16 +99,16 @@ class GerenciadorClientes:
         self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text= "Cnpj: ", width=300, height=40)
         self.cnpjEntry.pack(pady=10)
 
-        self.ruaEntry = ctk.CTkEntry(self.root, placeholder_text="Rua", width=300, height=40)
+        self.ruaEntry = ctk.CTkEntry(frame, placeholder_text="Rua", width=300, height=40)
         self.ruaEntry.pack(pady=10)
 
-        self.bairroEntry = ctk.CTkEntry(self.root, placeholder_text="Bairro", width=300, height=40)
+        self.bairroEntry = ctk.CTkEntry(frame, placeholder_text="Bairro", width=300, height=40)
         self.bairroEntry.pack(pady=10)
 
-        self.cidadeEntry = ctk.CTkEntry(self.root, placeholder_text="Cidade", width=300, height=40)
+        self.cidadeEntry = ctk.CTkEntry(frame, placeholder_text="Cidade", width=300, height=40)
         self.cidadeEntry.pack(pady=10)
 
-        self.estadoEntry = ctk.CTkEntry(self.root, placeholder_text="Estado (UF)", width=300, height=40)
+        self.estadoEntry = ctk.CTkEntry(frame, placeholder_text="Estado (UF)", width=300, height=40)
         self.estadoEntry.pack(pady=10)
 
         jan_clientecad.grab_set()
@@ -127,25 +127,30 @@ class GerenciadorClientes:
 
 
     def RegistrarCliente(self):
-        
-        # Recebe as informações do usúario e guarda em cada variavel dedicada 
         nomeCliente = self.clienomeEntry.get()
         cnpj = self.cnpjEntry.get()
         rua = self.ruaEntry.get()
         bairro = self.bairroEntry.get()
         cidade = self.cidadeEntry.get()
         estado = self.estadoEntry.get()
-        
-        
-        if nomeCliente == "" or cnpj == "" or rua == "" or bairro == '' or cidade == '' or estado == '' :
+
+        if nomeCliente == "" or cnpj == "" or rua == "" or bairro == '' or cidade == '' or estado == '':
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
-            db = comunicacao() 
-            db.AtualizarCliente(nomeCliente, cnpj, rua, bairro, cidade, estado)
-            messagebox.showinfo("Success", "Usuario criado com sucesso!")
+            db = comunicacao()
 
-            db.RegistrarFuncionario(nomeCliente, cnpj, rua, bairro, cidade, estado)
+            # Primeiro, registra o endereço
+            db.AtualizarEnderecoCliente(rua, bairro, cidade, estado)
+            idendereco = db.cursor.lastrowid  # Pega o ID do endereço inserido
+
+            # Agora, registra o cliente com o endereço
+            db.RegistrarCliente(nomeCliente, cnpj, idendereco)
+
             db.conn.commit()
+
+            messagebox.showinfo("Sucesso", "Cliente registrado com sucesso!")
+            self.limpar_campos()
+
     
     def limpar_campos(self, jan_clientecad=None):
         self.clienomeEntry.delete(0, 'end')
@@ -179,23 +184,10 @@ class GerenciadorClientes:
         for item in tree.get_children():
             tree.delete(item)
 
-            db = comunicacao()
-            query = """SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM fornecedor f LEFT JOIN endereco e ON f.idendereco = e.idendereco"""
-        try:
-            db.cursor.execute(query)
-            fornecedores = db.cursor.fetchall()
-
-            for fornecedor in fornecedores:
-                tree.insert("", "end", values=fornecedor)
-        finally:
-            db.conn.close()
-
-        
-
         db = comunicacao()
         try:
             cursor = db.conn.cursor()
-            cursor.execute("SELECT idcliente, NomeCliente, CNPJ	, endereco FROM cliente")
+            cursor.execute("SELECT idcliente, NomeCliente, CNPJ FROM cliente")
             for row in cursor.fetchall():
                 tree.insert("", "end", values=row)
         except Exception as e:
@@ -261,18 +253,19 @@ class GerenciadorClientes:
         idcliente = self.idcliente.get()
         nome = self.clienomeEntry.get()
         cnpj = self.cnpjEntry.get()
-        
-
-        
+        rua = self.ruaEntry.get()
+        bairro = self.bairroEntry.get()
+        cidade = self.cidadeEntry.get()
+        estado = self.estadoEntry.get()
       
         
 
-        if not idcliente or "" in [nome, cnpj, idcliente, nome, cnpj, endereco]:
+        if not idcliente or "" in [nome, cnpj, idcliente, rua, bairro, cidade, estado ]:
             messagebox.showerror("Erro", "Preencha todos os campos.")
             return
 
         db = comunicacao()
-        db.AtualizarCliente(idcliente, nome, cnpj, endereco)
+        db.AtualizarCliente(idcliente, nome, cnpj, rua, bairro, cidade, estado )
         messagebox.showinfo("Sucesso", "Cliente atualizado com sucesso! ")
 
         db = comunicacao()

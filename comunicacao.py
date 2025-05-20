@@ -14,13 +14,13 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "root",
+            password = "",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
 
     def RegistrarCliente(self,  NomeCliente, cnpj, endereco):
-        self.cursor.execute("INSERT INTO cliente ( NomeCliente, CNPJ, endereco) VALUES (%s, %s, %s)", ( NomeCliente, cnpj, endereco))
+        self.cursor.execute("INSERT INTO cliente (NomeCliente, CNPJ) VALUES (%s, %s)", ( NomeCliente, cnpj))
         self.conn.commit() 
 
     def RegistrarUsuario(self, nome, usuario, senha, email, userperm):
@@ -115,8 +115,8 @@ class comunicacao:
         self.cursor.execute("SELECT * FROM cliente WHERE idcliente = %s", (idcliente,))
         return self.cursor.fetchone()  
     
-    def AtualizarCliente(self, idcliente, NomeCliente, CNPJ, endereço,):
-        self.cursor.execute("UPDATE cliente SET idcliente = %s, NomeCliente = %s, CNPJ = %s, quantidade = %s, endereço = %s WHERE idproduto = %s ",(idcliente, NomeCliente, CNPJ, endereço)) 
+    def AtualizarCliente(self, idcliente, NomeCliente, CNPJ):
+        self.cursor.execute("UPDATE cliente SET idcliente = %s, NomeCliente = %s, CNPJ = %s",(idcliente, NomeCliente, CNPJ)) 
         self.conn.commit() 
 
     def LinkEndereco(self, rua, bairro, cidade, estado):
@@ -132,4 +132,8 @@ class comunicacao:
                 WHERE idfuncionario = %s
             )
         """, (rua, bairro, cidade, estado, idfuncionario))  # Ordem correta dos parâmetros
+        self.conn.commit()
+
+    def AtualizarEnderecoCliente(self, rua, bairro, cidade, estado):
+        self.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM clienteWHERE cliente = %s) """, (rua, bairro, cidade, estado))
         self.conn.commit()
