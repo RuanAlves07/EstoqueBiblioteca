@@ -53,7 +53,8 @@ class AppPedidos:
             for idx, prod in enumerate(resultados):
                 idprod, nome, desc, qtde, preco = prod
                 texto_prod = f"{nome} - {desc} | R$ {float(preco):.2f} | Estoque: {qtde}"
-
+                
+                
                 btn = ctk.CTkButton(
                     frame_resultados,
                     text=texto_prod,
@@ -73,7 +74,6 @@ class AppPedidos:
     def pesquisar_clientes(self, texto, frame_resultados, entry_destino):
         conexao = self.conectar_banco()
         cursor = conexao.cursor()
-
         try:
             query = """
             SELECT idcliente, NomeCliente, CNPJ, endereco 
@@ -83,17 +83,13 @@ class AppPedidos:
             parametro = f"%{texto}%"
             cursor.execute(query, (parametro,))
             resultados = cursor.fetchall()
-
             for widget in frame_resultados.winfo_children():
                 widget.destroy()
-
             if not texto.strip():
                 return
-
             for cli in resultados:
-                nome_cliente, produto, qtde_venda, data_emissao = cli
-                texto_cli = f"{nome_cliente} - Última compra: {produto}, Qtde: {qtde_venda}, Data: {data_emissao}"
-
+                idcliente, nome_cliente, cnpj, endereco = cli
+                texto_cli = f"{nome_cliente} | CNPJ: {cnpj} | Endereço: {endereco}"
                 btn = ctk.CTkButton(
                     frame_resultados,
                     text=texto_cli,
@@ -104,7 +100,6 @@ class AppPedidos:
                     ]
                 )
                 btn.pack(fill="x", pady=2)
-
         finally:
             cursor.close()
             conexao.close()
@@ -225,6 +220,7 @@ class AppPedidos:
         ctk.CTkLabel(self.frame_cadastro, text="Produto:").grid(row=2, column=0, padx=5, pady=5, sticky="e")
         self.entry_produto_selecionado = ctk.CTkEntry(self.frame_cadastro, width=250, justify="center")
         self.entry_produto_selecionado.grid(row=2, column=1, padx=5, pady=5)
+
         btn_pesquisar_produto = ctk.CTkButton(
             self.frame_cadastro,
             text="🔍",
@@ -238,6 +234,7 @@ class AppPedidos:
 
         ctk.CTkLabel(self.frame_cadastro, text="Método de Pagamento:").grid(row=4, column=0, padx=5, pady=5, sticky="e")
         opcoes_pag = ["Cartão de Crédito", "Boleto Bancário", "Pix", "Transferência"]
+
         self.combo_pag = ctk.CTkComboBox(self.frame_cadastro, values=opcoes_pag, width=250, justify="center")
         self.combo_pag.grid(row=4, column=1, padx=5, pady=5)
 

@@ -383,7 +383,7 @@ class TelaProdutos:
                         self.FornecedorEntry.delete(0, "end")  # Atualiza o campo de fornecedor
                         self.FornecedorEntry.insert(0, nomeforn)
                         self.idfornecedor_selecionado = idforn  # Salva o ID do fornecedor
-                        janela_pesquisa.destroy()
+                  
 
                     btn = ctk.CTkButton(
                         frame_resultados,
