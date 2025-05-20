@@ -131,11 +131,10 @@ class FornecedorApp:
             return
 
         db = comunicacao()
-        db.cursor.execute("""INSERT INTO endereco (rua, bairro, cidade, estado) VALUES (%s, %s, %s, %s)""", (rua, bairro, cidade, estado))
-        idendereco = db.cursor.lastrowid  # Obtém o ID do endereço recém-inserido
+        db.LinkEndereco(rua, bairro, cidade, estado)
+        idendereco = db.cursor.lastrowid
 
-        # Salva o fornecedor com o idendereco
-        db.cursor.execute("""INSERT INTO fornecedor (nome, nomefantasia, CNPJ, idendereco) VALUES (%s, %s, %s, %s)""", (nome, nomefantasia, CNPJ, idendereco))
+        db.RegistrarFornecedor(nome,nomefantasia, CNPJ,idendereco)
         db.conn.commit()
 
         messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")

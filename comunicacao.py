@@ -14,7 +14,7 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "",
+            password = "root",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
@@ -52,8 +52,8 @@ class comunicacao:
         self.cursor.execute("SELECT * FROM produto WHERE idproduto = %s", (idproduto,))
         return self.cursor.fetchone()
     
-    def RegistrarFornecedor(self, nome, nomefantasia, CNPJ, endereco):
-        self.cursor.execute("INSERT INTO fornecedor (nome, nomefantasia, CNPJ, endereco) VALUES (%s, %s, %s, %s)",(nome, nomefantasia, CNPJ, endereco))
+    def RegistrarFornecedor(self, nome, nomefantasia, CNPJ, idendereco):
+        self.cursor.execute("""INSERT INTO fornecedor (nome, nomefantasia, CNPJ, idendereco) VALUES (%s, %s, %s, %s)""", (nome, nomefantasia, CNPJ, idendereco))
         self.conn.commit()
 
     def ExcluirFornecedor(self, idfornecedor):
@@ -115,3 +115,7 @@ class comunicacao:
     def AtualizarCliente(self, idcliente, NomeCliente, CNPJ, endereço,):
         self.cursor.execute("UPDATE cliente SET idcliente = %s, NomeCliente = %s, CNPJ = %s, quantidade = %s, endereço = %s WHERE idproduto = %s ",(idcliente, NomeCliente, CNPJ, endereço)) 
         self.conn.commit() 
+
+    def LinkEndereco(self, rua, bairro, cidade, estado):
+        self.cursor.execute("""INSERT INTO endereco (rua, bairro, cidade, estado) VALUES (%s, %s, %s, %s)""", (rua, bairro, cidade, estado))
+        self.conn.commit()
