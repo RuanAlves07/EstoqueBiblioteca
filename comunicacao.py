@@ -70,11 +70,21 @@ class comunicacao:
         self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor,))
         return self.cursor.fetchone()  
         
-    def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ, endereco):
-        query = "UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s, endereco = %s WHERE idfornecedor = %s "
-        self.cursor.execute(query, (nome, nomefantasia, CNPJ, endereco, idfornecedor))
+    def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ):
+        self.cursor.execute("""UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s WHERE idfornecedor = %s""", (nome, nomefantasia, CNPJ, idfornecedor))
         self.conn.commit()
-        
+
+    def AtualizarEndereco(self, rua, bairro, cidade, estado, idfornecedor):
+        self.cursor.execute("""
+            UPDATE endereco 
+            SET rua = %s, bairro = %s, cidade = %s, estado = %s 
+            WHERE idendereco = (
+                SELECT idendereco FROM fornecedor 
+                WHERE idfornecedor = %s
+            )
+        """, (rua, bairro, cidade, estado, idfornecedor))  # Ordem correta dos parâmetros
+        self.conn.commit()
+
     def ListarFornecedor(self, idfornecedor):
         self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor)) 
         return self.cursor.fetchone() 

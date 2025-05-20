@@ -110,7 +110,7 @@ class FornecedorApp:
         self.estadoEntry.pack(pady=10)
 
         AddButton = ctk.CTkButton(jan, text="REGISTRAR FORNECEDOR", width=200, command=self.RegistrarNoBanco)
-        AddButton.place(x = 350, y = 610)
+        AddButton.place(x = 350, y = 590)
 
         voltButton = ctk.CTkButton(jan, text="Fechar", width=100, fg_color="gray", command=jan.destroy)
         voltButton.place(x = 400, y = 660)
@@ -144,7 +144,10 @@ class FornecedorApp:
         self.fornomeEntry.delete(0, 'end')
         self.ficticioEntry.delete(0, 'end')
         self.cnpjEntry.delete(0, 'end')
-        self.endEntry.delete(0, 'end')
+        self.ruaEntry.delete(0, 'end')
+        self.bairroEntry.delete(0, 'end')
+        self.cidadeEntry.delete(0, 'end')
+        self.estadoEntry.delete(0, 'end')
 
     def excluir_forn(self):
         def excluir_selecionado():
@@ -237,7 +240,7 @@ class FornecedorApp:
     def atuu_funci(self):
         jan = ctk.CTkToplevel(self.root)
         jan.title("Atualizar Fornecedor")
-        jan.geometry("800x600")
+        jan.geometry("900x700")
         jan.resizable(False, False)
 
         frame = ctk.CTkFrame(jan, corner_radius=10)
@@ -250,7 +253,7 @@ class FornecedorApp:
         self.idEntry.pack(pady=10)
 
         buscar_button = ctk.CTkButton(frame, text="Buscar Fornecedor", width=150, command=self.buscar_fornecedor)
-        buscar_button.pack(pady=10)
+        buscar_button.place(x = 550, y = 60)
 
         self.fornomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome Empresarial", width=300, height=40)
         self.fornomeEntry.pack(pady=10)
@@ -261,11 +264,20 @@ class FornecedorApp:
         self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text="CNPJ da Empresa", width=300, height=40)
         self.cnpjEntry.pack(pady=10)
 
-        self.endEntry = ctk.CTkEntry(frame, placeholder_text="Endereço da Empresa", width=300, height=40)
-        self.endEntry.pack(pady=10)
+        self.ruaEntry = ctk.CTkEntry(frame, placeholder_text="Rua", width=300, height=40)
+        self.ruaEntry.pack(pady=10)
+
+        self.bairroEntry = ctk.CTkEntry(frame, placeholder_text="Bairro", width=300, height=40)
+        self.bairroEntry.pack(pady=10)
+
+        self.cidadeEntry = ctk.CTkEntry(frame, placeholder_text="Cidade", width=300, height=40)
+        self.cidadeEntry.pack(pady=10)
+
+        self.estadoEntry = ctk.CTkEntry(frame, placeholder_text="Estado (UF)", width=300, height=40)
+        self.estadoEntry.pack(pady=10)
 
         salvar_button = ctk.CTkButton(frame, text="Salvar Alterações", width=150, command=self.salvar_alteracoes)
-        salvar_button.pack(pady=20)
+        salvar_button.place(x = 320, y = 540)
         jan.grab_set()
         jan.focus_force()
 
@@ -276,24 +288,44 @@ class FornecedorApp:
             return
 
         db = comunicacao()
-        fornecedor = db.buscar_fornecedor_por_id(idfornecedor)
+        try:
+            # Consulta SQL para buscar o fornecedor com informações do endereço
+            query = """SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM fornecedor f INNER JOIN endereco e ON f.idendereco = e.idendereco WHERE f.idfornecedor = %s"""
+            db.cursor.execute(query, (idfornecedor,))
+            fornecedor = db.cursor.fetchone()
 
-        if not fornecedor:
-            messagebox.showerror("Erro", "Fornecedor não encontrado.")
-            return
+            if not fornecedor:
+                messagebox.showerror("Erro", "Fornecedor não encontrado.")
+                return
 
-        # Preenche os campos com as informações do fornecedor
-        self.fornomeEntry.delete(0, )
-        self.fornomeEntry.insert(0, fornecedor[1])  # Nome empresarial
+            # Preenche os campos com as informações do fornecedor
+            self.fornomeEntry.delete(0, ctk.END)
+            self.fornomeEntry.insert(0, fornecedor[1])  # Nome empresarial
 
-        self.ficticioEntry.delete(0, )
-        self.ficticioEntry.insert(0, fornecedor[2])  # Nome fantasia
+            self.ficticioEntry.delete(0, ctk.END)
+            self.ficticioEntry.insert(0, fornecedor[2])  # Nome fantasia
 
-        self.cnpjEntry.delete(0, )
-        self.cnpjEntry.insert(0, fornecedor[3])  # CNPJ
+            self.cnpjEntry.delete(0, ctk.END)
+            self.cnpjEntry.insert(0, fornecedor[3])  # CNPJ
 
-        self.endEntry.delete(0, )
-        self.endEntry.insert(0, fornecedor[4])  # Endereço
+            # Preenche os campos de endereço
+            self.ruaEntry.delete(0, ctk.END)
+            self.ruaEntry.insert(0, fornecedor[4])  # Rua
+
+            self.bairroEntry.delete(0, ctk.END)
+            self.bairroEntry.insert(0, fornecedor[5])  # Bairro
+
+            self.cidadeEntry.delete(0, ctk.END)
+            self.cidadeEntry.insert(0, fornecedor[6])  # Cidade
+
+            self.estadoEntry.delete(0, ctk.END)
+            self.estadoEntry.insert(0, fornecedor[7])  # Estado
+
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao buscar fornecedor: {e}")
+        finally:
+            db.conn.close()
+
 
 
     def salvar_alteracoes(self):
@@ -310,17 +342,18 @@ class FornecedorApp:
             messagebox.showwarning("Atenção", "Por favor, insira o ID do fornecedor.")
             return
 
-        if nome == "" or nomefantasia == "" or CNPJ == "" or rua == "" or bairro == "" or cidade == "" or estado == "":
+        if not all([nome, nomefantasia, CNPJ, rua, bairro, cidade, estado]):
             messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
 
+        # Atualiza o endereço
         db = comunicacao()
-        db.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM fornecedor WHERE idfornecedor = %s)""", (rua, bairro, cidade, estado, idfornecedor))
+        db.AtualizarEndereco(rua, bairro, cidade, estado, idfornecedor)
 
-        # Atualiza o fornecedor
-        db.cursor.execute("""UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s WHERE idfornecedor = %s""", (nome, nomefantasia, CNPJ, idfornecedor))
+        # Atualiza as informações do fornecedor
+        db.AtualizarFornecedor(idfornecedor, nome, nomefantasia, CNPJ)
+
         db.conn.commit()
-
         messagebox.showinfo("Sucesso", "Fornecedor atualizado com sucesso!")
 
     def sair(self):

@@ -16,7 +16,6 @@ create table fornecedor(
     nome varchar(40),
     nomefantasia varchar(60),
     CNPJ varchar(20),
-    endereco varchar(40),
     primary key (idfornecedor)
 
 );
