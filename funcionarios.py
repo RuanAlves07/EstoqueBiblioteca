@@ -75,7 +75,7 @@ class GerenciadorFuncionarios:
     def cadastro_func(self):
         jan_cadastro = ctk.CTkToplevel(self.root)
         jan_cadastro.title("Cadastro de Funcionário")
-        jan_cadastro.geometry("800x600")
+        jan_cadastro.geometry("900x800")
         jan_cadastro.resizable(False, False)
 
         frame = ctk.CTkFrame(jan_cadastro, corner_radius=10)
@@ -98,6 +98,18 @@ class GerenciadorFuncionarios:
 
         self.datanascEntry = ctk.CTkEntry(frame, placeholder_text="Data de nascimento: ", width=300, height=40)
         self.datanascEntry.pack(pady=10)
+
+        self.ruafuncEntry = ctk.CTkEntry(frame, placeholder_text="Rua: ", width=300, height=40)
+        self.ruafuncEntry.pack(pady=10)
+
+        self.bairrofuncEntry = ctk.CTkEntry(frame, placeholder_text="Bairro: ", width=300, height=40)
+        self.bairrofuncEntry.pack(pady=10)
+
+        self.cidadefuncEntry = ctk.CTkEntry(frame, placeholder_text="Cidade: ", width=300, height=40)
+        self.cidadefuncEntry.pack(pady=10)
+
+        self.estadofuncEntry = ctk.CTkEntry(frame, placeholder_text="Estado (UF): ", width=300, height=40)
+        self.estadofuncEntry.pack(pady=10)
 
         AddButton = ctk.CTkButton(jan_cadastro, text="REGISTRAR FUNCIONARIO", width=200, command=self.RegistrarFuncionario)
         AddButton.pack(pady=10)
