@@ -94,8 +94,8 @@ class comunicacao:
         self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor)) 
         return self.cursor.fetchone() 
     
-    def RegistrarFuncionario(self, nome, telefone, enderecofunc, email, datanascimento):
-        self.cursor.execute("INSERT INTO funcionario (nome, telefone, enderecofunc, email, datanascimento) VALUES (%s, %s, %s, %s, %s)", (nome, telefone, enderecofunc, email, datanascimento))
+    def RegistrarFuncionario(self, nome, telefone, email, datanascimento):
+        self.cursor.execute("INSERT INTO funcionario (nome, telefone, email, datanascimento) VALUES (%s, %s, %s, %s, %s)", (nome, telefone, email, datanascimento))
         self.conn.commit() 
 
     def ExcluirFuncionario(self, idfuncionario):
@@ -104,11 +104,11 @@ class comunicacao:
         self.conn.commit()
 
     def carregar_funcionario(self):
-        self.cursor.execute("SELECT idfuncionario, nome, telefone, enderecofunc, email, data_nascimento FROM funcionario")
+        self.cursor.execute("SELECT idfuncionario, nome, telefone, email, data_nascimento FROM funcionario")
         self.conn.commit()
 
-    def AtualizarFuncionario(self, idfuncionario, nome, telefone, enderecofunc, email, datanascimento):
-        self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(nome, telefone, enderecofunc, email, datanascimento,idfuncionario)) 
+    def AtualizarFuncionario(self, idfuncionario, nome, telefone, email, datanascimento):
+        self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s,  email = %s, datanascimento = %s WHERE idfuncionario = %s ",(nome, telefone, email, datanascimento,idfuncionario)) 
         self.conn.commit() 
 
     def ListarFuncionario(self, idfuncionario):
