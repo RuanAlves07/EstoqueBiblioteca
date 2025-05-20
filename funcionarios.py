@@ -158,13 +158,13 @@ class GerenciadorFuncionarios:
         jan_atualizar.resizable(False, False)
 
         frame = ctk.CTkFrame(jan_atualizar, corner_radius=10)
-        frame.pack(padx=60, pady=50, fill="both", expand=True)
+        frame.pack(padx=80, pady=50, fill="both", expand=True )
 
         title = ctk.CTkLabel(frame, text="ATUALIZAR FUNCIONARIO", font=("Segoe UI", 18, "bold"))
         title.pack(pady=10)
 
         self.idEntry = ctk.CTkEntry(frame, placeholder_text="Digite o ID do Funcionario", width=300, height=40)
-        self.idEntry.pack(pady=10)
+        self.idEntry.pack(padx=10)
 
         buscar_botao = ctk.CTkButton(frame, text="Buscar Funcionario", width=150, command=self.buscar_funcionario)
         buscar_botao.pack(pady=10)
@@ -185,14 +185,9 @@ class GerenciadorFuncionarios:
         self.NascEntry.pack(pady=10)
 
         salvar_button = ctk.CTkButton(frame, text="Salvar Alterações", width=150, command=self.salvar_alteracoes)
-        salvar_button.pack(pady=10)
+        salvar_button.pack(pady =20)
 
-        labels = ["Nome", "Telefone", "Endereço", "Email", "Data de Nascimento"]
-        entries = [self.UsuarioEntry, self.TelefoneEntry, self.EnderecoEntry, self.EmailEntry, self.NascEntry]
-
-        for i, label in enumerate(labels):
-            ctk.CTkLabel(jan_atualizar, text=label + ":", font=("Arial", 16)).place(x=115, y=150 + i * 50)
-            entries[i].place(x=330, y=155 + i * 50)
+       
 
 
     def buscar_funcionario(self):
@@ -209,8 +204,8 @@ class GerenciadorFuncionarios:
 
         self.UsuarioEntry.delete(0, )
         self.UsuarioEntry.insert(0, funcionario[1])
-        self.telefoneEntry.delete(0, )
-        self.telefoneEntry.insert(0, funcionario[2])
+        self.TelefoneEntry.delete(0, )
+        self.TelefoneEntry.insert(0, funcionario[2])
         self.EnderecoEntry.delete(0, )
         self.EnderecoEntry.insert(0, funcionario[3])
         self.EmailEntry.delete(0, )
