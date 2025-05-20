@@ -129,20 +129,23 @@ class GerenciadorClientes:
     def RegistrarCliente(self):
         
         # Recebe as informações do usúario e guarda em cada variavel dedicada 
-        nomeCliente = self.clienomeEntry.get().strip()
-        cnpj = self.cnpjEntry.get().strip()
-        rua = self.ruaEntry.get().strip()
-        bairro = self.bairroEntry.get().strip()
-        cidade = self.cidadeEntry.get().strip()
-        estado = self.estadoEntry.get().strip()
+        nomeCliente = self.clienomeEntry.get()
+        cnpj = self.cnpjEntry.get()
+        rua = self.ruaEntry.get()
+        bairro = self.bairroEntry.get()
+        cidade = self.cidadeEntry.get()
+        estado = self.estadoEntry.get()
         
         
         if nomeCliente == "" or cnpj == "" or rua == "" or bairro == '' or cidade == '' or estado == '' :
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao() 
-            db.RegistrarCliente(nomeCliente, cnpj, rua, bairro, cidade, estado)
+            db.AtualizarCliente(nomeCliente, cnpj, rua, bairro, cidade, estado)
             messagebox.showinfo("Success", "Usuario criado com sucesso!")
+
+            db.RegistrarFuncionario(nomeCliente, cnpj, rua, bairro, cidade, estado)
+            db.conn.commit()
     
     def limpar_campos(self, jan_clientecad=None):
         self.clienomeEntry.delete(0, 'end')
@@ -175,6 +178,19 @@ class GerenciadorClientes:
     def carregar_clientes(self, tree):
         for item in tree.get_children():
             tree.delete(item)
+
+            db = comunicacao()
+            query = """SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM fornecedor f LEFT JOIN endereco e ON f.idendereco = e.idendereco"""
+        try:
+            db.cursor.execute(query)
+            fornecedores = db.cursor.fetchall()
+
+            for fornecedor in fornecedores:
+                tree.insert("", "end", values=fornecedor)
+        finally:
+            db.conn.close()
+
+        
 
         db = comunicacao()
         try:
