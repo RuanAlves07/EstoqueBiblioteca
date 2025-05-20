@@ -93,7 +93,7 @@ class comunicacao:
         self.conn.commit()
 
     def AtualizarFuncionario(self, idfuncionario, nome, telefone, enderecofunc, email, datanascimento):
-        self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(idfuncionario, nome, telefone, enderecofunc, email, datanascimento)) 
+        self.cursor.execute("UPDATE funcionario SET nome = %s, telefone = %s, enderecofunc = %s, email = %s, datanascimento = %s WHERE idfuncionario = %s ",(nome, telefone, enderecofunc, email, datanascimento,idfuncionario)) 
         self.conn.commit() 
 
     def ListarFuncionario(self, idfuncionario):
