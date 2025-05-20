@@ -133,7 +133,7 @@ class GerenciadorFuncionarios:
             db.LinkEndereco(rua, bairro, cidade, estado)
             idendereco = db.cursor.lastrowid
 
-            db.RegistrarFuncionario(nome,telefone, email,datanascimento, idendereco)
+            db.RegistrarFuncionario(self, nome,telefone, email, datanascimento, idendereco)
             db.conn.commit()
     
     def limpar_campos(self, janela=None):
