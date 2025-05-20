@@ -209,7 +209,7 @@ class FornecedorApp:
         janela.title("Lista de Fornecedores")
         janela.geometry("800x400")
 
-        colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
+        colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Rua")
     
         # Use ttk.Treeview em vez de ctk.Treeview
         tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")

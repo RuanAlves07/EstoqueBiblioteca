@@ -39,7 +39,6 @@ create table funcionario(
     idfuncionario int not null auto_increment,
     nome varchar(40),
     telefone text,
-    endereco text,
     email varchar(40),
     datanascimento text,
     primary key (idfuncionario)   
@@ -51,7 +50,6 @@ create table cliente(
  idcliente int not null auto_increment,
  NomeCliente text,
  CNPJ varchar(20),
- endereco text,
  primary key (idcliente)
 
 );
