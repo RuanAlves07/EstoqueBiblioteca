@@ -62,8 +62,8 @@ CREATE TABLE endereco (
     rua VARCHAR(100),
     bairro VARCHAR(100),
     cidade VARCHAR(100),
-    estado CHAR(2),
-    cep VARCHAR(9)
+    estado CHAR(2)
+    
 );
 
 CREATE TABLE venda (
