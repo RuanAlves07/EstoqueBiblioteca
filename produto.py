@@ -120,13 +120,10 @@ class TelaProdutos:
         self.botao_linkar_fornecedor = ctk.CTkButton(frame_add, text="🔗", width=40, command=self.Tela_FornProduto)
         self.botao_linkar_fornecedor.place(x = 500, y = 385)   
 
-<<<<<<< HEAD
-        # Def para registrar o produto e se comunicar com o banco de dados para registrar o mesmo no banco.         
-=======
+                
         frame_add.grab_set()       
         frame_add.focus_force()
-                 
->>>>>>> 862605a15f528021d60617824bd94d84b0c78e15
+        # Def para registrar o produto e se comunicar com o banco de dados para registrar o mesmo no banco.         
         def RegistrarProduto():
             nome = self.NomeEntry.get()
             descricao = self.DescEntry.get()
@@ -185,13 +182,10 @@ class TelaProdutos:
         tree.column("Preço", width=70,anchor="center")
         tree.pack(pady=10, padx=10, fill=BOTH, expand=True)
 
-<<<<<<< HEAD
         # Def para realizar a exclusão do produto e informar o banco de dados sobre a exclusão do mesmo
-=======
         produto_remove.grab_set()       
         produto_remove.focus_force()
 
->>>>>>> 862605a15f528021d60617824bd94d84b0c78e15
         def ExclusaoProd():
             item_selecionado = tree.selection()
             if not item_selecionado:
