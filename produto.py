@@ -405,42 +405,6 @@ class TelaProdutos:
         # Chama uma vez para carregar todos os fornecedores inicialmente
         pesquisar_fornecedores("", frame_resultados)
 
-    def pesquisar_fornecedores(self, termo, frame_resultados):
-        # Limpa resultados anteriores
-        for widget in frame_resultados.winfo_children():
-            widget.destroy()
-
-        db = comunicacao()
-        try:
-            if termo.strip() == "":
-                db.cursor.execute("SELECT idfornecedor, nome FROM fornecedor")
-            else:
-                db.cursor.execute("SELECT idfornecedor, nome FROM fornecedor WHERE nome LIKE %s", (f"%{termo}%",))
-                
-            fornecedores = db.cursor.fetchall()
-
-            if not fornecedores:
-                label_vazio = ctk.CTkLabel(frame_resultados, text="Nenhum fornecedor encontrado.")
-                label_vazio.pack(pady=10)
-                return
-
-            # Exibe os fornecedores como botões clicáveis
-            for idx, (idfornecedor, nome) in enumerate(fornecedores):
-                def on_select(idforn=idfornecedor, nomeforn=nome):
-                    self.NomeEntry.delete(0, "end")
-                    self.NomeEntry.insert(0, nomeforn)
-                    janela_pesquisa.destroy()
-
-                btn = ctk.CTkButton(
-                    frame_resultados,
-                    text=f"{nome} (ID: {idfornecedor})",
-                    anchor="w",
-                    command=on_select
-                )
-                btn.pack(pady=5, fill="x")
-            
-        except Exception as e:
-            messagebox.showerror("Erro", f"Erro ao pesquisar fornecedores: {e}")
 
 
 # Inicialização da aplicação
