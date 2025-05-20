@@ -63,18 +63,6 @@ CREATE TABLE endereco (
     
 );
 
-CREATE TABLE venda (
-    idvenda INT AUTO_INCREMENT PRIMARY KEY,
-    idcliente INT,
-    idproduto INT,
-    data_venda DATE,
-    quantidade INT,
-    valor_total DECIMAL(10,2),
-    idusuario INT,
-    FOREIGN KEY (idcliente) REFERENCES cliente(idcliente),
-    FOREIGN KEY (idproduto) REFERENCES produto(idproduto),
-    FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario)
-);
 
 ALTER TABLE produto ADD FOREIGN KEY (idfornecedor) REFERENCES fornecedor(idfornecedor);
 

@@ -136,3 +136,13 @@ class comunicacao:
     def carregar_vendas(self):
         self.cursor.execute("""SELECT v.idvenda, c.NomeCliente, p.nome, v.data_venda, v.quantidade, v.valor_total, u.usuario FROM venda v INNER JOIN cliente c ON v.idcliente = c.idcliente INNER JOIN produto p ON v.idproduto = p.idproduto INNER JOIN usuarios u ON v.idusuario = u.idusuario""")
         return self.cursor.fetchall()
+    def AtualizarEnderecoFunc(self, rua, bairro, cidade, estado, idfuncionario):
+        self.cursor.execute("""
+            UPDATE endereco 
+            SET rua = %s, bairro = %s, cidade = %s, estado = %s 
+            WHERE idendereco = (
+                SELECT idendereco FROM funcionario 
+                WHERE idfuncionario = %s
+            )
+        """, (rua, bairro, cidade, estado, idfuncionario))  # Ordem correta dos parâmetros
+        self.conn.commit()
