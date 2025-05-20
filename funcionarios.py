@@ -117,14 +117,14 @@ class GerenciadorFuncionarios:
         jan_cadastro.focus_force()
 
     def RegistrarFuncionario(self):
-        nome = self.funcnomeEntry.get().strip()
-        telefone = self.telefoneEntry.get().strip()
-        email = self.gmailEntry.get().strip()
-        datanascimento = self.datanascEntry.get().strip()
-        rua = self.ruafuncEntry.get().strip()
-        bairro = self.bairrofuncEntry.get().strip()
-        cidade = self.cidadefuncEntry.get().strip()
-        estado = self.estadofuncEntry.get().strip()
+        nome = self.funcnomeEntry.get()
+        telefone = self.telefoneEntry.get()
+        email = self.gmailEntry.get()
+        datanascimento = self.datanascEntry.get()
+        rua = self.ruafuncEntry.get()
+        bairro = self.bairrofuncEntry.get()
+        cidade = self.cidadefuncEntry.get()
+        estado = self.estadofuncEntry.get()
 
         if nome == "" or telefone == "" or email == "" or datanascimento == "" or rua == "" or bairro == "" or cidade == "" or estado == "":
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
@@ -133,7 +133,7 @@ class GerenciadorFuncionarios:
             db.LinkEndereco(rua, bairro, cidade, estado)
             idendereco = db.cursor.lastrowid
 
-            db.RegistrarFuncionario(self, nome,telefone, email, datanascimento, idendereco)
+            db.RegistrarFuncionario(nome,telefone, email, datanascimento, idendereco)
             db.conn.commit()
     
     def limpar_campos(self, janela=None):
