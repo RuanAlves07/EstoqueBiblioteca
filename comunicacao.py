@@ -62,12 +62,7 @@ class comunicacao:
         self.conn.commit()
 
     def carregar_fornecedores_com_endereco(self):
-        query = """
-            SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ,
-                e.rua, e.bairro, e.cidade, e.estado
-            FROM fornecedor f
-            LEFT JOIN endereco e ON f.idendereco = e.idendereco
-        """
+        query = """SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM fornecedor f LEFT JOIN endereco e ON f.idendereco = e.idendereco"""
         self.cursor.execute(query)
         return self.cursor.fetchall()
     
@@ -80,14 +75,7 @@ class comunicacao:
         self.conn.commit()
 
     def AtualizarEndereco(self, rua, bairro, cidade, estado, idfornecedor):
-        self.cursor.execute("""
-            UPDATE endereco 
-            SET rua = %s, bairro = %s, cidade = %s, estado = %s 
-            WHERE idendereco = (
-                SELECT idendereco FROM fornecedor 
-                WHERE idfornecedor = %s
-            )
-        """, (rua, bairro, cidade, estado, idfornecedor))  # Ordem correta dos parâmetros
+        self.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM fornecedor WHERE idfornecedor = %s)""", (rua, bairro, cidade, estado, idfornecedor))  # Ordem correta dos parâmetros
         self.conn.commit()
 
     def ListarFornecedor(self, idfornecedor):
