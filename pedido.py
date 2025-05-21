@@ -77,7 +77,7 @@ class AppPedidos:
         cursor = conexao.cursor()
         try:
             query = """
-            SELECT idcliente, NomeCliente, CNPJ, endereco 
+            SELECT idcliente, NomeCliente, CNPJ 
             FROM cliente 
             WHERE NomeCliente LIKE %s
             """
@@ -89,8 +89,9 @@ class AppPedidos:
             if not texto.strip():
                 return
             for cli in resultados:
-                idcliente, nome_cliente, cnpj, endereco = cli
-                texto_cli = f"{nome_cliente} | CNPJ: {cnpj} | Endereço: {endereco}"
+                idcliente, nome_cliente, cnpj = cli
+                texto_cli = f"{nome_cliente} | CNPJ: {cnpj}"
+                texto_cli = f"{nome_cliente} | CNPJ: {cnpj} "
                 btn = ctk.CTkButton(
                     frame_resultados,
                     text=texto_cli,
