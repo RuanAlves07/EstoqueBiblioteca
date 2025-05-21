@@ -14,7 +14,7 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "",
+            password = "root",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
@@ -76,11 +76,11 @@ class comunicacao:
         return self.cursor.fetchone()  
         
     def AtualizarFornecedor(self, idfornecedor, nome, nomefantasia, CNPJ):
-        self.cursor.execute("""UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s WHERE idfornecedor = %s""", (nome, nomefantasia, CNPJ, idfornecedor))
+        self.cursor.execute("UPDATE fornecedor SET nome = %s, nomefantasia = %s, CNPJ = %s WHERE idfornecedor = %s", (nome, nomefantasia, CNPJ, idfornecedor))
         self.conn.commit()
 
     def AtualizarEndereco(self, rua, bairro, cidade, estado, idfornecedor):
-        self.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM fornecedor WHERE idfornecedor = %s)""", (rua, bairro, cidade, estado, idfornecedor))  # Ordem correta dos parâmetros
+        self.cursor.execute("UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM fornecedor WHERE idfornecedor = %s)", (rua, bairro, cidade, estado, idfornecedor))  # Ordem correta dos parâmetros
         self.conn.commit()
 
     def ListarFornecedor(self, idfornecedor):
@@ -92,7 +92,7 @@ class comunicacao:
             return self.cursor.fetchone() 
     
     def RegistrarFuncionario(self, nome, telefone, email, datanascimento):
-        self.cursor.execute("INSERT INTO funcionario (nome, telefone, email, datanascimento) VALUES (%s, %s, %s, %s, %s)", (nome, telefone, email, datanascimento))
+        self.cursor.execute("INSERT funcionario nome, telefone, email, datanascimento VALUES ( %s, %s, %s, %s)", (nome, telefone, email, datanascimento))
         self.conn.commit() 
 
     def ExcluirFuncionario(self, idfuncionario):

@@ -163,7 +163,7 @@ class GerenciadorClientes:
         jan_lista.geometry("800x400")
         jan_lista.resizable(True, True)
 
-        colunas = ("ID", "Nome", "Rua", "Bairro", "Cidade", "Estado")
+        colunas = ("ID", "Nome", "CNPJ","Rua", "Bairro", "Cidade", "Estado")
         tree = ttk.Treeview(jan_lista, columns=colunas, show="headings", height=20)
 
         for col in colunas:
@@ -222,7 +222,7 @@ class GerenciadorClientes:
         jan_atualizar.grab_set()
         jan_atualizar.focus_force()
     def buscar_cliente(self):
-        idcliente = self.idclientes.get()  # <-- Aqui foi corrigido para 'idclientes' (com s)
+        idcliente = self.idclientes.get()
 
         if not idcliente:
             messagebox.showwarning("Atenção", "Por favor, insira o ID do cliente.")
@@ -233,25 +233,29 @@ class GerenciadorClientes:
             query = """SELECT c.idcliente, c.NomeCliente, c.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM cliente c INNER JOIN endereco e ON c.idendereco = e.idendereco WHERE c.idcliente = %s"""
             db.cursor.execute(query, (idcliente,))
             cliente = db.cursor.fetchone()
-            
 
             if not cliente:
                 messagebox.showerror("Erro", "Cliente não encontrado.")
                 return
 
-            self.clienomeEntry.delete(0, END)
+            # Preenchimento dos campos - Garantindo que os widgets existam
+            self.clienomeEntry.delete(0, 'end')
             self.clienomeEntry.insert(0, cliente[1])  
-            self.cnpjEntry.delete(0, END)
-            self.cnpjEntry.insert(0, cliente[2])   
-            self.ruaEntry.delete(0, END)
-            self.ruaEntry.insert(0, cliente[3])  
-            self.bairroEntry.delete(0, END)
+
+            self.cnpjEntry.delete(0, 'end')
+            self.cnpjEntry.insert(0, cliente[2])
+
+            self.ruaEntry.delete(0, 'end')
+            self.ruaEntry.insert(0, cliente[3])
+
+            self.bairroEntry.delete(0, 'end')
             self.bairroEntry.insert(0, cliente[4])
-            self.cidadeEntry.delete(0, END)
-            self.cidadeEntry.insert(0, cliente[5]) 
-            self.estadoEntry.delete(0, END)
-            self.estadoEntry.insert(0, cliente[6])   
-            
+
+            self.cidadeEntry.delete(0, 'end')
+            self.cidadeEntry.insert(0, cliente[5])
+
+            self.estadoEntry.delete(0, 'end')
+            self.estadoEntry.insert(0, cliente[6])
 
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao buscar cliente: {e}")
