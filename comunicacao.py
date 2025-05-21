@@ -14,7 +14,7 @@ class comunicacao:
         self.conn = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "root",
+            password = "",
             database = "biblioteca_db"
         )
         self.cursor = self.conn.cursor()
@@ -83,7 +83,7 @@ class comunicacao:
         return self.cursor.fetchone() 
     
     def RegistrarFuncionario(self, nome, telefone, email, datanascimento):
-        self.cursor.execute("INSERT INTO funcionario (nome, telefone, email, datanascimento) VALUES (%s, %s, %s, %s, %s)", (nome, telefone, email, datanascimento))
+        self.cursor.execute("INSERT INTO funcionario (nome, telefone, email, datanascimento) VALUES (%s, %s, %s, %s)", (nome, telefone, email, datanascimento))
         self.conn.commit() 
 
     def ExcluirFuncionario(self, idfuncionario):
@@ -123,7 +123,7 @@ class comunicacao:
         self.cursor.execute("""INSERT INTO endereco (rua, bairro, cidade, estado) VALUES (%s, %s, %s, %s)""", (rua, bairro, cidade, estado))
         self.conn.commit()
     
-    def AtualizarEnderecoFunc(self, rua, bairro, cidade, estado, idfuncionario):
+    def AtualizarEnderecoFunc(self, rua, bairro, cidade, estado):
         self.cursor.execute("""
             UPDATE endereco 
             SET rua = %s, bairro = %s, cidade = %s, estado = %s 
@@ -131,5 +131,10 @@ class comunicacao:
                 SELECT idendereco FROM funcionario 
                 WHERE idfuncionario = %s
             )
-        """, (rua, bairro, cidade, estado, idfuncionario))  # Ordem correta dos parâmetros
+        """, (rua, bairro, cidade, estado))  # Ordem correta dos parâmetros
         self.conn.commit()
+
+    def carregar_funcionarios_com_endereco(self):
+        query = """SELECT f.idfuncionario, f.nome, f.telefone, f.email, f.datanascimento, e.bairro, e.cidade, e.estado FROM funcionario f INNER JOIN endereco e ON f.idendereco = e.idendereco WHERE f.idfuncionario = %s"""
+        self.cursor.execute(query)
+        return self.cursor.fetchall()

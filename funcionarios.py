@@ -117,7 +117,6 @@ class GerenciadorFuncionarios:
         jan_cadastro.focus_force()
 
     def RegistrarFuncionario(self):
-        idfuncionario = self.idEntry.get()
         nome = self.funcnomeEntry.get()
         telefone = self.telefoneEntry.get()
         email = self.gmailEntry.get()
@@ -131,10 +130,10 @@ class GerenciadorFuncionarios:
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
             db = comunicacao()
-            db.AtualizarEnderecoFunc(rua, bairro, cidade, estado, idfuncionario)
+            db.LinkEndereco(rua, bairro, cidade, estado)
             idendereco = db.cursor.lastrowid
 
-            db.RegistrarFuncionario(nome,telefone, email, datanascimento, idendereco)
+            db.RegistrarFuncionario(nome,telefone, email, datanascimento)
             db.conn.commit()
     
     def limpar_campos(self, janela=None):
@@ -163,6 +162,7 @@ class GerenciadorFuncionarios:
         tree.pack(padx=10, pady=10, fill="both", expand=True)
 
         self.carregar_funcionarios(tree)
+        self.carregar_funcionarios_com_endereco(tree)
         jan_lista.grab_set()
         jan_lista.focus_force()
 
@@ -196,8 +196,8 @@ class GerenciadorFuncionarios:
         buscar_botao = ctk.CTkButton(frame, text="Buscar Funcionário", width=150, command=self.buscar_funcionario)
         buscar_botao.pack(pady=10)
 
-        self.UsuarioEntry = ctk.CTkEntry(frame, placeholder_text="Nome do Usuário", width=300, height=40)
-        self.UsuarioEntry.pack(pady=10)
+        self.funcnomeEntry = ctk.CTkEntry(frame, placeholder_text="Nome do Usuário", width=300, height=40)
+        self.funcnomeEntry.pack(pady=10)
 
         self.telefoneEntry = ctk.CTkEntry(frame, placeholder_text="Telefone", width=300, height=40)
         self.telefoneEntry.pack(pady=10)
@@ -231,45 +231,69 @@ class GerenciadorFuncionarios:
     def buscar_funcionario(self):
         idfuncionario = self.idEntry.get()
         if not idfuncionario:
-            messagebox.showwarning("Atenção", "Por favor, insira o ID.")
+            messagebox.showwarning("Atenção", "Por favor, insira o ID do funcionario.")
             return
 
         db = comunicacao()
-        funcionario = db.buscar_funcionario_por_id(idfuncionario)
+        try:
+            # Consulta SQL para buscar o funcionario com informações do endereço
+            query = """SELECT f.idfuncionario, f.nome, f.telefone, f.email, f.datanascimento, e.bairro, e.cidade, e.estado FROM funcionario f INNER JOIN endereco e ON f.idendereco = e.idendereco WHERE f.idfuncionario = %s"""
+            db.cursor.execute(query, (idfuncionario,))
+            funcionario = db.cursor.fetchone()
 
-        if not funcionario:
-            messagebox.showerror("Erro", "Funcionário não encontrado.")
-            return
+            if not idfuncionario:
+                messagebox.showerror("Erro", "Funcionario não encontrado.")
+                return
 
-        # Limpa e preenche os campos corretamente
-        self.UsuarioEntry.delete(0, tk.END)
-        self.UsuarioEntry.insert(0, funcionario[1])
+            # Limpa e preenche os campos corretamente
+            self.funcnomeEntry.delete(0, ctk.END)
+            self.funcnomeEntry.insert(0, funcionario[1])
 
-        self.telefoneEntry.delete(0, tk.END)
-        self.telefoneEntry.insert(0, funcionario[2])
+            self.telefoneEntry.delete(0, ctk.END)
+            self.telefoneEntry.insert(0, funcionario[2])
 
-        self.EmailEntry.delete(0, tk.END)
-        self.EmailEntry.insert(0, funcionario[3])
+            self.EmailEntry.delete(0, ctk.END)
+            self.EmailEntry.insert(0, funcionario[3])
 
-        self.NascEntry.delete(0, tk.END)
-        self.NascEntry.insert(0, funcionario[4])
+            self.NascEntry.delete(0, ctk.END)
+            self.NascEntry.insert(0, funcionario[4])
 
-        self.ruafuncEntry.delete(0, tk.END)
-        self.ruafuncEntry.insert(0, funcionario[5])
+            self.ruafuncEntry.delete(0, ctk.END)
+            self.ruafuncEntry.insert(0, funcionario[5])
 
-        self.bairrofuncEntry.delete(0, tk.END)
-        self.bairrofuncEntry.insert(0, funcionario[6])
+            self.bairrofuncEntry.delete(0, ctk.END)
+            self.bairrofuncEntry.insert(0, funcionario[6])
 
-        self.cidadefuncEntry.delete(0, tk.END)
-        self.cidadefuncEntry.insert(0, funcionario[7])
+            self.cidadefuncEntry.delete(0, ctk.END)
+            self.cidadefuncEntry.insert(0, funcionario[7])
 
-        self.estadofuncEntry.delete(0, tk.END)
-        self.estadofuncEntry.insert(0, funcionario[8])
+            self.estadofuncEntry.delete(0, ctk.END)
+            self.estadofuncEntry.insert(0, funcionario[8])
 
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao buscar funcionario: {e}")
+        finally:
+            db.conn.close()
+
+    def carregar_funcionarios_com_endereco(self, tree):
+        for item in tree.get_children():
+            tree.delete(item)
+
+        db = comunicacao()
+        query = """SELECT f.idfuncionario, f.nome, f.telefone, f.email, f.datanascimento, e.rua, e.bairro, e.cidade, e.estado FROM funcionario f LEFT JOIN endereco e ON f.idendereco = e.idendereco"""
+        try:
+            db.cursor.execute(query)
+            funcionarios = db.cursor.fetchall()
+
+            for funcionario in funcionarios:
+                tree.insert("", "end", values=funcionario)
+        finally:
+            db.conn.close()
+        
 
     def salvar_alteracoes(self):
         idfuncionario = self.idEntry.get()
-        nome = self.UsuarioEntry.get()
+        nome = self.funcnomeEntry.get()
         telefone = self.telefoneEntry.get()
         email = self.EmailEntry.get()
         nascimento = self.NascEntry.get()
@@ -283,10 +307,10 @@ class GerenciadorFuncionarios:
             return
 
         db = comunicacao()
-        db.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM funcionario WHERE idfuncionario = %s)""", (ruafunc, bairrofunc, cidadefunc, estadofunc, idfuncionario))
+        db.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM funcionario WHERE idfuncionario = %s)""", ( ruafunc, bairrofunc, cidadefunc, estadofunc,idfuncionario))
 
         # Atualiza o funcionario
-        db.cursor.execute("""UPDATE funcionario SET nome = %s, telefone = %s, email = %s , datanascimento = %s WHERE idfuncionario = %s""", (nome, telefone, estadofunc, email, nascimento,  idfuncionario))
+        db.cursor.execute("""UPDATE funcionario SET nome = %s, telefone = %s, email = %s , datanascimento = %s WHERE idfuncionario = %s""", (nome, telefone, email, nascimento,  idfuncionario))
         db.conn.commit()
         messagebox.showinfo("Sucesso", "Funcionário atualizado com sucesso!")
 
@@ -319,6 +343,8 @@ class GerenciadorFuncionarios:
                 messagebox.showinfo("Sucesso", "Funcionário excluído.")
 
         ctk.CTkButton(jan_excluir, text="Excluir Selecionado", command=excluir_selecionado).pack(pady=10)
+
+        self.carregar_funcionarios_com_endereco(tree)
         jan_excluir.grab_set()
         jan_excluir.focus_force()
 
