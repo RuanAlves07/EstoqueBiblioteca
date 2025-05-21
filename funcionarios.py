@@ -133,8 +133,9 @@ class GerenciadorFuncionarios:
             db.LinkEndereco(rua, bairro, cidade, estado)
             idendereco = db.cursor.lastrowid
 
-            db.RegistrarFuncionario(nome,telefone, email, datanascimento)
+            db.RegistrarFuncionario(nome,telefone, email, datanascimento, idendereco)
             db.conn.commit()
+            messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
     
     def limpar_campos(self, janela=None):
         self.funcnomeEntry.delete(0, 'end')

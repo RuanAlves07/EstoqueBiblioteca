@@ -167,24 +167,12 @@ class FornecedorApp:
         janela.title("Excluir Fornecedor")
         janela.geometry("800x400")
 
-        colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
-    
-        # Usar ttk.Treeview em vez de ctk.Treeview
-        tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
-    
-        tree.heading("ID", text="ID")
-        tree.heading("Nome", text="Nome")
-        tree.heading("Nome Fantasia", text="Nome Fantasia")
-        tree.heading("CNPJ", text="CNPJ")
-        tree.heading("Endereço", text="Endereço")
-    
-        tree.column("ID", width=50, anchor="center")
-        tree.column("Nome", width=150)
-        tree.column("Nome Fantasia", width=150)
-        tree.column("CNPJ", width=120, anchor="center")
-        tree.column("Endereço", width=200)
-    
-        tree.pack(fill="both", expand=True, padx=10, pady=10)
+        colunas = ("ID", "Nome", "nomefantasia", "Cnpj", "rua", "bairro", "cidade", "estado")
+        tree = ttk.Treeview(janela, columns=colunas, show="headings", height=8)
+        for col in colunas: 
+            tree.heading(col, text=col)
+            tree.column(col, width=60 if col in ["Nome", "ID"] else 100)
+        tree.pack(padx=10, pady=10, fill="both", expand=True)
 
         bt_excluir = ctk.CTkButton(janela, text="Excluir Selecionado", width=150, command=excluir_selecionado)
         bt_excluir.pack(pady=10)

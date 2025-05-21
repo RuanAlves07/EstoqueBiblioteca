@@ -91,9 +91,10 @@ class comunicacao:
             self.cursor.execute("SELECT * FROM cliente WHERE idcliente = %s", (idcliente)) 
             return self.cursor.fetchone() 
     
-    def RegistrarFuncionario(self, nome, telefone, email, datanascimento):
-        self.cursor.execute("INSERT funcionario nome, telefone, email, datanascimento VALUES ( %s, %s, %s, %s)", (nome, telefone, email, datanascimento))
-        self.conn.commit() 
+    def RegistrarFuncionario(self, nome, telefone, email, datanascimento, idendereco):
+            query = """INSERT INTO funcionario (nome, telefone, email, datanascimento, idendereco)VALUES (%s, %s, %s, %s, %s)"""
+            self.cursor.execute(query, (nome, telefone, email, datanascimento, idendereco))
+            self.conn.commit()
 
     def ExcluirFuncionario(self, idfuncionario):
         
