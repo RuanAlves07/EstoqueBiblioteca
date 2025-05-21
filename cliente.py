@@ -75,9 +75,6 @@ class GerenciadorClientes:
         janela.focus_force()
         GerenciadorClientes(janela)
 
-   
-        
-
         
     def cadastro_clien(self):
         jan_clientecad = ctk.CTkToplevel(self.root)
@@ -99,16 +96,16 @@ class GerenciadorClientes:
         self.cnpjEntry = ctk.CTkEntry(frame, placeholder_text= "Cnpj: ", width=300, height=40)
         self.cnpjEntry.pack(pady=10)
 
-        self.ruaEntry = ctk.CTkEntry(self.root, placeholder_text="Rua", width=300, height=40)
+        self.ruaEntry = ctk.CTkEntry(frame, placeholder_text="Rua", width=300, height=40)
         self.ruaEntry.pack(pady=10)
 
-        self.bairroEntry = ctk.CTkEntry(self.root, placeholder_text="Bairro", width=300, height=40)
+        self.bairroEntry = ctk.CTkEntry(frame, placeholder_text="Bairro", width=300, height=40)
         self.bairroEntry.pack(pady=10)
 
-        self.cidadeEntry = ctk.CTkEntry(self.root, placeholder_text="Cidade", width=300, height=40)
+        self.cidadeEntry = ctk.CTkEntry(frame, placeholder_text="Cidade", width=300, height=40)
         self.cidadeEntry.pack(pady=10)
 
-        self.estadoEntry = ctk.CTkEntry(self.root, placeholder_text="Estado (UF)", width=300, height=40)
+        self.estadoEntry = ctk.CTkEntry(frame, placeholder_text="Estado (UF)", width=300, height=40)
         self.estadoEntry.pack(pady=10)
 
         jan_clientecad.grab_set()
@@ -127,22 +124,28 @@ class GerenciadorClientes:
 
 
     def RegistrarCliente(self):
-        
-        # Recebe as informações do usúario e guarda em cada variavel dedicada 
-        nomeCliente = self.clienomeEntry.get().strip()
-        cnpj = self.cnpjEntry.get().strip()
-        rua = self.ruaEntry.get().strip()
-        bairro = self.bairroEntry.get().strip()
-        cidade = self.cidadeEntry.get().strip()
-        estado = self.estadoEntry.get().strip()
-        
-        
-        if nomeCliente == "" or cnpj == "" or rua == "" or bairro == '' or cidade == '' or estado == '' :
+        nomeCliente = self.clienomeEntry.get()
+        cnpj = self.cnpjEntry.get()
+        rua = self.ruaEntry.get()
+        bairro = self.bairroEntry.get()
+        cidade = self.cidadeEntry.get()
+        estado = self.estadoEntry.get()
+
+        if nomeCliente == "" or cnpj == "" or rua == "" or bairro == '' or cidade == '' or estado == '':
             messagebox.showerror(title="Erro no Registro", message="PREENCHA TODOS OS CAMPOS")
         else:
-            db = comunicacao() 
-            db.RegistrarCliente(nomeCliente, cnpj, rua, bairro, cidade, estado)
-            messagebox.showinfo("Success", "Usuario criado com sucesso!")
+            db = comunicacao()
+
+            db.LinkEndereco(rua, bairro, cidade, estado)
+            idendereco = db.cursor.lastrowid  # Pega o ID do novo endereço
+
+            db.RegistrarCliente(nomeCliente, cnpj, idendereco)
+
+            db.conn.commit()
+
+            messagebox.showinfo("Sucesso", "Cliente registrado com sucesso!")
+            self.limpar_campos()
+
     
     def limpar_campos(self, jan_clientecad=None):
         self.clienomeEntry.delete(0, 'end')
@@ -155,23 +158,23 @@ class GerenciadorClientes:
         
     def listar_cliente(self):
         jan_lista = ctk.CTkToplevel(self.root)
-        jan_lista.title("Listar Clientes")
+        jan_lista.title("Listar Funcionários")
         jan_lista.geometry("800x400")
         jan_lista.resizable(True, True)
 
-        colunas = ( "ID" , "Nome", "Cnpj", "Rua", "Bairro", "Cidade", "Estado") 
+        colunas = ("ID", "Nome", "Rua", "Bairro", "Cidade", "Estado")
         tree = ttk.Treeview(jan_lista, columns=colunas, show="headings", height=20)
 
         for col in colunas:
             tree.heading(col, text=col)
-            tree.column(col, width=150 if col == "Nome" or col == "ID" else 100)
+            tree.column(col, width=150 if col == "Nome" or col == "Email" else 100)
 
         tree.pack(padx=10, pady=10, fill="both", expand=True)
 
         self.carregar_clientes(tree)
-
         jan_lista.grab_set()
         jan_lista.focus_force()
+
     def carregar_clientes(self, tree):
         for item in tree.get_children():
             tree.delete(item)
@@ -179,11 +182,11 @@ class GerenciadorClientes:
         db = comunicacao()
         try:
             cursor = db.conn.cursor()
-            cursor.execute("SELECT idcliente, NomeCliente, CNPJ	, endereco FROM cliente")
+            cursor.execute("SELECT idcliente, NomeCliente, CNPJ FROM cliente")
             for row in cursor.fetchall():
                 tree.insert("", "end", values=row)
         except Exception as e:
-            messagebox.showerror("Erro", f"Falha ao carregar clientes: {e}")
+            messagebox.showerror("Erro", f"Falha ao carregar funcionários: {e}")
 
     def atuu_clien(self):
         jan_atualizar = ctk.CTkToplevel(self.root)
@@ -191,9 +194,9 @@ class GerenciadorClientes:
         jan_atualizar.geometry("800x600")
         jan_atualizar.resizable(False, False)
 
-        ctk.CTkLabel(jan_atualizar, text="Digite o id do cliente : ", font=("Arial", 16)).place(x=115, y=50)
-        self.idcliente = ctk.CTkEntry(jan_atualizar, width=200)
-        self.idcliente.place(x=330, y=55)
+        ctk.CTkLabel(jan_atualizar, text="Digite o id do cliente: ", font=("Arial", 16)).place(x=115, y=50)
+        self.idclientes = ctk.CTkEntry(jan_atualizar, width=200)
+        self.idclientes.place(x=330, y=55)
 
         ctk.CTkButton(jan_atualizar, text="Buscar clientes", command=self.buscar_cliente).place(x=330, y=90)
 
@@ -201,13 +204,13 @@ class GerenciadorClientes:
         self.idcliente = ctk.CTkEntry(jan_atualizar, width=300)
         self.clienomeEntry = ctk.CTkEntry(jan_atualizar, width=300)
         self.cnpjEntry = ctk.CTkEntry(jan_atualizar, width=300)
-        self.enderecoEntry = ctk.CTkEntry(jan_atualizar, width=300)
+    
         
         
 
         
-        labels = ["Nome", "Cnpj", "Endereço"]
-        entries = [self.idcliente, self.clienomeEntry, self.cnpjEntry, self.enderecoEntry]
+        labels = ["Nome", "Cnpj"]
+        entries = [self.idcliente, self.clienomeEntry, self.cnpjEntry]
         for i, label in enumerate(labels):
             ctk.CTkLabel(jan_atualizar, text=label + ":", font=("Arial", 16)).place(x=115, y=150 + i * 50)
             entries[i].place(x=330, y=155 + i * 50)
@@ -221,7 +224,7 @@ class GerenciadorClientes:
         if not idcliente:
             messagebox.showwarning("Atenção", "Por favor, insira o id.")
             return
-
+        
         db = comunicacao()
         cliente = db.buscar_cliente_por_id(idcliente)
         if not cliente:
@@ -234,8 +237,6 @@ class GerenciadorClientes:
         self.clienomeEntry.insert(0, cliente[2])
         self.cnpjEntry.delete(0, )
         self.cnpjEntry.insert(0, cliente[3])
-        self.enderecoEntry.delete(0, )
-        self.enderecoEntry.insert(0, cliente[4])
        
         
 
@@ -245,18 +246,19 @@ class GerenciadorClientes:
         idcliente = self.idcliente.get()
         nome = self.clienomeEntry.get()
         cnpj = self.cnpjEntry.get()
-        
-
-        
+        rua = self.ruaEntry.get()
+        bairro = self.bairroEntry.get()
+        cidade = self.cidadeEntry.get()
+        estado = self.estadoEntry.get()
       
         
 
-        if not idcliente or "" in [nome, cnpj, idcliente, nome, cnpj, endereco]:
+        if not idcliente or "" in [nome, cnpj, idcliente, rua, bairro, cidade, estado ]:
             messagebox.showerror("Erro", "Preencha todos os campos.")
             return
 
         db = comunicacao()
-        db.AtualizarCliente(idcliente, nome, cnpj, endereco)
+        db.AtualizarEnderecoCliente(rua, bairro, cidade, estado, idcliente)
         messagebox.showinfo("Sucesso", "Cliente atualizado com sucesso! ")
 
         db = comunicacao()
@@ -289,7 +291,7 @@ class GerenciadorClientes:
             resposta = messagebox.askyesno("Confirmação", "Tem certeza que deseja excluir?")
             if resposta:
                 db = comunicacao()
-                db.excluir_clien(id_sel)
+                db.ExcluirCliente(id_sel)
                 self.carregar_clientes(tree)
                 messagebox.showinfo("Sucesso", "cliente excluído.")
 

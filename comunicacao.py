@@ -20,7 +20,7 @@ class comunicacao:
         self.cursor = self.conn.cursor()
 
     def RegistrarCliente(self,  NomeCliente, cnpj, endereco):
-        self.cursor.execute("INSERT INTO cliente ( NomeCliente, CNPJ, endereco) VALUES (%s, %s, %s)", ( NomeCliente, cnpj, endereco))
+        self.cursor.execute("INSERT INTO cliente (NomeCliente, CNPJ) VALUES (%s, %s)", ( NomeCliente, cnpj))
         self.conn.commit() 
 
     def RegistrarUsuario(self, nome, usuario, senha, email, userperm):
@@ -61,6 +61,11 @@ class comunicacao:
         self.cursor.execute(query, (idfornecedor,))  
         self.conn.commit()
 
+    def ExcluirCliente(self, idcliente):
+        query = "DELETE FROM cliente WHERE idcliente = %s"
+        self.cursor.execute(query, (idcliente,))  
+        self.conn.commit()
+
     def carregar_fornecedores_com_endereco(self):
         query = """SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM fornecedor f LEFT JOIN endereco e ON f.idendereco = e.idendereco"""
         self.cursor.execute(query)
@@ -82,8 +87,12 @@ class comunicacao:
         self.cursor.execute("SELECT * FROM fornecedor WHERE idfornecedor = %s", (idfornecedor)) 
         return self.cursor.fetchone() 
     
+    def Listarcliente(self, idcliente):
+            self.cursor.execute("SELECT * FROM cliente WHERE idcliente = %s", (idcliente)) 
+            return self.cursor.fetchone() 
+    
     def RegistrarFuncionario(self, nome, telefone, email, datanascimento):
-        self.cursor.execute("INSERT INTO funcionario (nome, telefone, email, datanascimento) VALUES (%s, %s, %s, %s)", (nome, telefone, email, datanascimento))
+        self.cursor.execute("INSERT INTO funcionario (nome, telefone, email, datanascimento) VALUES (%s, %s, %s, %s, %s)", (nome, telefone, email, datanascimento))
         self.conn.commit() 
 
     def ExcluirFuncionario(self, idfuncionario):
@@ -112,29 +121,21 @@ class comunicacao:
         self.conn.commit() 
 
     def buscar_cliente_por_id(self, idcliente):
-        self.cursor.execute("SELECT * FROM cliente WHERE idcliente = %s", (idcliente,))
+        self.cursor.execute("SELECT * FROM cliente WHERE idcliente = %s", (idcliente))
         return self.cursor.fetchone()  
     
-    def AtualizarCliente(self, idcliente, NomeCliente, CNPJ, endereço,):
-        self.cursor.execute("UPDATE cliente SET idcliente = %s, NomeCliente = %s, CNPJ = %s, quantidade = %s, endereço = %s WHERE idproduto = %s ",(idcliente, NomeCliente, CNPJ, endereço)) 
+    def AtualizarCliente(self, idcliente, NomeCliente, CNPJ):
+        self.cursor.execute("UPDATE cliente SET idcliente = %s, NomeCliente = %s, CNPJ = %s",(idcliente, NomeCliente, CNPJ)) 
         self.conn.commit() 
 
     def LinkEndereco(self, rua, bairro, cidade, estado):
         self.cursor.execute("""INSERT INTO endereco (rua, bairro, cidade, estado) VALUES (%s, %s, %s, %s)""", (rua, bairro, cidade, estado))
         self.conn.commit()
     
-    def AtualizarEnderecoFunc(self, rua, bairro, cidade, estado):
-        self.cursor.execute("""
-            UPDATE endereco 
-            SET rua = %s, bairro = %s, cidade = %s, estado = %s 
-            WHERE idendereco = (
-                SELECT idendereco FROM funcionario 
-                WHERE idfuncionario = %s
-            )
-        """, (rua, bairro, cidade, estado))  # Ordem correta dos parâmetros
+    def AtualizarEnderecoFunc(self, rua, bairro, cidade, estado, idfuncionario):
+        self.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM funcionario WHERE idfuncionario = %s)""", (rua, bairro, cidade, estado, idfuncionario))  # Ordem correta dos parâmetros
         self.conn.commit()
 
-    def carregar_funcionarios_com_endereco(self):
-        query = """SELECT f.idfuncionario, f.nome, f.telefone, f.email, f.datanascimento, e.bairro, e.cidade, e.estado FROM funcionario f INNER JOIN endereco e ON f.idendereco = e.idendereco WHERE f.idfuncionario = %s"""
-        self.cursor.execute(query)
-        return self.cursor.fetchall()
+    def AtualizarEnderecoCliente(self, rua, bairro, cidade, estado, idcliente):
+        self.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM cliente WHERE cliente = %s)""", (rua, bairro, cidade, estado, idcliente))  
+        self.conn.commit()

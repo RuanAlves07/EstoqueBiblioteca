@@ -22,7 +22,7 @@ class AppPedidos:
             return mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="root",
+                password="",
                 database="biblioteca_db"
             )
         except mysql.connector.Error as err:
@@ -63,6 +63,7 @@ class AppPedidos:
                         entry_destino.delete(0, "end"),
                         entry_destino.insert(0, n),
                         label_qtde.configure(text=f"Estoque disponível: {q}")
+                        
                     ]
                 )
                 btn.pack(fill="x", pady=2)
@@ -76,7 +77,7 @@ class AppPedidos:
         cursor = conexao.cursor()
         try:
             query = """
-            SELECT idcliente, NomeCliente, CNPJ, endereco 
+            SELECT idcliente, NomeCliente, CNPJ 
             FROM cliente 
             WHERE NomeCliente LIKE %s
             """
@@ -88,8 +89,9 @@ class AppPedidos:
             if not texto.strip():
                 return
             for cli in resultados:
-                idcliente, nome_cliente, cnpj, endereco = cli
-                texto_cli = f"{nome_cliente} | CNPJ: {cnpj} | Endereço: {endereco}"
+                idcliente, nome_cliente, cnpj = cli
+                texto_cli = f"{nome_cliente} | CNPJ: {cnpj}"
+                texto_cli = f"{nome_cliente} | CNPJ: {cnpj} "
                 btn = ctk.CTkButton(
                     frame_resultados,
                     text=texto_cli,

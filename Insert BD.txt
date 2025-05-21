@@ -1,0 +1,43 @@
+INSERT INTO usuarios (nome, usuario, senha, email, userperm) VALUES
+('João Silva', 'joaosilva', 'senha123', 'joao@example.com', 'Sim'),
+('Maria Oliveira', 'mariaoliveira', 'senha456', 'maria@example.com', 'Não'),
+('Carlos Pereira', 'carlospereira', 'senha789', 'carlos@example.com', 'Sim'),
+('Ana Costa', 'anacosta', 'senha101', 'ana@example.com', 'Não'),
+('Luciano Almeida', 'lucianoa', 'senha202', 'luciano@example.com', 'Sim');
+
+-- Inserir endereços
+INSERT INTO endereco (rua, bairro, cidade, estado) VALUES
+('Rua das Flores 123', 'Centro', 'São Paulo', 'SP'),
+('Av. Brasil 456', 'Jardins', 'Rio de Janeiro', 'RJ'),
+('Rua dos Comerciantes 789', 'Lapa', 'Curitiba', 'PR');
+
+-- Inserir fornecedores
+INSERT INTO fornecedor (nome, nomefantasia, CNPJ, idendereco) VALUES
+('Editora Alpha', 'Alpha Livros', '12.345.678/0001-90', 1),
+('Editora Beta', 'Beta Publicações', '98.765.432/0001-12', 2),
+('Editora Gama', 'Gama Educação', '56.789.012/0001-34', 3);
+
+-- Produtos
+INSERT INTO produto (idfornecedor, nome, descricao, genero, quantidade, preco) VALUES
+(1, 'Dom Casmurro', 'Clássico da literatura brasileira.', 'L', 100, '39.90'),
+(1, 'O Pequeno Príncipe', 'Fábula sobre amor e perda.', 'I', 200, '49.90'),
+(2, 'Harry Potter e a Pedra Filosofal', 'Primeiro livro da série Harry Potter.', 'J', 150, '59.90'),
+(2, 'História do Brasil para Jovens', 'Resumo histórico do país.', 'H', 80, '45.00'),
+(3, 'Dicionário Português', 'Dicionário completo da língua portuguesa.', 'R', 60, '99.90'),
+(3, 'Contos de Fadas Clássicos', 'Coleção dos contos mais famosos.', 'I', 120, '34.90'),
+(1, 'A Moreninha', 'Romance clássico brasileiro.', 'L', 90, '29.90'),
+(2, 'Diário de um Banana', 'Livro juvenil engraçado e atual.', 'J', 130, '39.90'),
+(3, 'Biografia de Einstein', 'Vida e descobertas do físico.', 'H', 70, '55.00'),
+(1, 'Gramática Completa', 'Guia definitivo de gramática.', 'R', 110, '69.90');
+
+-- Mais endereços
+INSERT INTO endereco (rua, bairro, cidade, estado) VALUES
+('Rua Nova 321', 'Mooca', 'São Paulo', 'SP'),
+('Av. Paulista 555', 'Bela Vista', 'São Paulo', 'SP'),
+('Rua XV de Novembro 888', 'Centro', 'Porto Alegre', 'RS');
+
+-- Funcionários
+INSERT INTO funcionario (nome, telefone, email, datanascimento, idendereco) VALUES
+('Paulo Souza', '(11) 98765-4321', 'paulo@example.com', '1985-05-15', 4),
+('Juliana Lima', '(11) 99876-5432', 'juliana@example.com', '1990-08-22', 5),
+('Roberto Carvalho', '(51) 99988-7766', 'roberto@example.com', '1978-03-10', 6);
