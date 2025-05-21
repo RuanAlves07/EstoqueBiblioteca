@@ -4,6 +4,7 @@ import customtkinter as ctk
 import mysql.connector
 from comunicacao import comunicacao  
 from CTkMenuBar import *
+from tkinter import END, messagebox
 
 class GerenciadorClientes:
     def __init__(self, root):
@@ -158,7 +159,7 @@ class GerenciadorClientes:
         
     def listar_cliente(self):
         jan_lista = ctk.CTkToplevel(self.root)
-        jan_lista.title("Listar Funcionários")
+        jan_lista.title("Listar Clientes")
         jan_lista.geometry("800x400")
         jan_lista.resizable(True, True)
 
@@ -167,7 +168,7 @@ class GerenciadorClientes:
 
         for col in colunas:
             tree.heading(col, text=col)
-            tree.column(col, width=150 if col == "Nome" or col == "Email" else 100)
+            tree.column(col, width=150 if col == "Nome" or col == "ID" else 100)
 
         tree.pack(padx=10, pady=10, fill="both", expand=True)
 
@@ -180,14 +181,15 @@ class GerenciadorClientes:
             tree.delete(item)
 
         db = comunicacao()
+        query = """SELECT c.idcliente, c.NomeCliente, c.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM cliente c LEFT JOIN endereco e ON c.idendereco = e.idendereco"""
         try:
-            cursor = db.conn.cursor()
-            cursor.execute("SELECT idcliente, NomeCliente, CNPJ FROM cliente")
-            for row in cursor.fetchall():
-                tree.insert("", "end", values=row)
-        except Exception as e:
-            messagebox.showerror("Erro", f"Falha ao carregar funcionários: {e}")
+            db.cursor.execute(query)
+            clientes = db.cursor.fetchall()
 
+            for cliente in clientes:
+                tree.insert("", "end", values=cliente)
+        finally:
+            db.conn.close()
     def atuu_clien(self):
         jan_atualizar = ctk.CTkToplevel(self.root)
         jan_atualizar.title("Atualizar Cliente")
@@ -204,66 +206,77 @@ class GerenciadorClientes:
         self.idcliente = ctk.CTkEntry(jan_atualizar, width=300)
         self.clienomeEntry = ctk.CTkEntry(jan_atualizar, width=300)
         self.cnpjEntry = ctk.CTkEntry(jan_atualizar, width=300)
-    
+        self.ruaEntry = ctk.CTkEntry(jan_atualizar, width=300)
+        self.bairroEntry = ctk.CTkEntry(jan_atualizar,  width=300)
+        self.cidadeEntry = ctk.CTkEntry(jan_atualizar,  width=300)
+        self.estadoEntry = ctk.CTkEntry(jan_atualizar,  width=300)
         
-        
-
-        
-        labels = ["Nome", "Cnpj"]
-        entries = [self.idcliente, self.clienomeEntry, self.cnpjEntry]
+        labels = ["Nome", "Cnpj", "rua", "bairro", "cidade", "estado"]
+        entries = [self.clienomeEntry, self.cnpjEntry, self.ruaEntry, self.bairroEntry, self.cidadeEntry, self.estadoEntry]
         for i, label in enumerate(labels):
             ctk.CTkLabel(jan_atualizar, text=label + ":", font=("Arial", 16)).place(x=115, y=150 + i * 50)
             entries[i].place(x=330, y=155 + i * 50)
 
-        ctk.CTkButton(jan_atualizar, text="Salvar Alterações", command=self.salvar_alteracoes).place(x=330, y=420)
+        ctk.CTkButton(jan_atualizar, text="Salvar Alterações", command=self.salvar_alteracoes).place(x=330, y=470)
 
         jan_atualizar.grab_set()
         jan_atualizar.focus_force()
     def buscar_cliente(self):
-        idcliente = self.idcliente.get()
+        idcliente = self.idclientes.get()  # <-- Aqui foi corrigido para 'idclientes' (com s)
+
         if not idcliente:
-            messagebox.showwarning("Atenção", "Por favor, insira o id.")
-            return
-        
-        db = comunicacao()
-        cliente = db.buscar_cliente_por_id(idcliente)
-        if not cliente:
-            messagebox.showerror("Erro", "Cliente não listado.")
+            messagebox.showwarning("Atenção", "Por favor, insira o ID do cliente.")
             return
 
-        self.idcliente.delete(0, )
-        self.idcliente.insert(0, cliente[1])
-        self.clienomeEntry.delete(0, )
-        self.clienomeEntry.insert(0, cliente[2])
-        self.cnpjEntry.delete(0, )
-        self.cnpjEntry.insert(0, cliente[3])
-       
-        
+        db = comunicacao()
+        try:
+            query = """SELECT c.idcliente, c.NomeCliente, c.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM cliente c INNER JOIN endereco e ON c.idendereco = e.idendereco WHERE c.idcliente = %s"""
+            db.cursor.execute(query, (idcliente,))
+            cliente = db.cursor.fetchone()
+            
+
+            if not cliente:
+                messagebox.showerror("Erro", "Cliente não encontrado.")
+                return
+
+            self.clienomeEntry.delete(0, END)
+            self.clienomeEntry.insert(0, cliente[1])  
+            self.cnpjEntry.delete(0, END)
+            self.cnpjEntry.insert(0, cliente[2])   
+            self.ruaEntry.delete(0, END)
+            self.ruaEntry.insert(0, cliente[3])  
+            self.bairroEntry.delete(0, END)
+            self.bairroEntry.insert(0, cliente[4])
+            self.cidadeEntry.delete(0, END)
+            self.cidadeEntry.insert(0, cliente[5]) 
+            self.estadoEntry.delete(0, END)
+            self.estadoEntry.insert(0, cliente[6])   
+            
+
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao buscar cliente: {e}")
+            
 
     def salvar_alteracoes(self):
-
-        # Recebe as informações do usúario e guarda em cada variavel dedicada 
-        idcliente = self.idcliente.get()
+        idcliente = self.idclientes.get()
         nome = self.clienomeEntry.get()
         cnpj = self.cnpjEntry.get()
         rua = self.ruaEntry.get()
         bairro = self.bairroEntry.get()
         cidade = self.cidadeEntry.get()
         estado = self.estadoEntry.get()
-      
-        
 
-        if not idcliente or "" in [nome, cnpj, idcliente, rua, bairro, cidade, estado ]:
-            messagebox.showerror("Erro", "Preencha todos os campos.")
+        if not all([nome, cnpj, rua, bairro, cidade, estado]):
+            messagebox.showerror("Erro", "Todos os campos devem ser preenchidos.")
             return
 
         db = comunicacao()
-        db.AtualizarEnderecoCliente(rua, bairro, cidade, estado, idcliente)
-        messagebox.showinfo("Sucesso", "Cliente atualizado com sucesso! ")
-
-        db = comunicacao()
-        db.LinkEndereco(rua, bairro, cidade, estado)
-        idendereco = db.cursor.lastrowid
+        try:
+            db.AtualizarEnderecoCliente(rua, bairro, cidade, estado, idcliente)
+            db.AtualizarCliente(idcliente, nome, cnpj)
+            messagebox.showinfo("Sucesso", "Cliente atualizado com sucesso!")
+        except Exception as e:
+            messagebox.showerror("Erro", f"Falha ao atualizar cliente: {e}")
 
     def excluir_clien(self):
         jan_excluir = ctk.CTkToplevel(self.root)
@@ -271,7 +284,7 @@ class GerenciadorClientes:
         jan_excluir.geometry("800x400")
         jan_excluir.resizable(True, True)
 
-        colunas = ("Id", "Nome", "Cnpj", "Endereco")
+        colunas = ("Id", "Nome", "Cnpj", "rua", "bairro", "cidade", "estado")
         tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=8)
         for col in colunas: 
             tree.heading(col, text=col)
@@ -309,3 +322,4 @@ if __name__ == "__main__":
     root = ctk.CTk()
     app = GerenciadorClientes(root)
     root.mainloop()
+    

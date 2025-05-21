@@ -19,8 +19,8 @@ class comunicacao:
         )
         self.cursor = self.conn.cursor()
 
-    def RegistrarCliente(self,  NomeCliente, cnpj, endereco):
-        self.cursor.execute("INSERT INTO cliente (NomeCliente, CNPJ) VALUES (%s, %s)", ( NomeCliente, cnpj))
+    def RegistrarCliente(self,  NomeCliente, cnpj, idendereco):
+        self.cursor.execute("INSERT INTO cliente (NomeCliente, CNPJ, idendereco) VALUES (%s, %s, %s)", ( NomeCliente, cnpj, idendereco))
         self.conn.commit() 
 
     def RegistrarUsuario(self, nome, usuario, senha, email, userperm):
@@ -124,9 +124,9 @@ class comunicacao:
         self.cursor.execute("SELECT * FROM cliente WHERE idcliente = %s", (idcliente))
         return self.cursor.fetchone()  
     
-    def AtualizarCliente(self, idcliente, NomeCliente, CNPJ):
-        self.cursor.execute("UPDATE cliente SET idcliente = %s, NomeCliente = %s, CNPJ = %s",(idcliente, NomeCliente, CNPJ)) 
-        self.conn.commit() 
+    def AtualizarCliente(self, idcliente, nome, cnpj):
+        self.cursor.execute(""" UPDATE cliente SET NomeCliente = %s, CNPJ = %s WHERE idcliente = %s""", (nome, cnpj, idcliente))
+        self.conn.commit()
 
     def LinkEndereco(self, rua, bairro, cidade, estado):
         self.cursor.execute("""INSERT INTO endereco (rua, bairro, cidade, estado) VALUES (%s, %s, %s, %s)""", (rua, bairro, cidade, estado))
@@ -137,5 +137,5 @@ class comunicacao:
         self.conn.commit()
 
     def AtualizarEnderecoCliente(self, rua, bairro, cidade, estado, idcliente):
-        self.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM cliente WHERE cliente = %s)""", (rua, bairro, cidade, estado, idcliente))  
+        self.cursor.execute("""UPDATE endereco SET rua = %s, bairro = %s, cidade = %s, estado = %s WHERE idendereco = (SELECT idendereco FROM cliente WHERE idcliente = %s)""", (rua, bairro, cidade, estado, idcliente))
         self.conn.commit()
