@@ -135,7 +135,7 @@ class GerenciadorFuncionarios:
 
             db.RegistrarFuncionario(nome,telefone, email, datanascimento, idendereco)
             db.conn.commit()
-            messagebox.showinfo("Sucesso", "Fornecedor registrado com sucesso!")
+            messagebox.showinfo("Sucesso", "Funcionario registrado com sucesso!")
     
     def limpar_campos(self, janela=None):
         self.funcnomeEntry.delete(0, 'end')
@@ -238,7 +238,7 @@ class GerenciadorFuncionarios:
         db = comunicacao()
         try:
             # Consulta SQL para buscar o funcionario com informações do endereço
-            query = """SELECT f.idfuncionario, f.nome, f.telefone, f.email, f.datanascimento, e.bairro, e.cidade, e.estado FROM funcionario f INNER JOIN endereco e ON f.idendereco = e.idendereco WHERE f.idfuncionario = %s"""
+            query = """SELECT f.idfuncionario, f.nome, f.telefone, f.email, f.datanascimento,e.rua, e.bairro, e.cidade, e.estado FROM funcionario f INNER JOIN endereco e ON f.idendereco = e.idendereco WHERE f.idfuncionario = %s"""
             db.cursor.execute(query, (idfuncionario,))
             funcionario = db.cursor.fetchone()
 
