@@ -241,7 +241,7 @@ class GerenciadorFuncionarios:
             db.cursor.execute(query, (idfuncionario,))
             funcionario = db.cursor.fetchone()
 
-            if not idfuncionario:
+            if not funcionario:
                 messagebox.showerror("Erro", "Funcionario não encontrado.")
                 return
 
