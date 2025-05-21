@@ -158,7 +158,7 @@ class GerenciadorFuncionarios:
 
         for col in colunas:
             tree.heading(col, text=col)
-            tree.column(col, width=150 if col == "Nome" or col == "Email" else 100)
+            tree.column(col, width=47 if col == "Nome" or col == "Email" else 100)
 
         tree.pack(padx=10, pady=10, fill="both", expand=True)
 
@@ -325,7 +325,7 @@ class GerenciadorFuncionarios:
         tree = ttk.Treeview(jan_excluir, columns=colunas, show="headings", height=8)
         for col in colunas:
             tree.heading(col, text=col)
-            tree.column(col, width=120 if col in ["Nome", "Email"] else 100)
+            tree.column(col, width=47 if col in ["Nome", "Email"] else 100)
         tree.pack(padx=10, pady=10, fill="both", expand=True)
 
         self.carregar_funcionarios(tree)
