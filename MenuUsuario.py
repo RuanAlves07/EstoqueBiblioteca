@@ -100,38 +100,59 @@ class MenuU:
         produto_list.configure(bg="#f6f3ec")
         produto_list.resizable(False, False)
 
-        colunas = ("ID", "Nome", "Descrição", "Gênero", "Quantidade", "Preço")
+        # Atualizando as colunas para incluir o fornecedor
+        colunas = ("ID", "Nome", "Descrição", "Gênero", "Quantidade", "Preço", "Fornecedor")
         tree = ttk.Treeview(produto_list, columns=colunas, show="headings")
 
+        # Definições dos cabeçalhos
         for col in colunas:
             tree.heading(col, text=col)
-            tree.column(col, anchor="w" if col != "ID" else "center")
-
+        
+        # Configurações de largura das colunas
         tree.column("ID", width=50, anchor="center")
-        tree.column("Nome", width=100)
+        tree.column("Nome", width=120)
         tree.column("Descrição", width=150)
-        tree.column("Gênero", width=120, anchor="center")
-        tree.column("Quantidade", width=120)
-        tree.column("Preço", width=80)
+        tree.column("Gênero", width=80, anchor="center")
+        tree.column("Quantidade", width=80, anchor="center")
+        tree.column("Preço", width=80, anchor="e")
+        tree.column("Fornecedor", width=150)
 
         tree.pack(pady=10, padx=10, fill="both", expand=False)
 
-        self.PuxarInfo(tree)
+        produto_list.grab_set()       
+        produto_list.focus_force()
 
-    def carregar_fornecedores(self, tree):
+        def carregar_produtos():
+            for item in tree.get_children():
+                tree.delete(item)
+            db = comunicacao()
+            cursor = db.conn.cursor()
+            try:
+                # Consulta com INNER JOIN para trazer o nome do fornecedor
+                query = """SELECT p.idproduto, p.nome, p.descricao, p.genero, p.quantidade, p.preco, f.nome FROM produto p INNER JOIN fornecedor f ON p.idfornecedor = f.idfornecedor"""
+                cursor.execute(query)
+                produtos = cursor.fetchall()
+                for produto in produtos:
+                    tree.insert("", "end", values=produto)
+            finally:
+                cursor.close()
+
+        carregar_produtos()
+
+    def carregar_fornecedores_com_endereco(self, tree):
         for item in tree.get_children():
             tree.delete(item)
 
-        db = comunicacao()
-        cursor = db.conn.cursor()
-
+        db = comunicacao()#consulta join entre as tabelas fornecedor e endereco
+        query = """SELECT f.idfornecedor, f.nome, f.nomefantasia, f.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM fornecedor f LEFT JOIN endereco e ON f.idendereco = e.idendereco"""
         try:
-            cursor.execute("SELECT idfornecedor, nome, nomefantasia, CNPJ, endereco FROM fornecedor")
-            fornecedores = cursor.fetchall()
+            db.cursor.execute(query)
+            fornecedores = db.cursor.fetchall()
+
             for fornecedor in fornecedores:
                 tree.insert("", "end", values=fornecedor)
         finally:
-            cursor.close()
+            db.conn.close()
 
     def listar_forn(self):
         janela = ctk.CTkToplevel(self.root)
@@ -140,25 +161,36 @@ class MenuU:
         janela.configure(bg="#f6f3ec")
         janela.resizable(False, False)
 
-        colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Endereço")
-        tree = ttk.Treeview(janela, columns=colunas, show="headings")
+        colunas = ("ID", "Nome", "Nome Fantasia", "CNPJ", "Rua", "Bairro", "Cidade", "Estado")
+    
+        # Use ttk.Treeview em vez de ctk.Treeview
+        tree = ttk.Treeview(janela, columns=colunas, show="headings", selectmode="browse")
+    
+        tree.heading("ID", text="ID")
+        tree.heading("Nome", text="Nome")
+        tree.heading("Nome Fantasia", text="Nome Fantasia")
+        tree.heading("CNPJ", text="CNPJ")
+        tree.heading("Rua", text="Rua")
+        tree.heading("Bairro", text="Bairro")
+        tree.heading("Cidade", text="Cidade")
+        tree.heading("Estado", text="Estado")
 
-        for col in colunas:
-            tree.heading(col, text=col)
-            tree.column(col, anchor="w" if col not in ["ID", "CNPJ"] else "center")
-
+    
         tree.column("ID", width=50, anchor="center")
-        tree.column("Nome", width=150)
-        tree.column("Nome Fantasia", width=150)
-        tree.column("CNPJ", width=120, anchor="center")
-        tree.column("Endereço", width=200)
+        tree.column("Nome", width=100)
+        tree.column("Nome Fantasia", width=100)
+        tree.column("CNPJ", width=50, anchor="center") #colunas da tabela do listar 
+        tree.column("Rua", width=50)
+        tree.column("Bairro", width=50)
+        tree.column("Cidade", width=50)
+        tree.column("Estado", width=50)
+    
+        tree.pack(fill="both", expand=True, padx=10, pady=10)
 
-        tree.pack(pady=10, padx=10, fill="both", expand=True)
 
-        bt_fechar = ctk.CTkButton(janela, text="Fechar", width=100, command=janela.destroy)
-        bt_fechar.pack(pady=10)
-
-        self.carregar_fornecedores(tree)
+        self.carregar_fornecedores_com_endereco(tree)
+        janela.grab_set()
+        janela.focus_force()
 
     def carregar_produtos_baixo_estoque(self):
         # Limpar a tabela
@@ -191,31 +223,33 @@ class MenuU:
         jan_lista.geometry("800x400")
         jan_lista.resizable(True, True)
 
-        colunas = ( "ID" , "Nome", "Cnpj", "Endereço") 
+        colunas = ("ID", "Nome", "CNPJ","Rua", "Bairro", "Cidade", "Estado")
         tree = ttk.Treeview(jan_lista, columns=colunas, show="headings", height=20)
 
         for col in colunas:
             tree.heading(col, text=col)
-            tree.column(col, width=150 if col == "Nome" or col == "ID" else 100)
+            tree.column(col, width=150 if col == "Nome" else 50)
 
         tree.pack(padx=10, pady=10, fill="both", expand=True)
 
         self.carregar_clientes(tree)
-
         jan_lista.grab_set()
         jan_lista.focus_force()
+
     def carregar_clientes(self, tree):
         for item in tree.get_children():
             tree.delete(item)
 
         db = comunicacao()
+        query = """SELECT c.idcliente, c.NomeCliente, c.CNPJ, e.rua, e.bairro, e.cidade, e.estado FROM cliente c LEFT JOIN endereco e ON c.idendereco = e.idendereco"""
         try:
-            cursor = db.conn.cursor()
-            cursor.execute("SELECT idcliente, NomeCliente, CNPJ	, endereco FROM cliente")
-            for row in cursor.fetchall():
-                tree.insert("", "end", values=row)
-        except Exception as e:
-            messagebox.showerror("Erro", f"Falha ao carregar clientes: {e}")
+            db.cursor.execute(query)
+            clientes = db.cursor.fetchall()
+
+            for cliente in clientes:
+                tree.insert("", "end", values=cliente)
+        finally:
+            db.conn.close()
 
 
 
