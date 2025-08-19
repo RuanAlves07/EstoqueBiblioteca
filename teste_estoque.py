@@ -29,8 +29,14 @@ try:
 
     # Clica no botão
     botao_adicionar.click()
-    time.sleep(10)
+    time.sleep(2)
+
+
+        # ✅ Verifica se os valores estão corretos
+    if (campo_nome == "Livro legal" and campo_descricao == "Livro super massa" and campo_categoria == "Juvenil" and campo_quantidade == "5" and campo_preco == "7500.00" and campo_fornecedor == "Super legal"):
+        print("💚 Teste de cadastro de produto: SUCESSO!")
+    else:
+        print("❤️ Teste de cadastro de produto: FALHA!")
 
 finally:
-    print ("Teste funcionando!")
     driver.quit()
