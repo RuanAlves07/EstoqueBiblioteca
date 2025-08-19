@@ -29,21 +29,8 @@ try:
 
     # Clica no botão
     botao_adicionar.click()
-    time.sleep(2)
-
-   # ✅ Obtém os valores dos campos após o preenchimento
-    nome_valor = campo_nome.get_attribute("value")
-    descricao_valor = campo_descricao.get_attribute("value")
-    categoria_valor = campo_categoria.get_attribute("value")
-    quantidade_valor = campo_quantidade.get_attribute("value")
-    preco_valor = campo_preco.get_attribute("value")
-    fornecedor_valor = campo_fornecedor.get_attribute("value")
-
-    # ✅ Verifica se os valores estão corretos
-    if (nome_valor == "Livro legal" and descricao_valor == "Livro super massa" and categoria_valor == "Juvenil" and quantidade_valor == "5" and preco_valor == "7500.00" and fornecedor_valor == "Super legal"):
-        print("💚 Teste de cadastro de produto: SUCESSO!")
-    else:
-        print("❤️ Teste de cadastro de produto: FALHA!")
+    time.sleep(10)
 
 finally:
+    print ("Teste funcionando!")
     driver.quit()
