@@ -64,6 +64,9 @@ CREATE TABLE endereco (
 );
 
 
+
+
+
 ALTER TABLE produto ADD FOREIGN KEY (idfornecedor) REFERENCES fornecedor(idfornecedor);
 
 ALTER TABLE cliente ADD COLUMN idendereco INT;
